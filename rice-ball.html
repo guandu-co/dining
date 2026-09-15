@@ -53,7 +53,7 @@
 <body>
 
   <div class="container">
-    <!-- 顯示農家資訊圖片 -->
+    <!-- 顯示你的農家資訊圖片 -->
     <img class="info-img" src="未命名的作品 26.png" alt="紫蘇飯糰農家資訊" id="farmer-img">
     
     <!-- 返回便當主頁按鈕 -->
@@ -61,9 +61,9 @@
   </div>
 
   <script>
-    // 檢查圖片是否正確載入
+    // 除錯檢查：如果找不到圖片會跳提示
     document.getElementById('farmer-img').onerror = function() {
-      alert("找不到圖片！請確認 GitHub 上是否有上傳『未命名的作品 26.png』");
+      alert("找不到圖片！請確認 GitHub 上有沒有成功上傳檔名為『未命名的作品 26.png』的圖片！");
     };
   </script>
 
