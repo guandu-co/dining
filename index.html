@@ -13,62 +13,72 @@
     body, html {
       width: 100%;
       height: 100%;
-      background-color: #fcfbfa;
+      background-color: #000000; /* 背景設為純黑，配搭變暗視覺 */
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
       font-family: system-ui, -apple-system, sans-serif;
     }
-
     .hero-container {
       width: 90%;
       max-width: 450px;
       text-align: center;
-      cursor: pointer; /* 滑鼠移上去時顯示可點擊的手勢 */
+      position: relative;
     }
-
     .hero-container img {
       width: 100%;
       height: auto;
       display: block;
       border-radius: 12px;
-      transition: transform 0.2s ease;
     }
-
-    /* 輕微的按壓視覺回饋 */
-    .hero-container img:active {
-      transform: scale(0.98);
-    }
-
     .hint-text {
       margin-top: 15px;
       font-size: 14px;
-      color: #888888;
+      color: #aaaaaa;
       letter-spacing: 1px;
     }
   </style>
 </head>
 <body>
 
-  <div class="hero-container" id="bento-box">
+  <div class="hero-container">
     <!-- 預設顯示 3.gif -->
-    <img id="bento-img" src="3.gif" alt="關渡共食登場動畫">
+    <img id="main-img" src="3.gif" alt="關渡共食餐盒" usemap="#bento-map">
+
+    <!-- 定義點擊熱區：飯糰範圍 (位於右上角) -->
+    <map name="bento-map">
+      <!-- coords 座標代表點擊熱區的位置 (左, 上, 右, 下 %) -->
+      <area shape="rect" coords="200,80,400,300" alt="紫蘇飯糰" href="javascript:void(0);" id="rice-ball-area">
+    </map>
+
     <p class="hint-text" id="hint">👆 點擊餐盒開吃！</p>
   </div>
 
   <script>
-    const bentoBox = document.getElementById('bento-box');
-    const bentoImg = document.getElementById('bento-img');
+    const mainImg = document.getElementById('main-img');
     const hint = document.getElementById('hint');
+    const riceBallArea = document.getElementById('rice-ball-area');
 
-    // 當使用者點擊圖片時觸發
-    bentoBox.addEventListener('click', () => {
-      // 替換圖片為靜態圖檔
-      bentoImg.src = '不動.png';
-      
-      // 隱藏點擊提示
-      hint.style.display = 'none';
+    // 狀態紀錄：0=動畫, 1=不動, 2=飯糰變暗
+    let state = 0;
+
+    mainImg.addEventListener('click', (e) => {
+      // 第一次點擊：GIF -> 不動.png
+      if (state === 0) {
+        mainImg.src = '不動.png';
+        hint.innerText = '👆 點擊「紫蘇飯糰」看看農家資訊！';
+        state = 1;
+      }
+    });
+
+    // 當處於「不動.png」狀態，點擊飯糰熱區時切換圖片
+    riceBallArea.addEventListener('click', (e) => {
+      e.stopPropagation(); // 阻止事件重疊
+      if (state === 1 || state === 2) {
+        mainImg.src = '飯糰.jpg';
+        hint.innerText = '🍙 紫蘇飯糰：來自在地農家耕作';
+        state = 2;
+      }
     });
   </script>
 
