@@ -54,40 +54,50 @@
     const mainImg = document.getElementById('main-img');
     const hint = document.getElementById('hint');
 
-    let isStarted = false; // 是否已從 GIF 切換成靜態圖
+    // 狀態紀錄: 0 = 3.gif, 1 = 不動.png, 2 = 飯糰.png, 3 = 玉子燒亮.png
+    let currentState = 0;
 
     bentoBox.addEventListener('click', (e) => {
-      // 第一次點擊：從 GIF 切換成 不動.png
-      if (!isStarted) {
+      // 狀態 0：點擊切換為 不動.png
+      if (currentState === 0) {
         mainImg.src = '不動.png';
         hint.innerText = '👆 點擊「紫蘇飯糰」或「玉子燒」查看食材資訊！';
-        isStarted = true;
+        currentState = 1;
         return;
       }
 
-      // 取得點擊在圖片上的相對位置 (百分比)
+      // 取得點擊位置百分比
       const rect = mainImg.getBoundingClientRect();
-      const clickX = (e.clientX - rect.left) / rect.width;  // X 軸 0 ~ 1 (左到右)
-      const clickY = (e.clientY - rect.top) / rect.height;  // Y 軸 0 ~ 1 (上到下)
+      const clickX = (e.clientX - rect.left) / rect.width;
+      const clickY = (e.clientY - rect.top) / rect.height;
 
-      // 判定 1：點擊右下角區塊 (玉子燒區域)
-      if (clickX > 0.4 && clickY > 0.6) {
+      // 如果現在已經是「飯糰亮起」的狀態，再次點擊飯糰區域直接跳轉！
+      if (currentState === 2 && clickX > 0.4 && clickY <= 0.6) {
+        window.location.href = 'rice-ball.html';
+        return;
+      }
+
+      // 判定：點擊右上角 (飯糰)
+      if (clickX > 0.4 && clickY <= 0.6) {
+        mainImg.src = '飯糰.png';
+        hint.innerText = '🔗 飯糰已亮起！再次點擊飯糰查看農家故事 ➔';
+        currentState = 2;
+      } 
+      // 判定：點擊右下角 (玉子燒)
+      else if (clickX > 0.4 && clickY > 0.6) {
         mainImg.src = '玉子燒亮.png';
         hint.innerText = '🍳 玉子燒：選用優質放牧雞蛋';
+        currentState = 3;
       } 
-      // 判定 2：點擊右上角區塊 (飯糰區域)
-      else if (clickX > 0.4 && clickY <= 0.6) {
-        mainImg.src = '飯糰.png';
-        hint.innerText = '🍙 紫蘇飯糰：來自在地農家耕作';
-      } 
-      // 點擊其他地方：切換回全亮
+      // 點擊其他地方：回復成全亮
       else {
         mainImg.src = '不動.png';
         hint.innerText = '👆 點擊菜色查看農家資訊';
+        currentState = 1;
       }
     });
 
-    // 圖片載入失敗檢查
+    // 圖片載入錯誤處理
     mainImg.onerror = function() {
       alert("找不到圖片！請確認 GitHub 上的圖檔名稱是否為：" + mainImg.src.split('/').pop());
     };
