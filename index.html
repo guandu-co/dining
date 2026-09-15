@@ -18,6 +18,7 @@
       justify-content: center;
       align-items: center;
       font-family: system-ui, -apple-system, sans-serif;
+      overflow: hidden;
     }
     .hero-container {
       width: 90%;
@@ -39,14 +40,82 @@
       color: #bbbbbb;
       letter-spacing: 1px;
     }
+
+    /* 彈跳視窗背景 (Modal Overlay) */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 999;
+      padding: 20px;
+    }
+
+    /* 彈跳視窗顯示狀態 */
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* 彈跳圖片樣式 */
+    .modal-card {
+      position: relative;
+      max-width: 420px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-card img {
+      width: 100%;
+      height: auto;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .close-btn {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      width: 36px;
+      height: 36px;
+      background-color: #ffffff;
+      color: #333333;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
   </style>
 </head>
 <body>
 
+  <!-- 主便當容器 -->
   <div class="hero-container" id="bento-box">
-    <!-- 預設顯示 3.gif -->
     <img id="main-img" src="3.gif" alt="關渡共食餐盒">
     <p class="hint-text" id="hint">👆 點擊餐盒開吃！</p>
+  </div>
+
+  <!-- 農家資訊彈跳視窗 -->
+  <div class="modal-overlay" id="farmer-modal">
+    <div class="modal-card">
+      <div class="close-btn" id="close-modal">✕</div>
+      <img src="未命名的作品 26.png" alt="紫蘇飯糰農家資訊" id="modal-img">
+    </div>
   </div>
 
   <script>
@@ -54,42 +123,46 @@
     const mainImg = document.getElementById('main-img');
     const hint = document.getElementById('hint');
 
+    const farmerModal = document.getElementById('farmer-modal');
+    const closeModal = document.getElementById('close-modal');
+    const modalImg = document.getElementById('modal-img');
+
     // 狀態紀錄: 0 = 3.gif, 1 = 不動.png, 2 = 飯糰.png, 3 = 玉子燒亮.png
     let currentState = 0;
 
     bentoBox.addEventListener('click', (e) => {
-      // 狀態 0：點擊切換為 不動.png
+      // 第一次點擊：GIF -> 不動.png
       if (currentState === 0) {
         mainImg.src = '不動.png';
-        hint.innerText = '👆 點擊「紫蘇飯糰」或「玉子燒」查看食材資訊！';
+        hint.innerText = '👆 點擊「紫蘇飯糰」查看食材！';
         currentState = 1;
         return;
       }
 
-      // 取得點擊位置百分比
+      // 取得點擊相對位置
       const rect = mainImg.getBoundingClientRect();
       const clickX = (e.clientX - rect.left) / rect.width;
       const clickY = (e.clientY - rect.top) / rect.height;
 
-      // 如果現在已經是「飯糰亮起」的狀態，再次點擊飯糰區域直接跳轉！
+      // 當飯糰已亮起，再次點擊飯糰區域 -> 彈出農家圖
       if (currentState === 2 && clickX > 0.4 && clickY <= 0.6) {
-        window.location.href = 'rice-ball.html';
+        farmerModal.classList.add('active');
         return;
       }
 
-      // 判定：點擊右上角 (飯糰)
+      // 點擊右上角 (飯糰)
       if (clickX > 0.4 && clickY <= 0.6) {
         mainImg.src = '飯糰.png';
-        hint.innerText = '🔗 飯糰已亮起！再次點擊飯糰查看農家故事 ➔';
+        hint.innerText = '✨ 再次點擊「紫蘇飯糰」解鎖農家故事！';
         currentState = 2;
       } 
-      // 判定：點擊右下角 (玉子燒)
+      // 點擊右下角 (玉子燒)
       else if (clickX > 0.4 && clickY > 0.6) {
         mainImg.src = '玉子燒亮.png';
         hint.innerText = '🍳 玉子燒：選用優質放牧雞蛋';
         currentState = 3;
       } 
-      // 點擊其他地方：回復成全亮
+      // 點擊其他空白處
       else {
         mainImg.src = '不動.png';
         hint.innerText = '👆 點擊菜色查看農家資訊';
@@ -97,9 +170,19 @@
       }
     });
 
-    // 圖片載入錯誤處理
-    mainImg.onerror = function() {
-      alert("找不到圖片！請確認 GitHub 上的圖檔名稱是否為：" + mainImg.src.split('/').pop());
+    // 關閉彈跳視窗
+    closeModal.addEventListener('click', () => {
+      farmerModal.classList.remove('active');
+    });
+    farmerModal.addEventListener('click', (e) => {
+      if (e.target === farmerModal) {
+        farmerModal.classList.remove('active');
+      }
+    });
+
+    // 圖片載入失敗檢查
+    modalImg.onerror = function() {
+      alert("找不到農家介紹圖片！請確認 GitHub 上的檔名是否為：未命名的作品 26.png");
     };
   </script>
 
