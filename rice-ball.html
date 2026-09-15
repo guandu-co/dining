@@ -14,21 +14,66 @@
       width: 100%;
       min-height: 100%;
       background-color: #121212;
+      font-family: system-ui, -apple-system, sans-serif;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    /* 滿版圖片區域 */
+    .hero-banner {
+      position: relative;
+      width: 100%;
+      height: 100vh; /* 填滿整個螢幕高度 */
+      overflow: hidden;
+    }
+
+    .hero-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* 保持比例並滿版 */
+      object-position: center;
+      display: block;
+    }
+
+    /* 滿版圖片上的漸層遮罩，讓下滑視覺更順暢 */
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.2) 60%, rgba(18,18,18,1) 100%);
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-end;
       align-items: center;
-      font-family: system-ui, -apple-system, sans-serif;
-      padding: 20px;
+      padding-bottom: 30px;
+    }
+
+    /* 向下滑動提示動態文字 */
+    .scroll-hint {
+      font-size: 14px;
       color: #ffffff;
+      letter-spacing: 2px;
+      opacity: 0.8;
+      animation: bounce 2s infinite;
     }
-    .container {
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-8px); }
+      60% { transform: translateY(-4px); }
+    }
+
+    /* 內容資訊區域 (往下滑動顯示) */
+    .content-container {
       width: 100%;
-      max-width: 450px;
-      text-align: center;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 20px 20px 60px 20px;
     }
-    
-    /* 插圖 */
+
+    /* 手繪圖卡 */
     .info-img {
       width: 100%;
       height: auto;
@@ -39,48 +84,43 @@
     /* 黑底深色質感卡片 */
     .farmer-card {
       background-color: #1e1e1e;
-      padding: 24px;
+      padding: 28px 24px;
       border-radius: 0 0 16px 16px;
       text-align: left;
       box-shadow: 0 8px 30px rgba(0,0,0,0.6);
       border: 1px solid #2a2a2a;
       border-top: none;
     }
-    
-    .farm-photo {
-      width: 100%;
-      height: auto;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      display: block;
-    }
 
     .farmer-title {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: bold;
       color: #ffffff;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .farmer-desc {
-      font-size: 14px;
-      line-height: 1.7;
+      font-size: 15px;
+      line-height: 1.8;
       color: #cccccc;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
     }
 
-    /* 官網按鈕：深綠質感配白字 */
+    /* 官網按鈕 */
     .website-btn {
       display: block;
       width: 100%;
-      padding: 14px;
+      padding: 15px;
       background-color: #3b564a;
       color: #ffffff;
       text-align: center;
       text-decoration: none;
       border-radius: 30px;
       font-weight: bold;
-      font-size: 15px;
+      font-size: 16px;
       transition: background-color 0.2s ease, transform 0.1s ease;
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
@@ -89,11 +129,14 @@
       transform: scale(0.98);
     }
 
-    /* 返回餐盒按鈕 */
+    /* 返回餐盒按鈕區域 */
+    .back-wrapper {
+      text-align: center;
+      margin-top: 30px;
+    }
     .back-btn {
       display: inline-block;
-      margin-top: 25px;
-      padding: 10px 24px;
+      padding: 12px 28px;
       background-color: #2a2a2a;
       color: #ffffff;
       text-decoration: none;
@@ -108,36 +151,44 @@
 </head>
 <body>
 
-  <div class="container">
-    <!-- 主插圖未命名26 -->
-    <img class="info-img" src="未命名的作品 26.png" alt="紫蘇飯糰農家資訊" id="farmer-img">
+  <!-- 第一層：滿版 八仙.jpg 視覺 -->
+  <div class="hero-banner">
+    <img src="八仙.jpg" alt="八仙六代園滿版風景" id="hero-img">
+    <div class="hero-overlay">
+      <div class="scroll-hint">往下滑動探索農家資訊 ⬇️</div>
+    </div>
+  </div>
 
-    <!-- 八仙六代園 黑底白字卡片 -->
+  <!-- 第二層：往下滑動顯示的農家詳細資訊 -->
+  <div class="content-container">
+    <!-- 手繪資訊圖 未命名的作品 26.png -->
+    <img class="info-img" src="未命名的作品 26.png" alt="紫蘇飯糰農家資訊" id="info-img">
+
+    <!-- 農家簡介卡片 -->
     <div class="farmer-card">
-      <!-- 農家照片 -->
-      <img class="farm-photo" src="八仙.jpg" alt="八仙六代園" id="farm-photo">
-      
       <h2 class="farmer-title">🌾 八仙六代園</h2>
       <p class="farmer-desc">
         以陽明山的水為灌溉命脈，延續古法用灼灼烈日作為穀物烘乾機，採取友善環境的種植方式：不施化肥、100%無農藥使用，這樣的日曬米的米香有一種豐甜的味道叫「大自然」。
       </p>
 
-      <!-- 宣傳網站按鈕 -->
+      <!-- 官網連結按鈕 -->
       <a href="https://www.8gods.com.tw/zh-hant/categories/rice" target="_blank" class="website-btn">
         🌱 前往「八仙六代園」官網
       </a>
     </div>
-    
-    <!-- 返回便當主頁按鈕 -->
-    <a href="index.html" class="back-btn">← 返回餐盒</a>
+
+    <!-- 返回按鈕 -->
+    <div class="back-wrapper">
+      <a href="index.html" class="back-btn">← 返回餐盒</a>
+    </div>
   </div>
 
   <script>
-    document.getElementById('farmer-img').onerror = function() {
-      console.error("找不到 未命名的作品 26.png");
-    };
-    document.getElementById('farm-photo').onerror = function() {
+    document.getElementById('hero-img').onerror = function() {
       alert("找不到圖片！請確認 GitHub 上是否有上傳『八仙.jpg』");
+    };
+    document.getElementById('info-img').onerror = function() {
+      console.error("找不到 未命名的作品 26.png");
     };
   </script>
 
