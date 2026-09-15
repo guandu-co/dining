@@ -15,28 +15,62 @@
       height: 100%;
       background-color: #fcfbfa;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       font-family: system-ui, -apple-system, sans-serif;
     }
+
     .hero-container {
       width: 90%;
-      max-width: 500px;
+      max-width: 450px;
       text-align: center;
+      cursor: pointer; /* 滑鼠移上去時顯示可點擊的手勢 */
     }
+
     .hero-container img {
       width: 100%;
       height: auto;
       display: block;
       border-radius: 12px;
+      transition: transform 0.2s ease;
+    }
+
+    /* 輕微的按壓視覺回饋 */
+    .hero-container img:active {
+      transform: scale(0.98);
+    }
+
+    .hint-text {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #888888;
+      letter-spacing: 1px;
     }
   </style>
 </head>
 <body>
 
-  <div class="hero-container">
-    <img id="intro-gif" src="3.gif" alt="關渡共食登場動畫">
+  <div class="hero-container" id="bento-box">
+    <!-- 預設顯示 3.gif -->
+    <img id="bento-img" src="3.gif" alt="關渡共食登場動畫">
+    <p class="hint-text" id="hint">👆 點擊餐盒開吃！</p>
   </div>
+
+  <script>
+    const bentoBox = document.getElementById('bento-box');
+    const bentoImg = document.getElementById('bento-img');
+    const hint = document.getElementById('hint');
+
+    // 當使用者點擊圖片時觸發
+    bentoBox.addEventListener('click', () => {
+      // 替換圖片為靜態圖檔
+      bentoImg.src = '不動.png';
+      
+      // 隱藏點擊提示
+      hint.style.display = 'none';
+    });
+  </script>
 
 </body>
 </html>
