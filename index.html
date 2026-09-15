@@ -23,6 +23,7 @@
       width: 90%;
       max-width: 450px;
       text-align: center;
+      position: relative;
       cursor: pointer;
     }
     .hero-container img {
@@ -31,10 +32,6 @@
       display: block;
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-      transition: transform 0.2s ease;
-    }
-    .hero-container img:active {
-      transform: scale(0.98);
     }
     .hint-text {
       margin-top: 15px;
@@ -57,37 +54,42 @@
     const mainImg = document.getElementById('main-img');
     const hint = document.getElementById('hint');
 
-    // 狀態紀錄: 0 = 3.gif, 1 = 不動.png, 2 = 飯糰.png, 3 = 玉子燒亮.png
-    let currentState = 0;
+    let isStarted = false; // 是否已從 GIF 切換成靜態圖
 
-    bentoBox.addEventListener('click', () => {
-      if (currentState === 0) {
-        // 第一次點擊：切換為靜態完整圖
+    bentoBox.addEventListener('click', (e) => {
+      // 第一次點擊：從 GIF 切換成 不動.png
+      if (!isStarted) {
         mainImg.src = '不動.png';
-        hint.innerText = '👆 再次點擊餐盒，查看「紫蘇飯糰」！';
-        currentState = 1;
-      } else if (currentState === 1) {
-        // 第二次點擊：切換為紫蘇飯糰高亮
-        mainImg.src = '飯糰.png';
-        hint.innerText = '🍙 紫蘇飯糰：來自在地農家耕作';
-        currentState = 2;
-      } else if (currentState === 2) {
-        // 第三次點擊：切換為玉子燒高亮
+        hint.innerText = '👆 點擊「紫蘇飯糰」或「玉子燒」查看食材資訊！';
+        isStarted = true;
+        return;
+      }
+
+      // 取得點擊在圖片上的相對位置 (百分比)
+      const rect = mainImg.getBoundingClientRect();
+      const clickX = (e.clientX - rect.left) / rect.width;  // X 軸 0 ~ 1 (左到右)
+      const clickY = (e.clientY - rect.top) / rect.height;  // Y 軸 0 ~ 1 (上到下)
+
+      // 判定 1：點擊右下角區塊 (玉子燒區域)
+      if (clickX > 0.4 && clickY > 0.6) {
         mainImg.src = '玉子燒亮.png';
         hint.innerText = '🍳 玉子燒：選用優質放牧雞蛋';
-        currentState = 3;
-      } else if (currentState === 3) {
-        // 第四次點擊：切換回全亮靜態圖
+      } 
+      // 判定 2：點擊右上角區塊 (飯糰區域)
+      else if (clickX > 0.4 && clickY <= 0.6) {
+        mainImg.src = '飯糰.png';
+        hint.innerText = '🍙 紫蘇飯糰：來自在地農家耕作';
+      } 
+      // 點擊其他地方：切換回全亮
+      else {
         mainImg.src = '不動.png';
-        hint.innerText = '👆 點擊餐盒切換菜色';
-        currentState = 1;
+        hint.innerText = '👆 點擊菜色查看農家資訊';
       }
     });
 
-    // 圖片載入除錯提示
+    // 圖片載入失敗檢查
     mainImg.onerror = function() {
-      console.error("圖片載入失敗，請確認檔名：", mainImg.src);
-      alert("找不到圖片！請確認 GitHub 上的圖檔名稱是否真的為：" + mainImg.src.split('/').pop());
+      alert("找不到圖片！請確認 GitHub 上的圖檔名稱是否為：" + mainImg.src.split('/').pop());
     };
   </script>
 
