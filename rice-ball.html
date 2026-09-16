@@ -23,7 +23,7 @@
     .hero-slider {
       position: relative;
       width: 100%;
-      height: 100vh; /* 佔滿整頁螢幕高度 */
+      height: 100vh;
       overflow: hidden;
     }
 
@@ -34,9 +34,9 @@
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover; /* 保持比例填滿全螢幕 */
+      object-fit: cover;
       opacity: 0;
-      transition: opacity 1.5s ease-in-out; /* 1.5秒淡入淡出 */
+      transition: opacity 1.5s ease-in-out;
     }
 
     /* 顯示中的圖片 */
@@ -44,7 +44,7 @@
       opacity: 1;
     }
 
-    /* 暗色漸層遮罩，讓下滑提示更清晰 */
+    /* 暗色漸層遮罩 */
     .hero-overlay {
       position: absolute;
       top: 0;
@@ -62,11 +62,12 @@
 
     /* 往下滑動提示文字與箭頭 */
     .scroll-hint {
-      font-size: 14px;
+      font-size: 15px;
       letter-spacing: 2px;
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
       animation: bounce 2s infinite;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+      text-shadow: 0 2px 6px rgba(0,0,0,0.7);
     }
 
     @keyframes bounce {
@@ -75,7 +76,7 @@
       60% { transform: translateY(-4px); }
     }
 
-    /* 往下滑動後顯示的農家資訊卡片區 */
+    /* 內容區塊 */
     .content-container {
       width: 100%;
       max-width: 480px;
@@ -152,17 +153,17 @@
 </head>
 <body>
 
-  <!-- 1. 全螢幕淡入淡出圖片輪播區 -->
+  <!-- 全螢幕圖片輪播區 -->
   <div class="hero-slider">
     <img class="slide-img active" src="八仙.jpg" alt="八仙六代園 景觀" id="img1">
     <img class="slide-img" src="米.jpg" alt="八仙六代園 日曬米" id="img2">
     
     <div class="hero-overlay">
-      <div class="scroll-hint">往下滑動探索農家故事 ⬇️</div>
+      <div class="scroll-hint">八仙六代園的故事 ⬇️</div>
     </div>
   </div>
 
-  <!-- 2. 下滑後呈現的文字卡片資訊 -->
+  <!-- 下滑卡片區 -->
   <div class="content-container">
     <img class="info-img" src="未命名的作品 26.png" alt="紫蘇飯糰農家資訊" id="farmer-img">
 
@@ -183,7 +184,6 @@
   </div>
 
   <script>
-    // 自動淡入淡出輪播 (每 3.5 秒切換一次)
     const slides = document.querySelectorAll('.slide-img');
     let currentSlide = 0;
 
@@ -193,7 +193,6 @@
       slides[currentSlide].classList.add('active');
     }, 3500);
 
-    // 除錯檢查
     document.getElementById('img1').onerror = function() { console.error("找不到 八仙.jpg"); };
     document.getElementById('img2').onerror = function() { console.error("找不到 米.jpg"); };
   </script>
