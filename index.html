@@ -319,4 +319,146 @@
         <img src="vege.png" alt="vege" class="food-item delay-3" style="max-width: 140px;">
       </div>
       <div class="food-row row-right" style="margin-top: -30px;">
-        <img src="riceball2.
+        <img src="riceball2.png" alt="riceball2" class="food-item delay-4 trigger-farm-modal">
+      </div>
+
+      <div class="food-row row-left" style="margin-top: -20px;">
+        <img src="eggroll.png" alt="eggroll" class="food-item delay-5" style="max-width: 150px;">
+      </div>
+
+      <div class="food-row row-center" style="margin-top: 10px;">
+        <img src="cake.png" alt="cake" class="food-item delay-6" style="max-width: 160px;">
+      </div>
+
+    </div>
+
+    <!-- 3. 關渡平原微型藝術祭 Banner -->
+    <img src="guandu-banner.jpg" alt="關渡平原微型藝術祭" class="guandu-banner">
+
+    <!-- 4. 底部直排膠囊按鈕區 -->
+    <div class="footer-nav">
+      <a href="#" class="nav-pill">在地合作介紹</a>
+      <a href="#" class="nav-pill">講師 / 藝術家介紹</a>
+      <a href="https://usrhub.tnua.edu.tw/elementor-6431/#" class="nav-pill">回上頁</a>
+    </div>
+
+  </div>
+
+  <!-- 5. 八仙六代園小視窗 -->
+  <div class="modal-overlay" id="farm-modal">
+    <div class="modal-card">
+      
+      <div class="modal-header">
+        <span class="close-btn" id="close-modal">✕</span>
+        <span class="modal-title">八仙六代園</span>
+        <span style="width:20px;"></span>
+      </div>
+
+      <div class="modal-media">
+        <span class="arrow-left" id="prev-img">‹</span>
+        <img src="rice.webp" alt="八仙六代園 白米" class="modal-img active">
+        <img src="eightpeople.jpg" alt="八仙六代園 人物" class="modal-img">
+        <img src="riceplant.webp" alt="八仙六代園 稻田" class="modal-img">
+        <img src="carrot.jpg" alt="八仙六代園 蘿蔔" class="modal-img">
+        <span class="arrow-right" id="next-img">›</span>
+      </div>
+
+      <p class="modal-desc">
+        以陽明山的水為灌溉命脈，延續古法用灼灼烈日作為穀物烘乾機，採取友善環境不施化肥的種植方式。
+      </p>
+
+      <a href="https://www.8gods.com.tw/zh-hant/categories/rice" target="_blank" class="fb-btn">
+        FB / 官網
+      </a>
+
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var btnTop = document.getElementById('btn-top');
+      if (btnTop) {
+        btnTop.addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      var triggers = document.querySelectorAll('.trigger-farm-modal');
+      var farmModal = document.getElementById('farm-modal');
+      var closeModal = document.getElementById('close-modal');
+      var modalImgs = document.querySelectorAll('.modal-img');
+      var currentIdx = 0;
+      var autoPlayTimer = null;
+
+      function showSlide(index) {
+        for (var i = 0; i < modalImgs.length; i++) {
+          if (i === index) {
+            modalImgs[i].classList.add('active');
+          } else {
+            modalImgs[i].classList.remove('active');
+          }
+        }
+      }
+
+      function startAutoPlay() {
+        if (autoPlayTimer) clearInterval(autoPlayTimer);
+        autoPlayTimer = setInterval(function() {
+          currentIdx = (currentIdx + 1) % modalImgs.length;
+          showSlide(currentIdx);
+        }, 3000);
+      }
+
+      function stopAutoPlay() {
+        if (autoPlayTimer) clearInterval(autoPlayTimer);
+      }
+
+      for (var j = 0; j < triggers.length; j++) {
+        triggers[j].addEventListener('click', function() {
+          if (farmModal) {
+            farmModal.classList.add('active');
+            startAutoPlay();
+          }
+        });
+      }
+
+      if (closeModal && farmModal) {
+        closeModal.addEventListener('click', function() {
+          farmModal.classList.remove('active');
+          stopAutoPlay();
+        });
+      }
+
+      if (farmModal) {
+        farmModal.addEventListener('click', function(e) {
+          if (e.target === farmModal) {
+            farmModal.classList.remove('active');
+            stopAutoPlay();
+          }
+        });
+      }
+
+      var nextBtn = document.getElementById('next-img');
+      var prevBtn = document.getElementById('prev-img');
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function() {
+          stopAutoPlay();
+          currentIdx = (currentIdx + 1) % modalImgs.length;
+          showSlide(currentIdx);
+          startAutoPlay();
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function() {
+          stopAutoPlay();
+          currentIdx = (currentIdx - 1 + modalImgs.length) % modalImgs.length;
+          showSlide(currentIdx);
+          startAutoPlay();
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
