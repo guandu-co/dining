@@ -29,7 +29,7 @@
       align-items: center;
     }
 
-    /* 頂部 Header：左側直排膠囊 + 右側標題 */
+    /* 頂部 Header */
     .header-section {
       width: 100%;
       display: flex;
@@ -40,7 +40,6 @@
       padding-left: 10px;
     }
 
-    /* 左側直向「回上面」黃綠色膠囊按鈕 */
     .btn-back-top {
       background-color: #b3c200;
       color: #ffffff;
@@ -65,7 +64,6 @@
       background-color: #9ea800;
     }
 
-    /* 右側「餐食介紹」標題文字 */
     .header-title {
       font-size: 32px;
       font-weight: bold;
@@ -103,16 +101,43 @@
       justify-content: center;
     }
 
+    /* -----------------------------------
+       動態漂浮與點擊放大效果 (Floating Animation)
+    ----------------------------------- */
     .food-item {
       max-width: 130px;
       height: auto;
       cursor: pointer;
-      transition: transform 0.2s ease;
       display: block;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      animation: floatMotion 3.5s ease-in-out infinite alternate;
     }
+
+    /* 點擊時稍微放大 */
     .food-item:active {
-      transform: scale(0.92);
+      transform: scale(1.15) !important;
     }
+
+    /* 微幅漂浮動畫軌跡 */
+    @keyframes floatMotion {
+      0% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-8px) rotate(1.5deg);
+      }
+      100% {
+        transform: translateY(-15px) rotate(-1.5deg);
+      }
+    }
+
+    /* 各個圖片設定不同動畫延遲，產生錯落漂浮感 */
+    .float-delay-1 { animation-delay: 0s; }
+    .float-delay-2 { animation-delay: 0.6s; }
+    .float-delay-3 { animation-delay: 1.2s; }
+    .float-delay-4 { animation-delay: 1.8s; }
+    .float-delay-5 { animation-delay: 2.4s; }
+    .float-delay-6 { animation-delay: 3.0s; }
 
     /* 關渡平原微型藝術祭 Banner */
     .guandu-banner {
@@ -148,240 +173,4 @@
       font-size: 16px;
       text-decoration: none;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: background-color 0.2s ease, transform 0.1s ease;
-      cursor: pointer;
-      user-select: none;
-      border: none;
-    }
-    .nav-pill:active {
-      background-color: #9ea800;
-      transform: scale(0.98);
-    }
-
-    /* -----------------------------------
-       深綠色八仙六代園小視窗 (Modal)
-    ----------------------------------- */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-      z-index: 999;
-      padding: 20px;
-    }
-    .modal-overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .modal-card {
-      background-color: #0d6e5a;
-      color: #ffffff;
-      width: 100%;
-      max-width: 360px;
-      border-radius: 20px;
-      padding: 20px;
-      position: relative;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .modal-header {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-    .close-btn {
-      font-size: 22px;
-      font-weight: bold;
-      cursor: pointer;
-      padding: 0 5px;
-      line-height: 1;
-    }
-    .modal-title {
-      font-size: 18px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-
-    /* 小視窗中央輪播區域 */
-    .modal-media {
-      width: 100%;
-      height: 190px;
-      position: relative;
-      margin-bottom: 15px;
-      border-radius: 12px;
-      overflow: hidden;
-      background-color: rgba(255,255,255,0.1);
-    }
-    .modal-img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transition: opacity 0.8s ease-in-out;
-    }
-    .modal-img.active {
-      opacity: 1;
-    }
-
-    .arrow-left, .arrow-right {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 22px;
-      color: #ffffff;
-      cursor: pointer;
-      background: rgba(0,0,0,0.35);
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 10;
-      user-select: none;
-    }
-    .arrow-left { left: 8px; }
-    .arrow-right { right: 8px; }
-
-    .modal-desc {
-      font-size: 13px;
-      line-height: 1.6;
-      color: #e2f3ee;
-      margin-bottom: 15px;
-      text-align: center;
-    }
-
-    .fb-btn {
-      background-color: #ffffff;
-      color: #0d6e5a;
-      padding: 8px 30px;
-      border-radius: 20px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
-  </style>
-</head>
-<body>
-
-  <div class="page-container">
-    
-    <!-- 1. 頂部 Header -->
-    <div class="header-section">
-      <button class="btn-back-top" id="btn-top">回上面</button>
-      <h1 class="header-title">餐食介紹</h1>
-    </div>
-
-    <!-- 2. 食材圖形區域 -->
-    <div class="food-grid">
-      
-      <!-- 第一排：riceball1 (點擊跳出小視窗) 與 chicken -->
-      <div class="food-row row-left">
-        <img src="riceball1.png" alt="riceball1" class="food-item trigger-farm-modal">
-      </div>
-      <div class="food-row row-right" style="margin-top: -40px;">
-        <img src="chicken.png" alt="chicken" class="food-item">
-      </div>
-
-      <!-- 第二排：vege 與 riceball2 (點擊同樣跳出小視窗) -->
-      <div class="food-row row-left" style="margin-top: -10px; padding-left: 50px;">
-        <img src="vege.png" alt="vege" class="food-item" style="max-width: 140px;">
-      </div>
-      <div class="food-row row-right" style="margin-top: -30px;">
-        <img src="riceball2.png" alt="riceball2" class="food-item trigger-farm-modal">
-      </div>
-
-      <!-- 第三排：eggroll -->
-      <div class="food-row row-left" style="margin-top: -20px;">
-        <img src="eggroll.png" alt="eggroll" class="food-item" style="max-width: 150px;">
-      </div>
-
-      <!-- 第四排：cake -->
-      <div class="food-row row-center" style="margin-top: 10px;">
-        <img src="cake.png" alt="cake" class="food-item" style="max-width: 160px;">
-      </div>
-
-    </div>
-
-    <!-- 3. 關渡平原微型藝術祭 Banner -->
-    <img src="guandu-banner.jpg" alt="關渡平原微型藝術祭" class="guandu-banner">
-
-    <!-- 4. 底部直排膠囊按鈕區 -->
-    <div class="footer-nav">
-      <a href="#" class="nav-pill">在地合作介紹</a>
-      <a href="#" class="nav-pill">講師 / 藝術家介紹</a>
-      <a href="https://usrhub.tnua.edu.tw/elementor-6431/#" class="nav-pill">回上頁</a>
-    </div>
-
-  </div>
-
-  <!-- 5. 深綠色八仙六代園小視窗 (包含新上傳圖片輪播) -->
-  <div class="modal-overlay" id="farm-modal">
-    <div class="modal-card">
-      
-      <div class="modal-header">
-        <span class="close-btn" id="close-modal">✕</span>
-        <span class="modal-title">八仙六代園</span>
-        <span style="width:20px;"></span>
-      </div>
-
-      <!-- 輪播區域：新上傳的 4 張照片 -->
-      <div class="modal-media">
-        <span class="arrow-left" id="prev-img">‹</span>
-        <img src="rice.webp" alt="八仙六代園 白米" class="modal-img active">
-        <img src="eightpeople.jpg" alt="八仙六代園 人物" class="modal-img">
-        <img src="riceplant.webp" alt="八仙六代園 稻田" class="modal-img">
-        <img src="carrot.jpg" alt="八仙六代園 蘿蔔" class="modal-img">
-        <span class="arrow-right" id="next-img">›</span>
-      </div>
-
-      <p class="modal-desc">
-        以陽明山的水為灌溉命脈，延續古法用灼灼烈日作為穀物烘乾機，採取友善環境不施化肥的種植方式。
-      </p>
-
-      <a href="https://www.8gods.com.tw/zh-hant/categories/rice" target="_blank" class="fb-btn">
-        FB / 官網
-      </a>
-
-    </div>
-  </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      // 頂部按鈕捲動到最上面
-      var btnTop = document.getElementById('btn-top');
-      if (btnTop) {
-        btnTop.addEventListener('click', function() {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-      }
-
-      // 開啟與關閉八仙六代園小視窗
-      var triggers = document.querySelectorAll('.trigger-farm-modal');
-      var farmModal = document.getElementById('farm-modal');
-      var closeModal = document.getElementById('close-modal');
-      var modalImgs = document.querySelectorAll('.modal-img');
-      var currentIdx = 0;
-      var autoPlayTimer = null;
-
-      function showSlide(index) {
-        for (var i = 0; i < modalImgs.length; i++) {
-          if (i === index
+      transition: background-color 0.
