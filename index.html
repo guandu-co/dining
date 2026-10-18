@@ -73,9 +73,7 @@
       letter-spacing: 2px;
     }
 
-    /* -----------------------------------
-       食材形狀網格區域 (依照草圖交錯佈局)
-    ----------------------------------- */
+    /* 食材圖形網格區域 */
     .food-grid {
       width: 100%;
       display: flex;
@@ -160,7 +158,9 @@
       transform: scale(0.98);
     }
 
-    /* 八仙六代園小視窗 (Modal) */
+    /* -----------------------------------
+       深綠色八仙六代園小視窗 (Modal)
+    ----------------------------------- */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -208,6 +208,7 @@
       font-weight: bold;
       cursor: pointer;
       padding: 0 5px;
+      line-height: 1;
     }
     .modal-title {
       font-size: 18px;
@@ -215,21 +216,49 @@
       letter-spacing: 1px;
     }
 
+    /* 小視窗中央輪播區域 */
     .modal-media {
       width: 100%;
-      height: 180px;
+      height: 190px;
       position: relative;
       margin-bottom: 15px;
-      border-radius: 10px;
+      border-radius: 12px;
       overflow: hidden;
       background-color: rgba(255,255,255,0.1);
     }
     .modal-img {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out;
     }
+    .modal-img.active {
+      opacity: 1;
+    }
+
+    .arrow-left, .arrow-right {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 22px;
+      color: #ffffff;
+      cursor: pointer;
+      background: rgba(0,0,0,0.35);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+      user-select: none;
+    }
+    .arrow-left { left: 8px; }
+    .arrow-right { right: 8px; }
 
     .modal-desc {
       font-size: 13px;
@@ -247,6 +276,7 @@
       text-decoration: none;
       font-weight: bold;
       font-size: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
   </style>
 </head>
@@ -260,32 +290,31 @@
       <h1 class="header-title">餐食介紹</h1>
     </div>
 
-    <!-- 2. 食材圖形區域 (精準對應排版圖) -->
+    <!-- 2. 食材圖形區域 -->
     <div class="food-grid">
       
-      <!-- 第一排：riceball1 (左上) 與 chicken (右上) -->
+      <!-- 第一排：riceball1 (點擊跳出小視窗) 與 chicken -->
       <div class="food-row row-left">
-        <img src="riceball1.png" alt="riceball1" class="food-item">
+        <img src="riceball1.png" alt="riceball1" class="food-item trigger-farm-modal">
       </div>
       <div class="food-row row-right" style="margin-top: -40px;">
         <img src="chicken.png" alt="chicken" class="food-item">
       </div>
 
-      <!-- 第二排：vege (中左) 與 riceball2 (中右) -->
+      <!-- 第二排：vege 與 riceball2 (點擊同樣跳出小視窗) -->
       <div class="food-row row-left" style="margin-top: -10px; padding-left: 50px;">
         <img src="vege.png" alt="vege" class="food-item" style="max-width: 140px;">
       </div>
       <div class="food-row row-right" style="margin-top: -30px;">
-        <!-- 點擊 riceball2 跳出八仙六代園小視窗 -->
-        <img src="riceball2.png" alt="riceball2" class="food-item" id="riceball2-trigger">
+        <img src="riceball2.png" alt="riceball2" class="food-item trigger-farm-modal">
       </div>
 
-      <!-- 第三排：eggroll (下左) -->
+      <!-- 第三排：eggroll -->
       <div class="food-row row-left" style="margin-top: -20px;">
         <img src="eggroll.png" alt="eggroll" class="food-item" style="max-width: 150px;">
       </div>
 
-      <!-- 第四排：cake (正下方置中) -->
+      <!-- 第四排：cake -->
       <div class="food-row row-center" style="margin-top: 10px;">
         <img src="cake.png" alt="cake" class="food-item" style="max-width: 160px;">
       </div>
@@ -304,7 +333,7 @@
 
   </div>
 
-  <!-- 5. 深綠色八仙六代園小視窗 -->
+  <!-- 5. 深綠色八仙六代園小視窗 (包含新上傳圖片輪播) -->
   <div class="modal-overlay" id="farm-modal">
     <div class="modal-card">
       
@@ -314,8 +343,14 @@
         <span style="width:20px;"></span>
       </div>
 
+      <!-- 輪播區域：新上傳的 4 張照片 -->
       <div class="modal-media">
-        <img src="baxian.jpg" alt="八仙六代園" class="modal-img">
+        <span class="arrow-left" id="prev-img">‹</span>
+        <img src="rice.webp" alt="八仙六代園 白米" class="modal-img active">
+        <img src="eightpeople.jpg" alt="八仙六代園 人物" class="modal-img">
+        <img src="riceplant.webp" alt="八仙六代園 稻田" class="modal-img">
+        <img src="carrot.jpg" alt="八仙六代園 蘿蔔" class="modal-img">
+        <span class="arrow-right" id="next-img">›</span>
       </div>
 
       <p class="modal-desc">
@@ -339,32 +374,14 @@
         });
       }
 
-      // 點擊 riceball2 開啟八仙六代園小視窗
-      var riceball2Trigger = document.getElementById('riceball2-trigger');
+      // 開啟與關閉八仙六代園小視窗
+      var triggers = document.querySelectorAll('.trigger-farm-modal');
       var farmModal = document.getElementById('farm-modal');
       var closeModal = document.getElementById('close-modal');
+      var modalImgs = document.querySelectorAll('.modal-img');
+      var currentIdx = 0;
+      var autoPlayTimer = null;
 
-      if (riceball2Trigger && farmModal) {
-        riceball2Trigger.addEventListener('click', function() {
-          farmModal.classList.add('active');
-        });
-      }
-
-      if (closeModal && farmModal) {
-        closeModal.addEventListener('click', function() {
-          farmModal.classList.remove('active');
-        });
-      }
-
-      if (farmModal) {
-        farmModal.addEventListener('click', function(e) {
-          if (e.target === farmModal) {
-            farmModal.classList.remove('active');
-          }
-        });
-      }
-    });
-  </script>
-
-</body>
-</html>
+      function showSlide(index) {
+        for (var i = 0; i < modalImgs.length; i++) {
+          if (i === index
