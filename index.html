@@ -23,12 +23,11 @@
       width: 90%;
       max-width: 450px;
       text-align: center;
-      position: relative;
       cursor: pointer;
     }
     .hero-container img {
       width: 100%;
-      height auto;
+      height: auto;
       display: block;
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.5);
@@ -53,46 +52,10 @@
     const mainImg = document.getElementById('main-img');
     const hint = document.getElementById('hint');
 
-    let currentState = 0;
-
-    bentoBox.addEventListener('click', (e) => {
-      // 第一次點擊：GIF -> 不動.png
-      if (currentState === 0) {
-        mainImg.src = '不動.png';
-        hint.innerText = '👆 點擊「紫蘇飯糰」查看食材資訊！';
-        currentState = 1;
-        return;
-      }
-
-      // 取得點擊位置
-      const rect = mainImg.getBoundingClientRect();
-      const clickX = (e.clientX - rect.left) / rect.width;
-      const clickY = (e.clientY - rect.top) / rect.height;
-
-      // 如果已經在「飯糰亮起」狀態，再次點擊右上飯糰區塊 -> 跳轉到 rice-ball.html 新頁面
-      if (currentState === 2 && clickX > 0.4 && clickY <= 0.6) {
-        window.location.href = 'rice-ball.html';
-        return;
-      }
-
-      // 點擊右上角 (飯糰)
-      if (clickX > 0.4 && clickY <= 0.6) {
-        mainImg.src = '飯糰.png';
-        hint.innerText = '👉 再次點擊飯糰，前往農家介紹頁面 ➔';
-        currentState = 2;
-      } 
-      // 點擊右下角 (玉子燒)
-      else if (clickX > 0.4 && clickY > 0.6) {
-        mainImg.src = '玉子燒亮.png';
-        hint.innerText = '🍳 玉子燒：選用優質放牧雞蛋';
-        currentState = 3;
-      } 
-      // 點擊其他空白處
-      else {
-        mainImg.src = '不動.png';
-        hint.innerText = '👆 點擊菜色查看農家資訊';
-        currentState = 1;
-      }
+    // 基礎切換：從 GIF 變靜態圖
+    bentoBox.addEventListener('click', () => {
+      mainImg.src = '不動.png';
+      hint.innerText = '🍱 關渡共食餐盒';
     });
   </script>
 
