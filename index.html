@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>餐盒介紹 - 關渡共食</title>
+  <title>餐食介紹 - 關渡共食</title>
   <style>
     * {
       box-sizing: border-box;
@@ -31,7 +31,7 @@
       align-items: center;
     }
 
-    /* 上方「回上面 / 餐盒介紹」標頭 */
+    /* 上方「回上面 / 餐食介紹」標頭 */
     .header {
       width: 100%;
       display: flex;
@@ -73,33 +73,39 @@
       transform: scale(0.95);
     }
 
-    /* 底部廣告 Banner */
+    /* 關渡平原藝術祭 Banner (按鈕正上方圖片) */
     .guandu-banner {
       width: 100%;
       height: auto;
-      border-radius: 8px;
+      border-radius: 12px;
       margin-bottom: 25px;
+      display: block;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     }
 
-    /* 底部三個黃綠色按鈕區 */
+    /* 底部直排膠囊按鈕區 */
     .footer-nav {
       width: 100%;
       display: flex;
-      justify-content: space-around;
-      gap: 8px;
+      flex-direction: column;
+      gap: 12px;
       margin-bottom: 30px;
     }
     .nav-pill {
-      flex: 1;
+      width: 100%;
       background-color: #afc136;
       color: #ffffff;
-      padding: 12px 6px;
-      border-radius: 25px;
+      padding: 14px 0;
+      border-radius: 30px;
       text-align: center;
       font-weight: bold;
-      font-size: 13px;
+      font-size: 15px;
       text-decoration: none;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: background-color 0.2s ease;
+    }
+    .nav-pill:active {
+      background-color: #9ab027;
     }
 
     /* -----------------------------------
@@ -111,7 +117,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.4); /* 背景微微變暗 */
+      background: rgba(0, 0, 0, 0.4);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -119,195 +125,4 @@
       pointer-events: none;
       transition: opacity 0.3s ease;
       z-index: 999;
-      padding: 20px;
-    }
-    .modal-overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .modal-card {
-      background-color: #0d6e5a; /* 草圖上的手繪深綠色 */
-      color: #ffffff;
-      width: 100%;
-      max-width: 360px;
-      border-radius: 20px;
-      padding: 20px;
-      position: relative;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    /* 小視窗標題列 (X 與 八仙六代園) */
-    .modal-header {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-    .close-btn {
-      font-size: 22px;
-      font-weight: bold;
-      cursor: pointer;
-      line-height: 1;
-      padding: 0 5px;
-    }
-    .modal-title {
-      font-size: 18px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-
-    /* 視窗中央圖片/GIF 輪播區域 */
-    .modal-media {
-      width: 100%;
-      position: relative;
-      margin-bottom: 15px;
-    }
-    .modal-img {
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
-      display: block;
-    }
-    .arrow-left, .arrow-right {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 20px;
-      color: #ffffff;
-      cursor: pointer;
-      background: rgba(0,0,0,0.3);
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .arrow-left { left: 8px; }
-    .arrow-right { right: 8px; }
-
-    /* 文字介紹 */
-    .modal-desc {
-      font-size: 13px;
-      line-height: 1.6;
-      color: #e2f3ee;
-      margin-bottom: 15px;
-      text-align: center;
-    }
-
-    /* FB / 官網按鈕 */
-    .fb-btn {
-      background-color: #ffffff;
-      color: #0d6e5a;
-      padding: 8px 30px;
-      border-radius: 20px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-  </style>
-</head>
-<body>
-
-  <div class="page-container">
-    
-    <!-- 1. 上方 Header -->
-    <div class="header">
-      <div class="back-top-pill" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">回上面</div>
-      <div class="page-title">餐食介紹</div>
-    </div>
-
-    <!-- 2. 幾何形狀區域 (請換成您的幾何手繪圖檔名) -->
-    <div class="shapes-container">
-      <!-- 點擊這個三角飯糰形狀，會開啟八仙六代園小視窗 -->
-      <img src="未命名的作品 26.png" alt="三角飯糰" class="shape-item" id="rice-ball-shape">
-    </div>
-
-    <!-- 3. 關渡平原藝術祭 Banner -->
-    <!-- (如需替換照片，將 src 改為您的橫幅圖檔) -->
-    <img src="八仙.jpg" alt="關渡平原藝術祭" class="guandu-banner">
-
-    <!-- 4. 底部三個膠囊按鈕 -->
-    <div class="footer-nav">
-      <a href="#" class="nav-pill">在地合作介紹</a>
-      <a href="#" class="nav-pill">團隊 / 營業店家</a>
-      <a href="index.html" class="nav-pill">回主頁面</a>
-    </div>
-
-  </div>
-
-  <!-- 5. 點擊飯糰跳出的深綠色小視窗 (Modal Popup) -->
-  <div class="modal-overlay" id="farm-modal">
-    <div class="modal-card">
-      
-      <!-- 頂部標題列 -->
-      <div class="modal-header">
-        <span class="close-btn" id="close-modal">✕</span>
-        <span class="modal-title">八仙六代園</span>
-        <span style="width:20px;"></span> <!-- 保持標題置中 -->
-      </div>
-
-      <!-- 中央圖片 / GIF 輪播展示區 -->
-      <div class="modal-media">
-        <span class="arrow-left" id="prev-img">‹</span>
-        <img src="米.jpg" alt="八仙六代園" class="modal-img" id="modal-display-img">
-        <span class="arrow-right" id="next-img">›</span>
-      </div>
-
-      <!-- 文字簡介 -->
-      <p class="modal-desc">
-        以陽明山的水為灌溉命脈，延續古法用灼灼烈日作為穀物烘乾機，採取友善環境不施化肥的種植方式。
-      </p>
-
-      <!-- FB / 官網按鈕 -->
-      <a href="https://www.8gods.com.tw/zh-hant/categories/rice" target="_blank" class="fb-btn">
-        FB / 官網
-      </a>
-
-    </div>
-  </div>
-
-  <script>
-    const riceBallShape = document.getElementById('rice-ball-shape');
-    const farmModal = document.getElementById('farm-modal');
-    const closeModal = document.getElementById('close-modal');
-    const modalDisplayImg = document.getElementById('modal-display-img');
-
-    // 輪播圖片清單 (可放入 .gif 或 .jpg)
-    const images = ['米.jpg', '八仙.jpg'];
-    let currentImgIdx = 0;
-
-    // 點擊幾何飯糰 -> 跳出小視窗
-    riceBallShape.addEventListener('click', () => {
-      farmModal.classList.add('active');
-    });
-
-    // 關閉小視窗
-    closeModal.addEventListener('click', () => {
-      farmModal.classList.remove('active');
-    });
-    farmModal.addEventListener('click', (e) => {
-      if (e.target === farmModal) {
-        farmModal.classList.remove('active');
-      }
-    });
-
-    // 小視窗左右切換圖片
-    document.getElementById('next-img').addEventListener('click', () => {
-      currentImgIdx = (currentImgIdx + 1) % images.length;
-      modalDisplayImg.src = images[currentImgIdx];
-    });
-    document.getElementById('prev-img').addEventListener('click', () => {
-      currentImgIdx = (currentImgIdx - 1 + images.length) % images.length;
-      modalDisplayImg.src = images[currentImgIdx];
-    });
-  </script>
-
-</body>
-</html>
+      padding
