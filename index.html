@@ -83,7 +83,7 @@
       margin-bottom: 25px;
       display: block;
       box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-      background-color: #f0f0f0; /* 圖片載入前的預備底色 */
+      background-color: #f0f0f0;
       min-height: 120px;
     }
 
@@ -107,6 +107,8 @@
       text-decoration: none;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       transition: background-color 0.2s ease;
+      cursor: pointer;
+      user-select: none;
     }
     .nav-pill:active {
       background-color: #9ab027;
@@ -255,8 +257,8 @@
     <!-- 4. 底部直排按鈕區 -->
     <div class="footer-nav">
       <a href="#" class="nav-pill">在地合作介紹</a>
-      <a href="#" class="nav-pill">團隊 / 營業店家</a>
-      <a href="https://usrhub.tnua.edu.tw/elementor-6431/#" class="nav-pill">回主頁面</a>
+      <a href="#" class="nav-pill">講師 / 藝術家介紹</a>
+      <div class="nav-pill" onclick="history.back()">回上頁</div>
     </div>
 
   </div>
@@ -276,4 +278,78 @@
         <span class="arrow-left" id="prev-img">‹</span>
         <img src="米.jpg" alt="八仙六代園 米" class="modal-img active">
         <img src="八仙.jpg" alt="八仙六代園" class="modal-img">
-        <span class="arrow-right" id="next-img">›
+        <span class="arrow-right" id="next-img">›</span>
+      </div>
+
+      <p class="modal-desc">
+        以陽明山的水為灌溉命脈，延續古法用灼灼烈日作為穀物烘乾機，採取友善環境不施化肥的種植方式。
+      </p>
+
+      <a href="https://www.8gods.com.tw/zh-hant/categories/rice" target="_blank" class="fb-btn">
+        FB / 官網
+      </a>
+
+    </div>
+  </div>
+
+  <script>
+    const riceBallShape = document.getElementById('rice-ball-shape');
+    const farmModal = document.getElementById('farm-modal');
+    const closeModal = document.getElementById('close-modal');
+
+    // 小視窗自動輪播邏輯
+    const modalImgs = document.querySelectorAll('.modal-img');
+    let currentModalIdx = 0;
+    let autoPlayInterval = null;
+
+    function showModalImg(index) {
+      modalImgs.forEach((img, i) => {
+        img.classList.toggle('active', i === index);
+      });
+    }
+
+    function startAutoPlay() {
+      if (autoPlayInterval) clearInterval(autoPlayInterval);
+      autoPlayInterval = setInterval(() => {
+        currentModalIdx = (currentModalIdx + 1) % modalImgs.length;
+        showModalImg(currentModalIdx);
+      }, 3000);
+    }
+
+    function stopAutoPlay() {
+      if (autoPlayInterval) clearInterval(autoPlayInterval);
+    }
+
+    if (riceBallShape) {
+      riceBallShape.addEventListener('click', () => {
+        farmModal.classList.add('active');
+        startAutoPlay();
+      });
+    }
+
+    if (closeModal) {
+      closeModal.addEventListener('click', () => {
+        farmModal.classList.remove('active');
+        stopAutoPlay();
+      });
+    }
+
+    if (farmModal) {
+      farmModal.addEventListener('click', (e) => {
+        if (e.target === farmModal) {
+          farmModal.classList.remove('active');
+          stopAutoPlay();
+        }
+      });
+    }
+
+    const nextBtn = document.getElementById('next-img');
+    const prevBtn = document.getElementById('prev-img');
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        stopAutoPlay();
+        currentModalIdx = (currentModalIdx + 1) % modalImgs.length;
+        showModalImg(currentModalIdx);
+        startAutoPlay();
+      });
