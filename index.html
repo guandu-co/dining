@@ -29,53 +29,51 @@
       align-items: center;
     }
 
-    /* 頂部直排膠囊按鈕區 */
-    .header-nav {
+    /* 頂部標頭區：左側豎長按鈕 + 右側標題文字 */
+    .header-section {
       width: 100%;
       display: flex;
-      flex-direction: column;
+      justify-content: flex-start;
       align-items: center;
-      gap: 12px;
+      gap: 25px;
       margin-bottom: 25px;
+      padding-left: 10px;
     }
 
-    .page-title-pill {
-      width: 100%;
-      background-color: #333333;
+    /* 左側直向「回上面」黃綠色膠囊按鈕 */
+    .btn-back-top {
+      background-color: #b3c200; /* 對應草圖上的亮黃綠色 */
       color: #ffffff;
-      padding: 12px 0;
-      border-radius: 30px;
-      text-align: center;
+      width: 65px;
+      height: 120px;
+      border-radius: 35px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       font-weight: bold;
-      font-size: 18px;
-      letter-spacing: 2px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    .nav-pill {
-      width: 100%;
-      display: block;
-      background-color: #afc136;
-      color: #ffffff;
-      padding: 14px 0;
-      border-radius: 30px;
-      text-align: center;
-      font-weight: bold;
-      font-size: 15px;
-      text-decoration: none;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: background-color 0.2s ease, transform 0.1s ease;
+      font-size: 20px;
+      writing-mode: vertical-lr; /* 文字直排 */
+      letter-spacing: 4px;
       cursor: pointer;
       user-select: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.1s ease, background-color 0.2s ease;
       border: none;
-      margin: 0;
     }
-    .nav-pill:active {
-      background-color: #9ab027;
-      transform: scale(0.98);
+    .btn-back-top:active {
+      transform: scale(0.95);
+      background-color: #9ea800;
     }
 
-    /* 中間留白區塊 (點擊空白處可觸發八仙六代園小視窗) */
+    /* 右側「餐食介紹」標題文字 */
+    .header-title {
+      font-size: 32px;
+      font-weight: bold;
+      color: #2b2b2b;
+      letter-spacing: 2px;
+    }
+
+    /* 中間留白區塊 */
     .blank-shape-area {
       width: 100%;
       height: 140px;
@@ -111,6 +109,28 @@
       align-items: center;
       gap: 12px;
       margin-bottom: 30px;
+    }
+
+    .nav-pill {
+      width: 100%;
+      display: block;
+      background-color: #b3c200;
+      color: #ffffff;
+      padding: 14px 0;
+      border-radius: 30px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: background-color 0.2s ease, transform 0.1s ease;
+      cursor: pointer;
+      user-select: none;
+      border: none;
+    }
+    .nav-pill:active {
+      background-color: #9ea800;
+      transform: scale(0.98);
     }
 
     /* 八仙六代園小視窗 (Modal) */
@@ -207,10 +227,10 @@
 
   <div class="page-container">
     
-    <!-- 1. 上方 Header -->
-    <div class="header-nav">
-      <button class="nav-pill" id="btn-top">回上面</button>
-      <div class="page-title-pill">餐食介紹</div>
+    <!-- 1. 頂部 Header：左側直排膠囊 + 右側標題 -->
+    <div class="header-section">
+      <button class="btn-back-top" id="btn-top">回上面</button>
+      <h1 class="header-title">餐食介紹</h1>
     </div>
 
     <!-- 2. 中間純留白區域 (點擊彈出八仙六代園) -->
@@ -218,7 +238,7 @@
       點擊區域查看八仙六代園
     </div>
 
-    <!-- 3. 關渡平原微型藝術祭 Banner (使用新檔名 guandu-banner.jpg) -->
+    <!-- 3. 關渡平原微型藝術祭 Banner -->
     <img src="guandu-banner.jpg" alt="關渡平原微型藝術祭" class="guandu-banner">
 
     <!-- 4. 底部直排膠囊按鈕區 -->
@@ -250,3 +270,47 @@
 
       <a href="https://www.8gods.com.tw/zh-hant/categories/rice" target="_blank" class="fb-btn">
         FB / 官網
+      </a>
+
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // 頂部按鈕捲動到最上面
+      var btnTop = document.getElementById('btn-top');
+      if (btnTop) {
+        btnTop.addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      // 開啟與關閉小視窗
+      var riceBallTrigger = document.getElementById('rice-ball-trigger');
+      var farmModal = document.getElementById('farm-modal');
+      var closeModal = document.getElementById('close-modal');
+
+      if (riceBallTrigger && farmModal) {
+        riceBallTrigger.addEventListener('click', function() {
+          farmModal.classList.add('active');
+        });
+      }
+
+      if (closeModal && farmModal) {
+        closeModal.addEventListener('click', function() {
+          farmModal.classList.remove('active');
+        });
+      }
+
+      if (farmModal) {
+        farmModal.addEventListener('click', function(e) {
+          if (e.target === farmModal) {
+            farmModal.classList.remove('active');
+          }
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
