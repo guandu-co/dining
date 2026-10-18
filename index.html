@@ -58,6 +58,7 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       transition: transform 0.1s ease, background-color 0.2s ease;
       border: none;
+      text-decoration: none;
     }
     .btn-back-top:active {
       transform: scale(0.95);
@@ -144,9 +145,7 @@
       min-height: 120px;
     }
 
-    /* -----------------------------------
-       底部橫向並排直立膠囊按鈕區 (草圖三直排按鈕)
-    ----------------------------------- */
+    /* 底部橫向並排直立膠囊按鈕區 */
     .footer-nav-horizontal {
       width: 100%;
       display: flex;
@@ -167,7 +166,7 @@
       align-items: center;
       font-weight: bold;
       font-size: 17px;
-      writing-mode: vertical-lr; /* 文字直排 */
+      writing-mode: vertical-lr;
       letter-spacing: 3px;
       text-decoration: none;
       box-shadow: 0 4px 10px rgba(0,0,0,0.12);
@@ -305,9 +304,9 @@
 
   <div class="page-container">
     
-    <!-- 1. 頂部 Header -->
+    <!-- 1. 頂部 Header (點擊導至外部網站) -->
     <div class="header-section">
-      <button class="btn-back-top" id="btn-top">回上面</button>
+      <a href="https://usrhub.tnua.edu.tw/elementor-6431/#" class="btn-back-top">回上面</a>
       <h1 class="header-title">餐食介紹</h1>
     </div>
 
@@ -345,7 +344,7 @@
     <div class="footer-nav-horizontal">
       <a href="#" class="nav-pill-vertical">在地合作介紹</a>
       <a href="#" class="nav-pill-vertical">講師/藝術家介紹</a>
-      <a href="https://usrhub.tnua.edu.tw/elementor-6431/#" class="nav-pill-vertical">回主頁面</a>
+      <a href="https://usrhub.tnua.edu.tw/elementor-6431/#" class="nav-pill-vertical">回上頁</a>
     </div>
 
   </div>
@@ -382,13 +381,6 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      var btnTop = document.getElementById('btn-top');
-      if (btnTop) {
-        btnTop.addEventListener('click', function() {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-      }
-
       var triggers = document.querySelectorAll('.trigger-farm-modal');
       var farmModal = document.getElementById('farm-modal');
       var closeModal = document.getElementById('close-modal');
