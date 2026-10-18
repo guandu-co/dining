@@ -29,7 +29,7 @@
       align-items: center;
     }
 
-    /* 頂部標頭區：左側豎長按鈕 + 右側標題文字 */
+    /* 頂部 Header：左側直排膠囊 + 右側標題 */
     .header-section {
       width: 100%;
       display: flex;
@@ -42,7 +42,7 @@
 
     /* 左側直向「回上面」黃綠色膠囊按鈕 */
     .btn-back-top {
-      background-color: #b3c200; /* 對應草圖上的亮黃綠色 */
+      background-color: #b3c200;
       color: #ffffff;
       width: 65px;
       height: 120px;
@@ -52,7 +52,7 @@
       align-items: center;
       font-weight: bold;
       font-size: 20px;
-      writing-mode: vertical-lr; /* 文字直排 */
+      writing-mode: vertical-lr;
       letter-spacing: 4px;
       cursor: pointer;
       user-select: none;
@@ -73,20 +73,47 @@
       letter-spacing: 2px;
     }
 
-    /* 中間留白區塊 */
-    .blank-shape-area {
+    /* -----------------------------------
+       食材形狀網格區域 (依照草圖交錯佈局)
+    ----------------------------------- */
+    .food-grid {
       width: 100%;
-      height: 140px;
-      margin-bottom: 30px;
-      cursor: pointer;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 35px;
+      padding: 0 10px;
+    }
+
+    .food-row {
+      width: 100%;
+      display: flex;
       align-items: center;
-      border: 2px dashed #e0e0e0;
-      border-radius: 16px;
-      color: #aaaaaa;
-      font-size: 14px;
-      background-color: #fafafa;
+    }
+
+    .food-row.row-left {
+      justify-content: flex-start;
+      padding-left: 20px;
+    }
+
+    .food-row.row-right {
+      justify-content: flex-end;
+      padding-right: 20px;
+    }
+
+    .food-row.row-center {
+      justify-content: center;
+    }
+
+    .food-item {
+      max-width: 130px;
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      display: block;
+    }
+    .food-item:active {
+      transform: scale(0.92);
     }
 
     /* 關渡平原微型藝術祭 Banner */
@@ -227,15 +254,42 @@
 
   <div class="page-container">
     
-    <!-- 1. 頂部 Header：左側直排膠囊 + 右側標題 -->
+    <!-- 1. 頂部 Header -->
     <div class="header-section">
       <button class="btn-back-top" id="btn-top">回上面</button>
       <h1 class="header-title">餐食介紹</h1>
     </div>
 
-    <!-- 2. 中間純留白區域 (點擊彈出八仙六代園) -->
-    <div class="blank-shape-area" id="rice-ball-trigger">
-      點擊區域查看八仙六代園
+    <!-- 2. 食材圖形區域 (精準對應排版圖) -->
+    <div class="food-grid">
+      
+      <!-- 第一排：riceball1 (左上) 與 chicken (右上) -->
+      <div class="food-row row-left">
+        <img src="riceball1.png" alt="riceball1" class="food-item">
+      </div>
+      <div class="food-row row-right" style="margin-top: -40px;">
+        <img src="chicken.png" alt="chicken" class="food-item">
+      </div>
+
+      <!-- 第二排：vege (中左) 與 riceball2 (中右) -->
+      <div class="food-row row-left" style="margin-top: -10px; padding-left: 50px;">
+        <img src="vege.png" alt="vege" class="food-item" style="max-width: 140px;">
+      </div>
+      <div class="food-row row-right" style="margin-top: -30px;">
+        <!-- 點擊 riceball2 跳出八仙六代園小視窗 -->
+        <img src="riceball2.png" alt="riceball2" class="food-item" id="riceball2-trigger">
+      </div>
+
+      <!-- 第三排：eggroll (下左) -->
+      <div class="food-row row-left" style="margin-top: -20px;">
+        <img src="eggroll.png" alt="eggroll" class="food-item" style="max-width: 150px;">
+      </div>
+
+      <!-- 第四排：cake (正下方置中) -->
+      <div class="food-row row-center" style="margin-top: 10px;">
+        <img src="cake.png" alt="cake" class="food-item" style="max-width: 160px;">
+      </div>
+
     </div>
 
     <!-- 3. 關渡平原微型藝術祭 Banner -->
@@ -285,13 +339,13 @@
         });
       }
 
-      // 開啟與關閉小視窗
-      var riceBallTrigger = document.getElementById('rice-ball-trigger');
+      // 點擊 riceball2 開啟八仙六代園小視窗
+      var riceball2Trigger = document.getElementById('riceball2-trigger');
       var farmModal = document.getElementById('farm-modal');
       var closeModal = document.getElementById('close-modal');
 
-      if (riceBallTrigger && farmModal) {
-        riceBallTrigger.addEventListener('click', function() {
+      if (riceball2Trigger && farmModal) {
+        riceball2Trigger.addEventListener('click', function() {
           farmModal.classList.add('active');
         });
       }
