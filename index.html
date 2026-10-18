@@ -20,18 +20,15 @@
       align-items: center;
     }
 
-    /* 頁面整體容器 */
     .page-container {
       width: 100%;
       max-width: 450px;
       padding: 20px 15px;
-      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    /* 上方標頭與按鈕直向排列區域 */
     .header-nav {
       width: 100%;
       display: flex;
@@ -41,7 +38,6 @@
       margin-bottom: 30px;
     }
 
-    /* 頁面大標題膠囊 */
     .page-title-pill {
       width: 100%;
       background-color: #333333;
@@ -55,7 +51,6 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
-    /* 通用草綠色膠囊按鈕 (直向滿版) */
     .nav-pill {
       width: 100%;
       background-color: #afc136;
@@ -67,7 +62,7 @@
       font-size: 15px;
       text-decoration: none;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: background-color 0.2s ease, transform 0.1s ease;
+      transition: background-color 0.2s ease;
       cursor: pointer;
       user-select: none;
       display: block;
@@ -75,10 +70,8 @@
     }
     .nav-pill:active {
       background-color: #9ab027;
-      transform: scale(0.98);
     }
 
-    /* 幾何食材區域 */
     .shapes-container {
       width: 100%;
       display: flex;
@@ -86,18 +79,15 @@
       align-items: center;
       gap: 25px;
       margin-bottom: 40px;
+      min-height: 100px;
     }
     .shape-item {
       cursor: pointer;
-      transition: transform 0.2s ease;
       max-width: 80%;
       height: auto;
-    }
-    .shape-item:active {
-      transform: scale(0.95);
+      display: block;
     }
 
-    /* 關渡平原藝術祭 Banner */
     .guandu-banner {
       width: 100%;
       height: auto;
@@ -105,11 +95,10 @@
       margin-bottom: 25px;
       display: block;
       box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-      background-color: #f0f0f0;
+      background-color: #f5f5f5;
       min-height: 120px;
     }
 
-    /* 底部直排膠囊按鈕區 */
     .footer-nav {
       width: 100%;
       display: flex;
@@ -118,9 +107,6 @@
       margin-bottom: 30px;
     }
 
-    /* -----------------------------------
-       深綠色八仙六代園小視窗 (Modal)
-    ----------------------------------- */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -167,7 +153,6 @@
       font-size: 22px;
       font-weight: bold;
       cursor: pointer;
-      line-height: 1;
       padding: 0 5px;
     }
     .modal-title {
@@ -176,10 +161,205 @@
       letter-spacing: 1px;
     }
 
-    /* 小視窗圖片區域 */
     .modal-media {
       width: 100%;
       height: 180px;
       position: relative;
       margin-bottom: 15px;
-      border
+      border-radius: 10px;
+      overflow: hidden;
+      background-color: rgba(255,255,255,0.1);
+    }
+    .modal-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .modal-img.active {
+      opacity: 1;
+    }
+
+    .arrow-left, .arrow-right {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+      color: #ffffff;
+      cursor: pointer;
+      background: rgba(0,0,0,0.3);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+    .arrow-left { left: 8px; }
+    .arrow-right { right: 8px; }
+
+    .modal-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #e2f3ee;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .fb-btn {
+      background-color: #ffffff;
+      color: #0d6e5a;
+      padding: 8px 30px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-container">
+    
+    <!-- 1. 上方 Header -->
+    <div class="header-nav">
+      <button class="nav-pill" id="btn-top">回上面</button>
+      <div class="page-title-pill">餐食介紹</div>
+    </div>
+
+    <!-- 2. 幾何食材區域 (預設相容中文與英文檔名) -->
+    <div class="shapes-container">
+      <img src="未命名的作品 26.png" onerror="this.onerror=null; this.src='riceball-shape.png';" alt="三角飯糰" class="shape-item" id="rice-ball-shape">
+    </div>
+
+    <!-- 3. 關渡平原藝術祭 Banner -->
+    <img src="關渡平原banner.jpg" onerror="this.onerror=null; this.src='guandu-banner.jpg';" alt="關渡平原微型藝術祭" class="guandu-banner">
+
+    <!-- 4. 底部直排膠囊按鈕區 -->
+    <div class="footer-nav">
+      <a href="#" class="nav-pill">在地合作介紹</a>
+      <a href="#" class="nav-pill">講師 / 藝術家介紹</a>
+      <a href="https://usrhub.tnua.edu.tw/elementor-6431/#" class="nav-pill">回上頁</a>
+    </div>
+
+  </div>
+
+  <!-- 5. 深綠色八仙六代園小視窗 -->
+  <div class="modal-overlay" id="farm-modal">
+    <div class="modal-card">
+      
+      <div class="modal-header">
+        <span class="close-btn" id="close-modal">✕</span>
+        <span class="modal-title">八仙六代園</span>
+        <span style="width:20px;"></span>
+      </div>
+
+      <div class="modal-media">
+        <span class="arrow-left" id="prev-img">‹</span>
+        <img src="米.jpg" onerror="this.onerror=null; this.src='rice.jpg';" alt="八仙六代園 米" class="modal-img active">
+        <img src="八仙.jpg" onerror="this.onerror=null; this.src='baxian.jpg';" alt="八仙六代園" class="modal-img">
+        <span class="arrow-right" id="next-img">›</span>
+      </div>
+
+      <p class="modal-desc">
+        以陽明山的水為灌溉命脈，延續古法用灼灼烈日作為穀物烘乾機，採取友善環境不施化肥的種植方式。
+      </p>
+
+      <a href="https://www.8gods.com.tw/zh-hant/categories/rice" target="_blank" class="fb-btn">
+        FB / 官網
+      </a>
+
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var btnTop = document.getElementById('btn-top');
+      if (btnTop) {
+        btnTop.addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      var riceBallShape = document.getElementById('rice-ball-shape');
+      var farmModal = document.getElementById('farm-modal');
+      var closeModal = document.getElementById('close-modal');
+      var modalImgs = document.querySelectorAll('.modal-img');
+      var currentModalIdx = 0;
+      var autoPlayInterval = null;
+
+      function showModalImg(index) {
+        for (var i = 0; i < modalImgs.length; i++) {
+          if (i === index) {
+            modalImgs[i].classList.add('active');
+          } else {
+            modalImgs[i].classList.remove('active');
+          }
+        }
+      }
+
+      function startAutoPlay() {
+        if (autoPlayInterval) clearInterval(autoPlayInterval);
+        autoPlayInterval = setInterval(function() {
+          currentModalIdx = (currentModalIdx + 1) % modalImgs.length;
+          showModalImg(currentModalIdx);
+        }, 3000);
+      }
+
+      function stopAutoPlay() {
+        if (autoPlayInterval) clearInterval(autoPlayInterval);
+      }
+
+      if (riceBallShape && farmModal) {
+        riceBallShape.addEventListener('click', function() {
+          farmModal.classList.add('active');
+          startAutoPlay();
+        });
+      }
+
+      if (closeModal && farmModal) {
+        closeModal.addEventListener('click', function() {
+          farmModal.classList.remove('active');
+          stopAutoPlay();
+        });
+      }
+
+      if (farmModal) {
+        farmModal.addEventListener('click', function(e) {
+          if (e.target === farmModal) {
+            farmModal.classList.remove('active');
+            stopAutoPlay();
+          }
+        });
+      }
+
+      var nextBtn = document.getElementById('next-img');
+      var prevBtn = document.getElementById('prev-img');
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function() {
+          stopAutoPlay();
+          currentModalIdx = (currentModalIdx + 1) % modalImgs.length;
+          showModalImg(currentModalIdx);
+          startAutoPlay();
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function() {
+          stopAutoPlay();
+          currentModalIdx = (currentModalIdx - 1 + modalImgs.length) % modalImgs.length;
+          showModalImg(currentModalIdx);
+          startAutoPlay();
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
