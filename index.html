@@ -47,6 +47,7 @@
       font-weight: bold;
       font-size: 14px;
       cursor: pointer;
+      user-select: none;
     }
     .page-title {
       font-size: 22px;
@@ -68,12 +69,13 @@
       cursor: pointer;
       transition: transform 0.2s ease;
       max-width: 80%;
+      height: auto;
     }
     .shape-item:active {
       transform: scale(0.95);
     }
 
-    /* 關渡平原藝術祭 Banner (按鈕正上方圖片) */
+    /* 關渡平原藝術祭 Banner */
     .guandu-banner {
       width: 100%;
       height: auto;
@@ -81,6 +83,8 @@
       margin-bottom: 25px;
       display: block;
       box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      background-color: #f0f0f0; /* 圖片載入前的預備底色 */
+      min-height: 120px;
     }
 
     /* 底部直排膠囊按鈕區 */
@@ -117,7 +121,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.5);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -125,4 +129,151 @@
       pointer-events: none;
       transition: opacity 0.3s ease;
       z-index: 999;
-      padding
+      padding: 20px;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background-color: #0d6e5a;
+      color: #ffffff;
+      width: 100%;
+      max-width: 360px;
+      border-radius: 20px;
+      padding: 20px;
+      position: relative;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .modal-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .close-btn {
+      font-size: 22px;
+      font-weight: bold;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 5px;
+    }
+    .modal-title {
+      font-size: 18px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    /* 小視窗圖片區域 */
+    .modal-media {
+      width: 100%;
+      height: 180px;
+      position: relative;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      overflow: hidden;
+      background-color: rgba(255,255,255,0.1);
+    }
+    .modal-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .modal-img.active {
+      opacity: 1;
+    }
+
+    .arrow-left, .arrow-right {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+      color: #ffffff;
+      cursor: pointer;
+      background: rgba(0,0,0,0.3);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+      user-select: none;
+    }
+    .arrow-left { left: 8px; }
+    .arrow-right { right: 8px; }
+
+    .modal-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #e2f3ee;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .fb-btn {
+      background-color: #ffffff;
+      color: #0d6e5a;
+      padding: 8px 30px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-container">
+    
+    <!-- 1. 上方 Header -->
+    <div class="header">
+      <div class="back-top-pill" onclick="history.back()">回上面</div>
+      <div class="page-title">餐食介紹</div>
+    </div>
+
+    <!-- 2. 幾何食材區域 -->
+    <div class="shapes-container">
+      <img src="未命名的作品 26.png" alt="三角飯糰" class="shape-item" id="rice-ball-shape">
+    </div>
+
+    <!-- 3. 按鈕正上方的「關渡平原微型藝術祭」 Banner 圖片 -->
+    <img src="關渡平原banner.jpg" alt="關渡平原微型藝術祭" class="guandu-banner">
+
+    <!-- 4. 底部直排按鈕區 -->
+    <div class="footer-nav">
+      <a href="#" class="nav-pill">在地合作介紹</a>
+      <a href="#" class="nav-pill">團隊 / 營業店家</a>
+      <a href="https://usrhub.tnua.edu.tw/elementor-6431/#" class="nav-pill">回主頁面</a>
+    </div>
+
+  </div>
+
+  <!-- 5. 深綠色八仙六代園小視窗 -->
+  <div class="modal-overlay" id="farm-modal">
+    <div class="modal-card">
+      
+      <div class="modal-header">
+        <span class="close-btn" id="close-modal">✕</span>
+        <span class="modal-title">八仙六代園</span>
+        <span style="width:20px;"></span>
+      </div>
+
+      <!-- 自動輪播圖片區域 -->
+      <div class="modal-media">
+        <span class="arrow-left" id="prev-img">‹</span>
+        <img src="米.jpg" alt="八仙六代園 米" class="modal-img active">
+        <img src="八仙.jpg" alt="八仙六代園" class="modal-img">
+        <span class="arrow-right" id="next-img">›
