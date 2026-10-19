@@ -90,7 +90,7 @@
 
     .food-row.row-left {
       justify-content: flex-start;
-      padding-left: 20px;
+      padding-left: 10px;
     }
 
     .food-row.row-right {
@@ -102,18 +102,48 @@
       justify-content: center;
     }
 
-    /* 飯糰 + 文字組合容器 */
+    /* -----------------------------------
+       第一顆飯糰 + 雙行標籤與引線容器
+    ----------------------------------- */
     .riceball-group {
       display: flex;
       align-items: center;
-      gap: 10px;
       cursor: pointer;
+      will-change: transform;
+      animation: floatAnim 3s ease-in-out infinite alternate;
+      transition: transform 0.15s ease-out;
     }
 
-    .riceball-label {
-      font-size: 18px;
+    .riceball-group:active {
+      transform: scale(1.1) !important;
+    }
+
+    .labels-column {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-left: -10px; /* 使指引線貼近飯糰右側邊緣 */
+    }
+
+    .label-line-item {
+      display: flex;
+      align-items: center;
+    }
+
+    /* 引導橫線 */
+    .pointer-line {
+      width: 35px;
+      height: 2px;
+      background-color: #e5cd00;
+      display: inline-block;
+      margin-right: 6px;
+    }
+
+    /* 黃色手繪感文字 */
+    .riceball-label-yellow {
+      font-size: 16px;
       font-weight: bold;
-      color: #b3c200;
+      color: #e5cd00;
       letter-spacing: 1px;
       user-select: none;
       white-space: nowrap;
@@ -348,11 +378,20 @@
     <!-- 2. 食材圖形區域 -->
     <div class="food-grid">
       
-      <!-- 第一排：riceball1 + 「八仙六代園」 -->
+      <!-- 第一排：riceball1 + 「八仙六代園」與「湖山社區發展協會」及指引線 -->
       <div class="food-row row-left">
-        <div class="riceball-group trigger-farm-modal">
-          <img src="riceball1.png" alt="riceball1" class="food-item delay-1">
-          <span class="riceball-label">八仙六代園</span>
+        <div class="riceball-group delay-1 trigger-farm-modal">
+          <img src="riceball1.png" alt="riceball1" class="food-item" style="animation: none;">
+          <div class="labels-column">
+            <div class="label-line-item">
+              <span class="pointer-line"></span>
+              <span class="riceball-label-yellow">八仙六代園</span>
+            </div>
+            <div class="label-line-item">
+              <span class="pointer-line"></span>
+              <span class="riceball-label-yellow">湖山社區發展協會</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -364,12 +403,9 @@
         <img src="vege.png" alt="vege" class="food-item delay-3" style="max-width: 140px;">
       </div>
 
-      <!-- 第二排：riceball2 + 「湖山社區發展協會」 -->
+      <!-- 第二排：riceball2 -->
       <div class="food-row row-right" style="margin-top: -30px;">
-        <div class="riceball-group trigger-farm-modal">
-          <img src="riceball2.png" alt="riceball2" class="food-item delay-4">
-          <span class="riceball-label">湖山社區發展協會</span>
-        </div>
+        <img src="riceball2.png" alt="riceball2" class="food-item delay-4 trigger-farm-modal">
       </div>
 
       <div class="food-row row-left" style="margin-top: -20px;">
