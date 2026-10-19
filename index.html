@@ -304,7 +304,6 @@
       opacity: 1;
     }
 
-    /* 圖片內部的輪播箭頭 */
     .arrow-left, .arrow-right {
       position: absolute;
       top: 50%;
@@ -325,7 +324,7 @@
     .arrow-left { left: 8px; }
     .arrow-right { right: 8px; }
 
-    /* 切換農場卡片的大白色箭頭 (位於圖片下方兩側紅線位置) */
+    /* 切換農場卡片的大白色箭頭 */
     .card-switch-arrow {
       position: absolute;
       top: 65%;
@@ -371,13 +370,13 @@
     }
 
     .modal-desc {
-      font-size: 13px;
-      line-height: 1.6;
+      font-size: 12.5px;
+      line-height: 1.5;
       color: #e2f3ee;
       margin-bottom: 15px;
-      text-align: center;
-      min-height: 50px;
-      padding: 0 10px;
+      text-align: left;
+      min-height: 60px;
+      padding: 0 5px;
     }
 
     .fb-btn {
@@ -461,7 +460,6 @@
   <div class="modal-overlay" id="farm-modal">
     <div class="modal-card">
       
-      <!-- 左右兩側白色卡片切換按鈕 (位於紅線標示高度) -->
       <span class="card-switch-arrow left-arrow" id="card-prev">‹</span>
       <span class="card-switch-arrow right-arrow" id="card-next">›</span>
 
@@ -481,7 +479,7 @@
       </div>
 
       <p class="modal-desc" id="modal-desc-text">
-        以陽明山的水為灌溉命脈，延續古法用灼灼烈日作為穀物烘乾機，採取友善環境不施化肥的種植方式。
+        農家第六代---宣智與亦真堅持友善耕作與自然共生，致力為下一代留下無毒乾淨的土地。<br><br>農場積極推動食農教育與季節農事體驗，包含插秧、割稻及米食 DIY、稻田運動會。邀請民眾在金黃稻浪間親近土地，感受都市角落裡最真誠的農村風土。
       </p>
 
       <a href="https://www.facebook.com/beitoubaxianfarm" target="_blank" class="fb-btn" id="modal-fb-link">
@@ -497,7 +495,7 @@
         {
           title: "八仙六代園",
           ingredient: "米",
-          desc: "以陽明山的水為灌溉命脈，延續古法用灼灼烈日作為穀物烘乾機，採取友善環境不施化肥的種植方式。",
+          desc: "農家第六代---宣智與亦真堅持友善耕作與自然共生，致力為下一代留下無毒乾淨的土地。<br><br>農場積極推動食農教育與季節農事體驗，包含插秧、割稻及米食 DIY、稻田運動會。邀請民眾在金黃稻浪間親近土地，感受都市角落裡最真誠的農村風土。",
           fb: "https://www.facebook.com/beitoubaxianfarm",
           imgs: ["rice.webp", "eightpeople.jpg", "riceplant.webp", "carrot.jpg"]
         },
@@ -529,7 +527,7 @@
 
         cardTitle.innerText = data.title;
         ingredientText.innerText = data.ingredient;
-        descText.innerText = data.desc;
+        descText.innerHTML = data.desc;
         fbLink.href = data.fb;
 
         var oldImgs = mediaContainer.querySelectorAll('.modal-img');
@@ -577,7 +575,6 @@
         });
       });
 
-      // 兩側白色按鈕切換農場卡片
       document.getElementById('card-prev').addEventListener('click', function() {
         stopAutoPlay();
         currentCardIdx = (currentCardIdx - 1 + cardsData.length) % cardsData.length;
@@ -592,7 +589,6 @@
         startAutoPlay();
       });
 
-      // 圖片內部左右輪播按鈕
       document.getElementById('next-img').addEventListener('click', function() {
         stopAutoPlay();
         var imgs = mediaContainer.querySelectorAll('.modal-img');
