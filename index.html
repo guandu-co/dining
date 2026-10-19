@@ -35,9 +35,9 @@
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      gap: 25px;
+      gap: 20px;
       margin-bottom: 25px;
-      padding-left: 10px;
+      padding-left: 5px;
     }
 
     .btn-back-top {
@@ -59,10 +59,17 @@
       transition: transform 0.1s ease, background-color 0.2s ease;
       border: none;
       text-decoration: none;
+      flex-shrink: 0;
     }
     .btn-back-top:active {
       transform: scale(0.95);
       background-color: #9ea800;
+    }
+
+    .header-title-container {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
 
     .header-title {
@@ -70,6 +77,13 @@
       font-weight: bold;
       color: #2b2b2b;
       letter-spacing: 2px;
+    }
+
+    .header-subtitle {
+      font-size: 13px;
+      color: #888888;
+      letter-spacing: 0.5px;
+      user-select: none;
     }
 
     /* 食材圖形網格區域 */
@@ -124,12 +138,10 @@
       gap: 6px;
     }
 
-    /* 右側標籤專用 Margin */
     .labels-right {
       margin-left: -8px;
     }
 
-    /* 左側標籤專用 Margin */
     .labels-left {
       margin-right: -8px;
     }
@@ -398,13 +410,16 @@
 
   <div class="page-container">
     
-    <!-- 1. 頂部 Header -->
+    <!-- 1. 頂部 Header (包含主標題與灰色小字) -->
     <div class="header-section">
       <a href="https://usrhub.tnua.edu.tw/elementor-6431/#" class="btn-back-top">回上面</a>
-      <h1 class="header-title">餐食介紹</h1>
+      <div class="header-title-container">
+        <h1 class="header-title">餐食介紹</h1>
+        <p class="header-subtitle">點擊料理查看辛苦的農民們吧！</p>
+      </div>
     </div>
 
-    <!-- 2. 食材圖形區域 (6個圖案皆配對應方向的黃色標籤與引線) -->
+    <!-- 2. 食材圖形區域 -->
     <div class="food-grid">
       
       <!-- 第一排：riceball1 (文字在右側) -->
@@ -437,7 +452,7 @@
         </div>
       </div>
 
-      <!-- vege (文字在右側，多行) -->
+      <!-- vege (文字在右側) -->
       <div class="food-row row-left" style="margin-top: -10px;">
         <div class="food-group delay-3">
           <img src="vege.png" alt="vege" class="food-item" style="max-width: 125px;">
@@ -490,7 +505,7 @@
 
     </div>
 
-    <!-- 3. 關渡平原微型藝術祭 Banner -->
+    <!-- 3. 關渡平原 Banner -->
     <img src="guandu-banner.jpg" alt="關渡平原微型藝術祭" class="guandu-banner">
 
     <!-- 4. 底部三個豎長型直排膠囊按鈕 -->
