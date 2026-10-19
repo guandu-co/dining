@@ -205,17 +205,25 @@
     .delay-6 { animation-delay: 2.5s; }
 
     /* -----------------------------------
-       底部 Banner 輪播區域
+       底部 Banner 輪播區域（依照原始圖片比例）
     ----------------------------------- */
     .banner-slider-container {
       width: 100%;
-      height: 120px;
       position: relative;
       border-radius: 12px;
       margin-bottom: 25px;
       overflow: hidden;
       box-shadow: 0 4px 15px rgba(0,0,0,0.08);
       background-color: #f5f5f5;
+      display: block;
+    }
+
+    /* 占位用圖片，維持原圖高寬比 */
+    .banner-placeholder {
+      width: 100%;
+      height: auto;
+      display: block;
+      visibility: hidden;
     }
 
     .banner-slide-img {
@@ -530,8 +538,11 @@
 
     </div>
 
-    <!-- 3. 底部 Banner 淡入淡出自動輪播區域 -->
+    <!-- 3. 底部 Banner 區域 (依照原始關渡 Banner 的實際比例撐開) -->
     <div class="banner-slider-container" id="banner-slider">
+      <!-- 用於佔位與維持原圖長寬比的隱形圖片 -->
+      <img src="guandu-banner.jpg" class="banner-placeholder" alt="banner placeholder">
+      <!-- 實際淡入淡出輪播的圖片 -->
       <img src="guandu-banner.jpg" alt="關渡平原微型藝術祭" class="banner-slide-img active">
       <img src="banner2.png" alt="關渡共食" class="banner-slide-img" onerror="if(this.src.endsWith('.png')){this.src='banner2.jpg';}else if(this.src.endsWith('.jpg')){this.src='banner2.jpeg';}">
     </div>
@@ -591,7 +602,7 @@
             currentBannerIdx = (currentBannerIdx + 1) % bannerImgs.length;
             bannerImgs[currentBannerIdx].classList.add('active');
           }
-        }, 3500); // 每 3.5 秒淡入淡出切換一次
+        }, 3500);
       }
 
       // -----------------------------------
@@ -678,7 +689,6 @@
         imgs: ["p1.JPG", "p2.jpg", "p3.JPG", "p4.JPG", "p5.jpg", "p6.jpeg", "p7.jpeg", "p8.jpg", "p9.jpg"]
       };
 
-      // 各項料理觸發時的 Modal 組合
       var modalDataSets = {
         riceball1: [farm_baxian, farm_hushan],
         chicken: [farm_fengcun],
@@ -715,7 +725,6 @@
         descText.innerHTML = data.desc;
         fbLink.href = data.fb;
 
-        // 切換卡片箭頭顯示
         if (activeCardsData.length > 1) {
           cardPrevBtn.style.display = 'flex';
           cardNextBtn.style.display = 'flex';
@@ -734,7 +743,6 @@
           mediaContainer.appendChild(imgEl);
         });
 
-        // 圖片輪播箭頭顯示
         var prevImgBtn = document.getElementById('prev-img');
         var nextImgBtn = document.getElementById('next-img');
         if (data.imgs.length <= 1) {
