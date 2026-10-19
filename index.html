@@ -538,13 +538,16 @@
 
     </div>
 
-    <!-- 3. 底部 Banner 區域 (依照原始關渡 Banner 的實際比例撐開) -->
+    <!-- 3. 底部 Banner 區域 (第一張播放 banner2.png) -->
     <div class="banner-slider-container" id="banner-slider">
-      <!-- 用於佔位與維持原圖長寬比的隱形圖片 -->
+      <!-- 佔位圖，維持比例 -->
       <img src="guandu-banner.jpg" class="banner-placeholder" alt="banner placeholder">
-      <!-- 實際淡入淡出輪播的圖片 -->
-      <img src="guandu-banner.jpg" alt="關渡平原微型藝術祭" class="banner-slide-img active">
-      <img src="banner2.png" alt="關渡共食" class="banner-slide-img" onerror="if(this.src.endsWith('.png')){this.src='banner2.jpg';}else if(this.src.endsWith('.jpg')){this.src='banner2.jpeg';}">
+      
+      <!-- 第一張播放：banner2.png -->
+      <img src="banner2.png" alt="關渡共食" class="banner-slide-img active" onerror="if(this.src.endsWith('.png')){this.src='banner2.jpg';}else if(this.src.endsWith('.jpg')){this.src='banner2.jpeg';}">
+      
+      <!-- 第二張播放：guandu-banner.jpg -->
+      <img src="guandu-banner.jpg" alt="關渡平原微型藝術祭" class="banner-slide-img">
     </div>
 
     <!-- 4. 底部三個豎長型直排膠囊按鈕 -->
