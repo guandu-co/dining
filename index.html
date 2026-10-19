@@ -204,16 +204,33 @@
     .delay-5 { animation-delay: 2.0s; }
     .delay-6 { animation-delay: 2.5s; }
 
-    /* 關渡平原 Banner */
-    .guandu-banner {
+    /* -----------------------------------
+       底部 Banner 輪播區域
+    ----------------------------------- */
+    .banner-slider-container {
       width: 100%;
-      height: auto;
+      height: 120px;
+      position: relative;
       border-radius: 12px;
       margin-bottom: 25px;
-      display: block;
+      overflow: hidden;
       box-shadow: 0 4px 15px rgba(0,0,0,0.08);
       background-color: #f5f5f5;
-      min-height: 120px;
+    }
+
+    .banner-slide-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .banner-slide-img.active {
+      opacity: 1;
     }
 
     /* 底部橫向並排直立膠囊按鈕區 */
@@ -513,8 +530,11 @@
 
     </div>
 
-    <!-- 3. 關渡平原 Banner -->
-    <img src="guandu-banner.jpg" alt="關渡平原微型藝術祭" class="guandu-banner">
+    <!-- 3. 底部 Banner 淡入淡出自動輪播區域 -->
+    <div class="banner-slider-container" id="banner-slider">
+      <img src="guandu-banner.jpg" alt="關渡平原微型藝術祭" class="banner-slide-img active">
+      <img src="banner2.png" alt="關渡共食" class="banner-slide-img" onerror="if(this.src.endsWith('.png')){this.src='banner2.jpg';}else if(this.src.endsWith('.jpg')){this.src='banner2.jpeg';}">
+    </div>
 
     <!-- 4. 底部三個豎長型直排膠囊按鈕 -->
     <div class="footer-nav-horizontal">
@@ -558,7 +578,25 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      // 共通農場資料定義 (供重複使用)
+      // -----------------------------------
+      // 1. 最下方 Banner 自動淡入淡出輪播
+      // -----------------------------------
+      var bannerContainer = document.getElementById('banner-slider');
+      if (bannerContainer) {
+        var bannerImgs = bannerContainer.querySelectorAll('.banner-slide-img');
+        var currentBannerIdx = 0;
+        setInterval(function() {
+          if (bannerImgs.length > 1) {
+            bannerImgs[currentBannerIdx].classList.remove('active');
+            currentBannerIdx = (currentBannerIdx + 1) % bannerImgs.length;
+            bannerImgs[currentBannerIdx].classList.add('active');
+          }
+        }, 3500); // 每 3.5 秒淡入淡出切換一次
+      }
+
+      // -----------------------------------
+      // 2. 共通農場資料與 Modal 邏輯
+      // -----------------------------------
       var farm_baxian = {
         title: "八仙六代園",
         prefix: "食材中的：",
