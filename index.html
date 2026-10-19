@@ -86,13 +86,13 @@
       user-select: none;
     }
 
-    /* 食材圖形網格區域 */
+    /* 食材圖形網格區域 (拉大間距 gap: 40px) */
     .food-grid {
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 20px;
-      margin-bottom: 35px;
+      gap: 40px;
+      margin-bottom: 45px;
       padding: 0 5px;
     }
 
@@ -135,15 +135,15 @@
     .labels-column {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 12px;
     }
 
     .labels-right {
-      margin-left: -8px;
+      margin-left: -10px;
     }
 
     .labels-left {
-      margin-right: -8px;
+      margin-right: -10px;
     }
 
     .label-line-item {
@@ -151,10 +151,10 @@
       align-items: center;
     }
 
-    /* 使用 卷卷.png 作為 Mask 連接線，並支援著色 */
+    /* 卷卷.png 連接線：放大 3 倍 (寬 96px, 高 60px) */
     .curly-png-line {
-      width: 32px;
-      height: 20px;
+      width: 96px;
+      height: 60px;
       display: inline-block;
       margin: 0 2px;
       flex-shrink: 0;
@@ -491,7 +491,7 @@
       </div>
 
       <!-- chicken (峰村有機農場) -->
-      <div class="food-row row-right" style="margin-top: -30px;">
+      <div class="food-row row-right">
         <div class="food-group color-chicken delay-2 trigger-farm-modal" data-modal="chicken">
           <div class="labels-column labels-left">
             <div class="label-line-item">
@@ -504,7 +504,7 @@
       </div>
 
       <!-- vege (山水香-曹永慶 ↔ 四口田 ↔ 故鄉金針花 ↔ 一德農園) -->
-      <div class="food-row row-left" style="margin-top: -10px;">
+      <div class="food-row row-left">
         <div class="food-group color-vege delay-3 trigger-farm-modal" data-modal="vege">
           <img src="vege.png" alt="vege" class="food-item" style="max-width: 125px;">
           <div class="labels-column labels-right">
@@ -519,7 +519,7 @@
       </div>
 
       <!-- riceball2 (四口田 ↔ 八仙六代園 ↔ 峰村有機農場) -->
-      <div class="food-row row-right" style="margin-top: -20px;">
+      <div class="food-row row-right">
         <div class="food-group color-riceball2 delay-4 trigger-farm-modal" data-modal="riceball2">
           <div class="labels-column labels-left">
             <div class="label-line-item"><span class="food-label-text">四口田</span><span class="curly-png-line"></span></div>
@@ -531,7 +531,7 @@
       </div>
 
       <!-- eggroll (隨野家農場) -->
-      <div class="food-row row-left" style="margin-top: -15px;">
+      <div class="food-row row-left">
         <div class="food-group color-eggroll delay-5 trigger-farm-modal" data-modal="eggroll">
           <img src="eggroll.png" alt="eggroll" class="food-item" style="max-width: 130px;">
           <div class="labels-column labels-right">
@@ -542,7 +542,7 @@
       </div>
 
       <!-- cake (一德農園 ↔ 八仙六代園 ↔ 財福海芋田 ↔ 峰村有機農場) -->
-      <div class="food-row row-center" style="margin-top: 10px;">
+      <div class="food-row row-center">
         <div class="food-group color-cake delay-6 trigger-farm-modal" data-modal="cake">
           <div class="labels-column labels-left">
             <div class="label-line-item"><span class="food-label-text">一德農園</span><span class="curly-png-line"></span></div>
