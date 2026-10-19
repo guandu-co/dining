@@ -77,9 +77,9 @@
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 20px;
       margin-bottom: 35px;
-      padding: 0 10px;
+      padding: 0 5px;
     }
 
     .food-row {
@@ -90,20 +90,22 @@
 
     .food-row.row-left {
       justify-content: flex-start;
-      padding-left: 10px;
+      padding-left: 5px;
     }
 
     .food-row.row-right {
       justify-content: flex-end;
-      padding-right: 20px;
+      padding-right: 5px;
     }
 
     .food-row.row-center {
       justify-content: center;
     }
 
-    /* 第一顆飯糰 + 雙行標籤與引線容器 */
-    .riceball-group {
+    /* -----------------------------------
+       食材 + 標籤組合通用樣式與漂浮
+    ----------------------------------- */
+    .food-group {
       display: flex;
       align-items: center;
       cursor: pointer;
@@ -112,15 +114,24 @@
       transition: transform 0.15s ease-out;
     }
 
-    .riceball-group:active {
+    .food-group:active {
       transform: scale(1.1) !important;
     }
 
     .labels-column {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      margin-left: -10px;
+      gap: 6px;
+    }
+
+    /* 右側標籤專用 Margin */
+    .labels-right {
+      margin-left: -8px;
+    }
+
+    /* 左側標籤專用 Margin */
+    .labels-left {
+      margin-right: -8px;
     }
 
     .label-line-item {
@@ -129,35 +140,27 @@
     }
 
     .pointer-line {
-      width: 35px;
+      width: 25px;
       height: 2px;
       background-color: #e5cd00;
       display: inline-block;
-      margin-right: 6px;
+      margin: 0 4px;
     }
 
     .riceball-label-yellow {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: bold;
       color: #e5cd00;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
       user-select: none;
       white-space: nowrap;
     }
 
-    /* 漂浮與點擊放大效果 */
     .food-item {
-      max-width: 130px;
+      max-width: 120px;
       height: auto;
       cursor: pointer;
       display: block;
-      will-change: transform;
-      animation: floatAnim 3s ease-in-out infinite alternate;
-      transition: transform 0.15s ease-out;
-    }
-
-    .food-item:active {
-      transform: scale(1.18) !important;
     }
 
     @keyframes floatAnim {
@@ -401,14 +404,14 @@
       <h1 class="header-title">餐食介紹</h1>
     </div>
 
-    <!-- 2. 食材圖形區域 -->
+    <!-- 2. 食材圖形區域 (6個圖案皆配對應方向的黃色標籤與引線) -->
     <div class="food-grid">
       
-      <!-- 第一排：riceball1 -->
+      <!-- 第一排：riceball1 (文字在右側) -->
       <div class="food-row row-left">
-        <div class="riceball-group delay-1 trigger-farm-modal">
-          <img src="riceball1.png" alt="riceball1" class="food-item" style="animation: none;">
-          <div class="labels-column">
+        <div class="food-group delay-1 trigger-farm-modal">
+          <img src="riceball1.png" alt="riceball1" class="food-item">
+          <div class="labels-column labels-right">
             <div class="label-line-item">
               <span class="pointer-line"></span>
               <span class="riceball-label-yellow">八仙六代園</span>
@@ -421,25 +424,68 @@
         </div>
       </div>
 
-      <div class="food-row row-right" style="margin-top: -40px;">
-        <img src="chicken.png" alt="chicken" class="food-item delay-2">
-      </div>
-
-      <div class="food-row row-left" style="margin-top: -10px; padding-left: 50px;">
-        <img src="vege.png" alt="vege" class="food-item delay-3" style="max-width: 140px;">
-      </div>
-
-      <!-- 第二排：riceball2 -->
+      <!-- chicken (文字在左側) -->
       <div class="food-row row-right" style="margin-top: -30px;">
-        <img src="riceball2.png" alt="riceball2" class="food-item delay-4 trigger-farm-modal">
+        <div class="food-group delay-2">
+          <div class="labels-column labels-left">
+            <div class="label-line-item">
+              <span class="riceball-label-yellow">峰村有機農場</span>
+              <span class="pointer-line"></span>
+            </div>
+          </div>
+          <img src="chicken.png" alt="chicken" class="food-item">
+        </div>
       </div>
 
-      <div class="food-row row-left" style="margin-top: -20px;">
-        <img src="eggroll.png" alt="eggroll" class="food-item delay-5" style="max-width: 150px;">
+      <!-- vege (文字在右側，多行) -->
+      <div class="food-row row-left" style="margin-top: -10px;">
+        <div class="food-group delay-3">
+          <img src="vege.png" alt="vege" class="food-item" style="max-width: 125px;">
+          <div class="labels-column labels-right">
+            <div class="label-line-item"><span class="pointer-line"></span><span class="riceball-label-yellow">一德農園</span></div>
+            <div class="label-line-item"><span class="pointer-line"></span><span class="riceball-label-yellow">四口田</span></div>
+            <div class="label-line-item"><span class="pointer-line"></span><span class="riceball-label-yellow">故鄉金針花農園</span></div>
+            <div class="label-line-item"><span class="pointer-line"></span><span class="riceball-label-yellow">峰村有機農場</span></div>
+            <div class="label-line-item"><span class="pointer-line"></span><span class="riceball-label-yellow">山水香-曹永慶</span></div>
+            <div class="label-line-item"><span class="pointer-line"></span><span class="riceball-label-yellow">湖山社區發展協會</span></div>
+          </div>
+        </div>
       </div>
 
+      <!-- riceball2 (文字在左側) -->
+      <div class="food-row row-right" style="margin-top: -20px;">
+        <div class="food-group delay-4 trigger-farm-modal">
+          <div class="labels-column labels-left">
+            <div class="label-line-item"><span class="riceball-label-yellow">八仙六代園</span><span class="pointer-line"></span></div>
+            <div class="label-line-item"><span class="riceball-label-yellow">四口田</span><span class="pointer-line"></span></div>
+            <div class="label-line-item"><span class="riceball-label-yellow">峰村有機農場</span><span class="pointer-line"></span></div>
+          </div>
+          <img src="riceball2.png" alt="riceball2" class="food-item">
+        </div>
+      </div>
+
+      <!-- eggroll (文字在右側) -->
+      <div class="food-row row-left" style="margin-top: -15px;">
+        <div class="food-group delay-5">
+          <img src="eggroll.png" alt="eggroll" class="food-item" style="max-width: 130px;">
+          <div class="labels-column labels-right">
+            <div class="label-line-item"><span class="pointer-line"></span><span class="riceball-label-yellow">足妹農場</span></div>
+            <div class="label-line-item"><span class="pointer-line"></span><span class="riceball-label-yellow">隨野家農場</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- cake (文字在左側) -->
       <div class="food-row row-center" style="margin-top: 10px;">
-        <img src="cake.png" alt="cake" class="food-item delay-6" style="max-width: 160px;">
+        <div class="food-group delay-6">
+          <div class="labels-column labels-left">
+            <div class="label-line-item"><span class="riceball-label-yellow">八仙六代園</span><span class="pointer-line"></span></div>
+            <div class="label-line-item"><span class="riceball-label-yellow">財福海芋田</span><span class="pointer-line"></span></div>
+            <div class="label-line-item"><span class="riceball-label-yellow">峰村有機農場</span><span class="pointer-line"></span></div>
+            <div class="label-line-item"><span class="riceball-label-yellow">一德農園</span><span class="pointer-line"></span></div>
+          </div>
+          <img src="cake.png" alt="cake" class="food-item" style="max-width: 135px;">
+        </div>
       </div>
 
     </div>
