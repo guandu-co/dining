@@ -154,19 +154,36 @@
     .pointer-line {
       width: 25px;
       height: 2px;
-      background-color: #e5cd00;
       display: inline-block;
       margin: 0 4px;
     }
 
-    .riceball-label-yellow {
+    .food-label-text {
       font-size: 14px;
       font-weight: bold;
-      color: #e5cd00;
       letter-spacing: 0.5px;
       user-select: none;
       white-space: nowrap;
     }
+
+    /* 各組色彩定義 */
+    .color-riceball1 .pointer-line { background-color: #d3be6a; }
+    .color-riceball1 .food-label-text { color: #d3be6a; }
+
+    .color-chicken .pointer-line { background-color: #c56e3b; }
+    .color-chicken .food-label-text { color: #c56e3b; }
+
+    .color-vege .pointer-line { background-color: #8f9e1e; }
+    .color-vege .food-label-text { color: #8f9e1e; }
+
+    .color-riceball2 .pointer-line { background-color: #ba8ecf; }
+    .color-riceball2 .food-label-text { color: #ba8ecf; }
+
+    .color-eggroll .pointer-line { background-color: #f0b800; }
+    .color-eggroll .food-label-text { color: #f0b800; }
+
+    .color-cake .pointer-line { background-color: #f09bb0; }
+    .color-cake .food-label-text { color: #f09bb0; }
 
     .food-item {
       max-width: 120px;
@@ -410,7 +427,7 @@
 
   <div class="page-container">
     
-    <!-- 1. 頂部 Header (包含主標題與灰色小字) -->
+    <!-- 1. 頂部 Header -->
     <div class="header-section">
       <a href="https://usrhub.tnua.edu.tw/elementor-6431/#" class="btn-back-top">回上面</a>
       <div class="header-title-container">
@@ -419,85 +436,76 @@
       </div>
     </div>
 
-    <!-- 2. 食材圖形區域 -->
+    <!-- 2. 食材圖形區域 (精準對應顏色與圖片順序) -->
     <div class="food-grid">
       
-      <!-- 第一排：riceball1 (文字在右側) -->
+      <!-- 第一排：riceball1 (黃色系) -->
       <div class="food-row row-left">
-        <div class="food-group delay-1 trigger-farm-modal">
+        <div class="food-group color-riceball1 delay-1 trigger-farm-modal">
           <img src="riceball1.png" alt="riceball1" class="food-item">
           <div class="labels-column labels-right">
-            <div class="label-line-item">
-              <span class="pointer-line"></span>
-              <span class="riceball-label-yellow">八仙六代園</span>
-            </div>
-            <div class="label-line-item">
-              <span class="pointer-line"></span>
-              <span class="riceball-label-yellow">湖山社區發展協會</span>
-            </div>
+            <div class="label-line-item"><span class="pointer-line"></span><span class="food-label-text">八仙六代園</span></div>
+            <div class="label-line-item"><span class="pointer-line"></span><span class="food-label-text">湖山社區發展協會</span></div>
           </div>
         </div>
       </div>
 
-      <!-- chicken (文字在左側) -->
+      <!-- chicken (暖橘棕色) -->
       <div class="food-row row-right" style="margin-top: -30px;">
-        <div class="food-group delay-2">
+        <div class="food-group color-chicken delay-2">
           <div class="labels-column labels-left">
-            <div class="label-line-item">
-              <span class="riceball-label-yellow">峰村有機農場</span>
-              <span class="pointer-line"></span>
-            </div>
+            <div class="label-line-item"><span class="food-label-text">峰村有機農場</span><span class="pointer-line"></span></div>
           </div>
           <img src="chicken.png" alt="chicken" class="food-item">
         </div>
       </div>
 
-      <!-- vege (文字在右側) -->
+      <!-- vege (橄欖綠色) -->
       <div class="food-row row-left" style="margin-top: -10px;">
-        <div class="food-group delay-3">
+        <div class="food-group color-vege delay-3">
           <img src="vege.png" alt="vege" class="food-item" style="max-width: 125px;">
           <div class="labels-column labels-right">
-            <div class="label-line-item"><span class="pointer-line"></span><span class="riceball-label-yellow">一德農園</span></div>
-            <div class="label-line-item"><span class="pointer-line"></span><span class="riceball-label-yellow">四口田</span></div>
-            <div class="label-line-item"><span class="pointer-line"></span><span class="riceball-label-yellow">故鄉金針花農園</span></div>
-            <div class="label-line-item"><span class="pointer-line"></span><span class="riceball-label-yellow">峰村有機農場</span></div>
-            <div class="label-line-item"><span class="pointer-line"></span><span class="riceball-label-yellow">山水香-曹永慶</span></div>
-            <div class="label-line-item"><span class="pointer-line"></span><span class="riceball-label-yellow">湖山社區發展協會</span></div>
+            <div class="label-line-item"><span class="pointer-line"></span><span class="food-label-text">一德農園</span></div>
+            <div class="label-line-item"><span class="pointer-line"></span><span class="food-label-text">四口田</span></div>
+            <div class="label-line-item"><span class="pointer-line"></span><span class="food-label-text">故鄉金針花農園</span></div>
+            <div class="label-line-item"><span class="pointer-line"></span><span class="food-label-text">峰村有機農場</span></div>
+            <div class="label-line-item"><span class="pointer-line"></span><span class="food-label-text">山水香-曹永慶</span></div>
+            <div class="label-line-item"><span class="pointer-line"></span><span class="food-label-text">湖山社區發展協會</span></div>
           </div>
         </div>
       </div>
 
-      <!-- riceball2 (文字在左側) -->
+      <!-- riceball2 (粉紫色，四口田排最上面) -->
       <div class="food-row row-right" style="margin-top: -20px;">
-        <div class="food-group delay-4 trigger-farm-modal">
+        <div class="food-group color-riceball2 delay-4 trigger-farm-modal">
           <div class="labels-column labels-left">
-            <div class="label-line-item"><span class="riceball-label-yellow">八仙六代園</span><span class="pointer-line"></span></div>
-            <div class="label-line-item"><span class="riceball-label-yellow">四口田</span><span class="pointer-line"></span></div>
-            <div class="label-line-item"><span class="riceball-label-yellow">峰村有機農場</span><span class="pointer-line"></span></div>
+            <div class="label-line-item"><span class="food-label-text">四口田</span><span class="pointer-line"></span></div>
+            <div class="label-line-item"><span class="food-label-text">八仙六代園</span><span class="pointer-line"></span></div>
+            <div class="label-line-item"><span class="food-label-text">峰村有機農場</span><span class="pointer-line"></span></div>
           </div>
           <img src="riceball2.png" alt="riceball2" class="food-item">
         </div>
       </div>
 
-      <!-- eggroll (文字在右側) -->
+      <!-- eggroll (亮黃色) -->
       <div class="food-row row-left" style="margin-top: -15px;">
-        <div class="food-group delay-5">
+        <div class="food-group color-eggroll delay-5">
           <img src="eggroll.png" alt="eggroll" class="food-item" style="max-width: 130px;">
           <div class="labels-column labels-right">
-            <div class="label-line-item"><span class="pointer-line"></span><span class="riceball-label-yellow">足妹農場</span></div>
-            <div class="label-line-item"><span class="pointer-line"></span><span class="riceball-label-yellow">隨野家農場</span></div>
+            <div class="label-line-item"><span class="pointer-line"></span><span class="food-label-text">足妹農場</span></div>
+            <div class="label-line-item"><span class="pointer-line"></span><span class="food-label-text">隨野家農場</span></div>
           </div>
         </div>
       </div>
 
-      <!-- cake (文字在左側) -->
+      <!-- cake (粉紅色，一德農園排最上面) -->
       <div class="food-row row-center" style="margin-top: 10px;">
-        <div class="food-group delay-6">
+        <div class="food-group color-cake delay-6">
           <div class="labels-column labels-left">
-            <div class="label-line-item"><span class="riceball-label-yellow">八仙六代園</span><span class="pointer-line"></span></div>
-            <div class="label-line-item"><span class="riceball-label-yellow">財福海芋田</span><span class="pointer-line"></span></div>
-            <div class="label-line-item"><span class="riceball-label-yellow">峰村有機農場</span><span class="pointer-line"></span></div>
-            <div class="label-line-item"><span class="riceball-label-yellow">一德農園</span><span class="pointer-line"></span></div>
+            <div class="label-line-item"><span class="food-label-text">一德農園</span><span class="pointer-line"></span></div>
+            <div class="label-line-item"><span class="food-label-text">八仙六代園</span><span class="pointer-line"></span></div>
+            <div class="label-line-item"><span class="food-label-text">財福海芋田</span><span class="pointer-line"></span></div>
+            <div class="label-line-item"><span class="food-label-text">峰村有機農場</span><span class="pointer-line"></span></div>
           </div>
           <img src="cake.png" alt="cake" class="food-item" style="max-width: 135px;">
         </div>
