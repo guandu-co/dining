@@ -102,9 +102,7 @@
       justify-content: center;
     }
 
-    /* -----------------------------------
-       第一顆飯糰 + 雙行標籤與引線容器
-    ----------------------------------- */
+    /* 第一顆飯糰 + 雙行標籤與引線容器 */
     .riceball-group {
       display: flex;
       align-items: center;
@@ -122,7 +120,7 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
-      margin-left: -10px; /* 使指引線貼近飯糰右側邊緣 */
+      margin-left: -10px;
     }
 
     .label-line-item {
@@ -130,7 +128,6 @@
       align-items: center;
     }
 
-    /* 引導橫線 */
     .pointer-line {
       width: 35px;
       height: 2px;
@@ -139,7 +136,6 @@
       margin-right: 6px;
     }
 
-    /* 黃色手繪感文字 */
     .riceball-label-yellow {
       font-size: 16px;
       font-weight: bold;
@@ -165,12 +161,8 @@
     }
 
     @keyframes floatAnim {
-      0% {
-        transform: translateY(0px);
-      }
-      100% {
-        transform: translateY(-12px);
-      }
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-12px); }
     }
 
     .delay-1 { animation-delay: 0s; }
@@ -228,7 +220,9 @@
       transform: scale(0.95);
     }
 
-    /* 八仙六代園小視窗 (Modal) */
+    /* -----------------------------------
+       八仙 / 湖山 社區彈跳視窗 (Modal)
+    ----------------------------------- */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -278,8 +272,28 @@
       padding: 0 5px;
       line-height: 1;
     }
-    .modal-title {
+
+    /* 小視窗頂部切換標題列 */
+    .title-switch-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .title-nav-arrow {
       font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 2px 8px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 12px;
+      user-select: none;
+    }
+    .title-nav-arrow:active {
+      background: rgba(255,255,255,0.4);
+    }
+
+    .modal-title {
+      font-size: 17px;
       font-weight: bold;
       letter-spacing: 1px;
     }
@@ -327,7 +341,7 @@
     .arrow-left { left: 8px; }
     .arrow-right { right: 8px; }
 
-    /* 「飯糰中的：米」提示列 */
+    /* 「飯糰中的：米 / 醃蘿蔔」提示列 */
     .ingredient-tag {
       font-size: 15px;
       font-weight: bold;
@@ -351,6 +365,7 @@
       color: #e2f3ee;
       margin-bottom: 15px;
       text-align: center;
+      min-height: 50px;
     }
 
     .fb-btn {
@@ -378,7 +393,7 @@
     <!-- 2. 食材圖形區域 -->
     <div class="food-grid">
       
-      <!-- 第一排：riceball1 + 「八仙六代園」與「湖山社區發展協會」及指引線 -->
+      <!-- 第一排：riceball1 -->
       <div class="food-row row-left">
         <div class="riceball-group delay-1 trigger-farm-modal">
           <img src="riceball1.png" alt="riceball1" class="food-item" style="animation: none;">
@@ -430,35 +445,40 @@
 
   </div>
 
-  <!-- 5. 八仙六代園小視窗 -->
+  <!-- 5. 可切換卡片的小視窗 (八仙六代園 ↔ 湖山社區發展協會) -->
   <div class="modal-overlay" id="farm-modal">
     <div class="modal-card">
       
       <div class="modal-header">
         <span class="close-btn" id="close-modal">✕</span>
-        <span class="modal-title">八仙六代園</span>
+        
+        <!-- 頂部切換按鈕區 -->
+        <div class="title-switch-container">
+          <span class="title-nav-arrow" id="title-prev">‹</span>
+          <span class="modal-title" id="modal-card-title">八仙六代園</span>
+          <span class="title-nav-arrow" id="title-next">›</span>
+        </div>
+
         <span style="width:20px;"></span>
       </div>
 
-      <div class="modal-media">
+      <!-- 圖片輪播區 -->
+      <div class="modal-media" id="media-container">
         <span class="arrow-left" id="prev-img">‹</span>
-        <img src="rice.webp" alt="八仙六代園 白米" class="modal-img active">
-        <img src="eightpeople.jpg" alt="八仙六代園 人物" class="modal-img">
-        <img src="riceplant.webp" alt="八仙六代園 稻田" class="modal-img">
-        <img src="carrot.jpg" alt="八仙六代園 蘿蔔" class="modal-img">
+        <!-- JS 動態帶入圖片 -->
         <span class="arrow-right" id="next-img">›</span>
       </div>
 
-      <!-- 飯糰中的：米 標籤區塊 -->
+      <!-- 食材標籤 -->
       <div class="ingredient-tag">
-        飯糰中的：<span class="ingredient-highlight">米</span>
+        飯糰中的：<span class="ingredient-highlight" id="ingredient-text">米</span>
       </div>
 
-      <p class="modal-desc">
+      <p class="modal-desc" id="modal-desc-text">
         以陽明山的水為灌溉命脈，延續古法用灼灼烈日作為穀物烘乾機，採取友善環境不施化肥的種植方式。
       </p>
 
-      <a href="https://www.facebook.com/beitoubaxianfarm" target="_blank" class="fb-btn">
+      <a href="https://www.facebook.com/beitoubaxianfarm" target="_blank" class="fb-btn" id="modal-fb-link">
         FB
       </a>
 
@@ -467,28 +487,75 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      var triggers = document.querySelectorAll('.trigger-farm-modal');
-      var farmModal = document.getElementById('farm-modal');
-      var closeModal = document.getElementById('close-modal');
-      var modalImgs = document.querySelectorAll('.modal-img');
-      var currentIdx = 0;
+      // 兩張小視窗卡片資料集
+      var cardsData = [
+        {
+          title: "八仙六代園",
+          ingredient: "米",
+          desc: "以陽明山的水為灌溉命脈，延續古法用灼灼烈日作為穀物烘乾機，採取友善環境不施化肥的種植方式。",
+          fb: "https://www.facebook.com/beitoubaxianfarm",
+          imgs: ["rice.webp", "eightpeople.jpg", "riceplant.webp", "carrot.jpg"]
+        },
+        {
+          title: "湖山社區發展協會",
+          ingredient: "醃蘿蔔",
+          desc: "位於陽明山湖山里，致力於推廣在地友善農作與傳統醬菜手工藝，傳承在地豐富的人文與飲食文化。",
+          fb: "https://www.facebook.com/hushantw",
+          imgs: ["hu1.jpg", "hu2.jpg", "hu3.jpg", "hu4.jpg", "hu5.jpg"]
+        }
+      ];
+
+      var currentCardIdx = 0; // 0: 八仙六代園, 1: 湖山社區
+      var currentImgIdx = 0;
       var autoPlayTimer = null;
 
-      function showSlide(index) {
-        for (var i = 0; i < modalImgs.length; i++) {
-          if (i === index) {
-            modalImgs[i].classList.add('active');
-          } else {
-            modalImgs[i].classList.remove('active');
-          }
-        }
+      var farmModal = document.getElementById('farm-modal');
+      var closeModal = document.getElementById('close-modal');
+      var cardTitle = document.getElementById('modal-card-title');
+      var ingredientText = document.getElementById('ingredient-text');
+      var descText = document.getElementById('modal-desc-text');
+      var fbLink = document.getElementById('modal-fb-link');
+      var mediaContainer = document.getElementById('media-container');
+
+      // 載入指定卡片內容
+      function loadCard(cardIdx) {
+        currentCardIdx = cardIdx;
+        currentImgIdx = 0;
+        var data = cardsData[cardIdx];
+
+        cardTitle.innerText = data.title;
+        ingredientText.innerText = data.ingredient;
+        descText.innerText = data.desc;
+        fbLink.href = data.fb;
+
+        // 清除舊圖片，重新生成
+        var oldImgs = mediaContainer.querySelectorAll('.modal-img');
+        oldImgs.forEach(function(img) { img.remove(); });
+
+        data.imgs.forEach(function(src, i) {
+          var imgEl = document.createElement('img');
+          imgEl.src = src;
+          imgEl.className = 'modal-img' + (i === 0 ? ' active' : '');
+          mediaContainer.appendChild(imgEl);
+        });
+      }
+
+      function showSlide(imgIdx) {
+        var imgs = mediaContainer.querySelectorAll('.modal-img');
+        imgs.forEach(function(img, i) {
+          if (i === imgIdx) img.classList.add('active');
+          else img.classList.remove('active');
+        });
       }
 
       function startAutoPlay() {
         if (autoPlayTimer) clearInterval(autoPlayTimer);
         autoPlayTimer = setInterval(function() {
-          currentIdx = (currentIdx + 1) % modalImgs.length;
-          showSlide(currentIdx);
+          var imgs = mediaContainer.querySelectorAll('.modal-img');
+          if (imgs.length > 0) {
+            currentImgIdx = (currentImgIdx + 1) % imgs.length;
+            showSlide(currentImgIdx);
+          }
         }, 3000);
       }
 
@@ -496,14 +563,49 @@
         if (autoPlayTimer) clearInterval(autoPlayTimer);
       }
 
-      for (var j = 0; j < triggers.length; j++) {
-        triggers[j].addEventListener('click', function() {
+      // 點擊觸發點開小視窗
+      var triggers = document.querySelectorAll('.trigger-farm-modal');
+      triggers.forEach(function(trigger) {
+        trigger.addEventListener('click', function() {
           if (farmModal) {
+            loadCard(0); // 預設先開八仙六代園
             farmModal.classList.add('active');
             startAutoPlay();
           }
         });
-      }
+      });
+
+      // 頂部標題 ‹ › 箭頭切換小視窗
+      document.getElementById('title-prev').addEventListener('click', function() {
+        stopAutoPlay();
+        currentCardIdx = (currentCardIdx - 1 + cardsData.length) % cardsData.length;
+        loadCard(currentCardIdx);
+        startAutoPlay();
+      });
+
+      document.getElementById('title-next').addEventListener('click', function() {
+        stopAutoPlay();
+        currentCardIdx = (currentCardIdx + 1) % cardsData.length;
+        loadCard(currentCardIdx);
+        startAutoPlay();
+      });
+
+      // 圖片左右切換
+      document.getElementById('next-img').addEventListener('click', function() {
+        stopAutoPlay();
+        var imgs = mediaContainer.querySelectorAll('.modal-img');
+        currentImgIdx = (currentImgIdx + 1) % imgs.length;
+        showSlide(currentImgIdx);
+        startAutoPlay();
+      });
+
+      document.getElementById('prev-img').addEventListener('click', function() {
+        stopAutoPlay();
+        var imgs = mediaContainer.querySelectorAll('.modal-img');
+        currentImgIdx = (currentImgIdx - 1 + imgs.length) % imgs.length;
+        showSlide(currentImgIdx);
+        startAutoPlay();
+      });
 
       if (closeModal && farmModal) {
         closeModal.addEventListener('click', function() {
@@ -518,27 +620,6 @@
             farmModal.classList.remove('active');
             stopAutoPlay();
           }
-        });
-      }
-
-      var nextBtn = document.getElementById('next-img');
-      var prevBtn = document.getElementById('prev-img');
-
-      if (nextBtn) {
-        nextBtn.addEventListener('click', function() {
-          stopAutoPlay();
-          currentIdx = (currentIdx + 1) % modalImgs.length;
-          showSlide(currentIdx);
-          startAutoPlay();
-        });
-      }
-
-      if (prevBtn) {
-        prevBtn.addEventListener('click', function() {
-          stopAutoPlay();
-          currentIdx = (currentIdx - 1 + modalImgs.length) % modalImgs.length;
-          showSlide(currentIdx);
-          startAutoPlay();
         });
       }
     });
