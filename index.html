@@ -460,7 +460,7 @@
         </div>
       </div>
 
-      <!-- vege (點擊跳出一德農園) -->
+      <!-- vege (點擊可切換：一德農園 ↔ 山水香-曹永慶 ↔ 四口田 ↔ 故鄉金針花農園) -->
       <div class="food-row row-left" style="margin-top: -10px;">
         <div class="food-group color-vege delay-3 trigger-farm-modal" data-modal="vege">
           <img src="vege.png" alt="vege" class="food-item" style="max-width: 125px;">
@@ -544,7 +544,7 @@
       </div>
 
       <div class="ingredient-tag">
-        <span id="prefix-text">飯糰中的：</span><span class="ingredient-highlight" id="ingredient-text">米</span>
+        <span id="prefix-text">蔬菜裡有：</span><span class="ingredient-highlight" id="ingredient-text">小黃瓜 / 百香果</span>
       </div>
 
       <p class="modal-desc" id="modal-desc-text"></p>
@@ -589,6 +589,30 @@
           }
         ],
         vege: [
+          {
+            title: "山水香-曹永慶",
+            prefix: "蔬菜裡有：",
+            ingredient: "地瓜",
+            desc: "堅持友善土地的耕作精神，用心栽培優質在地地瓜與農作物，傳遞最單純樸實的在地好滋味。",
+            fb: "https://www.facebook.com/shanshuixiang",
+            imgs: ["tsh1.jpg"]
+          },
+          {
+            title: "四口田",
+            prefix: "蔬菜裡有：",
+            ingredient: "新鮮蔬果 / 蜂蜜",
+            desc: "致力於推廣自然有機栽培與生態養蜂，堅持不使用化學農藥，提供純淨自然的美味食材。",
+            fb: "https://www.facebook.com/4sunkitchen",
+            imgs: ["f1.jpg", "f2.jpeg", "f3.jpg", "f4.jpg", "f5.jpg", "f6.jpg", "f7.jpg", "f8.jpg"]
+          },
+          {
+            title: "故鄉金針花農園",
+            prefix: "蔬菜裡有：",
+            ingredient: "金針花",
+            desc: "位於北投陽明山，用心經營金針花海與友善農作，讓到訪民眾感受農村美麗景色與在地飲食活力。",
+            fb: "https://www.facebook.com/homeland.farm",
+            imgs: ["ku1.jpg", "ku2.jpg", "ku3.jpg", "ku4.jpg", "ku5.jpg"]
+          },
           {
             title: "一德農園",
             prefix: "蔬菜裡有：",
@@ -645,6 +669,17 @@
           imgEl.className = 'modal-img' + (i === 0 ? ' active' : '');
           mediaContainer.appendChild(imgEl);
         });
+
+        // 若該卡片只有 1 張照片，則隱藏圖片內部的輪播箭頭
+        var prevImgBtn = document.getElementById('prev-img');
+        var nextImgBtn = document.getElementById('next-img');
+        if (data.imgs.length <= 1) {
+          prevImgBtn.style.display = 'none';
+          nextImgBtn.style.display = 'none';
+        } else {
+          prevImgBtn.style.display = 'flex';
+          nextImgBtn.style.display = 'flex';
+        }
       }
 
       function showSlide(imgIdx) {
@@ -659,7 +694,7 @@
         if (autoPlayTimer) clearInterval(autoPlayTimer);
         autoPlayTimer = setInterval(function() {
           var imgs = mediaContainer.querySelectorAll('.modal-img');
-          if (imgs.length > 0) {
+          if (imgs.length > 1) {
             currentImgIdx = (currentImgIdx + 1) % imgs.length;
             showSlide(currentImgIdx);
           }
@@ -700,17 +735,21 @@
       document.getElementById('next-img').addEventListener('click', function() {
         stopAutoPlay();
         var imgs = mediaContainer.querySelectorAll('.modal-img');
-        currentImgIdx = (currentImgIdx + 1) % imgs.length;
-        showSlide(currentImgIdx);
-        startAutoPlay();
+        if (imgs.length > 1) {
+          currentImgIdx = (currentImgIdx + 1) % imgs.length;
+          showSlide(currentImgIdx);
+          startAutoPlay();
+        }
       });
 
       document.getElementById('prev-img').addEventListener('click', function() {
         stopAutoPlay();
         var imgs = mediaContainer.querySelectorAll('.modal-img');
-        currentImgIdx = (currentImgIdx - 1 + imgs.length) % imgs.length;
-        showSlide(currentImgIdx);
-        startAutoPlay();
+        if (imgs.length > 1) {
+          currentImgIdx = (currentImgIdx - 1 + imgs.length) % imgs.length;
+          showSlide(currentImgIdx);
+          startAutoPlay();
+        }
       });
 
       if (closeModal && farmModal) {
