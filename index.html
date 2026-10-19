@@ -102,6 +102,23 @@
       justify-content: center;
     }
 
+    /* 飯糰 + 文字組合容器 */
+    .riceball-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .riceball-label {
+      font-size: 18px;
+      font-weight: bold;
+      color: #b3c200;
+      letter-spacing: 1px;
+      user-select: none;
+      white-space: nowrap;
+    }
+
     /* 漂浮與點擊放大效果 */
     .food-item {
       max-width: 130px;
@@ -239,9 +256,9 @@
 
     .modal-media {
       width: 100%;
-      height: 190px;
+      height: 180px;
       position: relative;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       border-radius: 12px;
       overflow: hidden;
       background-color: rgba(255,255,255,0.1);
@@ -280,6 +297,24 @@
     .arrow-left { left: 8px; }
     .arrow-right { right: 8px; }
 
+    /* 「飯糰中的：米」提示列 */
+    .ingredient-tag {
+      font-size: 15px;
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ingredient-highlight {
+      border: 2px solid #b3c200;
+      color: #ffffff;
+      padding: 2px 10px;
+      border-radius: 8px;
+      background-color: rgba(179, 194, 0, 0.2);
+    }
+
     .modal-desc {
       font-size: 13px;
       line-height: 1.6;
@@ -304,7 +339,7 @@
 
   <div class="page-container">
     
-    <!-- 1. 頂部 Header (點擊導至外部網站) -->
+    <!-- 1. 頂部 Header -->
     <div class="header-section">
       <a href="https://usrhub.tnua.edu.tw/elementor-6431/#" class="btn-back-top">回上面</a>
       <h1 class="header-title">餐食介紹</h1>
@@ -313,9 +348,14 @@
     <!-- 2. 食材圖形區域 -->
     <div class="food-grid">
       
+      <!-- 第一排：riceball1 + 「八仙六代園」 -->
       <div class="food-row row-left">
-        <img src="riceball1.png" alt="riceball1" class="food-item delay-1 trigger-farm-modal">
+        <div class="riceball-group trigger-farm-modal">
+          <img src="riceball1.png" alt="riceball1" class="food-item delay-1">
+          <span class="riceball-label">八仙六代園</span>
+        </div>
       </div>
+
       <div class="food-row row-right" style="margin-top: -40px;">
         <img src="chicken.png" alt="chicken" class="food-item delay-2">
       </div>
@@ -323,8 +363,13 @@
       <div class="food-row row-left" style="margin-top: -10px; padding-left: 50px;">
         <img src="vege.png" alt="vege" class="food-item delay-3" style="max-width: 140px;">
       </div>
+
+      <!-- 第二排：riceball2 + 「湖山社區發展協會」 -->
       <div class="food-row row-right" style="margin-top: -30px;">
-        <img src="riceball2.png" alt="riceball2" class="food-item delay-4 trigger-farm-modal">
+        <div class="riceball-group trigger-farm-modal">
+          <img src="riceball2.png" alt="riceball2" class="food-item delay-4">
+          <span class="riceball-label">湖山社區發展協會</span>
+        </div>
       </div>
 
       <div class="food-row row-left" style="margin-top: -20px;">
@@ -366,6 +411,11 @@
         <img src="riceplant.webp" alt="八仙六代園 稻田" class="modal-img">
         <img src="carrot.jpg" alt="八仙六代園 蘿蔔" class="modal-img">
         <span class="arrow-right" id="next-img">›</span>
+      </div>
+
+      <!-- 飯糰中的：米 標籤區塊 -->
+      <div class="ingredient-tag">
+        飯糰中的：<span class="ingredient-highlight">米</span>
       </div>
 
       <p class="modal-desc">
