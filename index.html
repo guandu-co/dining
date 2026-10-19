@@ -86,7 +86,7 @@
       user-select: none;
     }
 
-    /* 食材圖形網格區域 (拉大間距 gap: 40px) */
+    /* 食材圖形網格區域 */
     .food-grid {
       width: 100%;
       display: flex;
@@ -176,7 +176,7 @@
       white-space: nowrap;
     }
 
-    /* 各組色彩定義 (文字與 卷卷.png 連接線顏色) */
+    /* 各組色彩定義 */
     .color-riceball1 .food-label-text { color: #d3be6a; }
     .color-riceball1 .curly-png-line { background-color: #d3be6a; }
 
@@ -215,7 +215,7 @@
     .delay-6 { animation-delay: 2.5s; }
 
     /* -----------------------------------
-       底部 Banner 輪播區域（依照原始圖片比例）
+       底部 Banner 輪播區域
     ----------------------------------- */
     .banner-slider-container {
       width: 100%;
@@ -627,7 +627,7 @@
       }
 
       // -----------------------------------
-      // 2. 共通農場資料與 Modal 邏輯
+      // 2. 共通農場資料與 Modal 邏輯 (使用最新詳細介紹內文)
       // -----------------------------------
       var farm_baxian = {
         title: "八仙六代園",
@@ -642,70 +642,70 @@
         title: "湖山社區發展協會",
         prefix: "食材中的：",
         ingredient: "豆腐乳",
-        desc: "位於陽明山湖山里，致力於推廣在地友善農作與傳統醬菜手工藝，傳承在地豐富的人文與飲食文化。",
+        desc: "歷史建築珍藏、探索古道湖底的神秘風情。<br><br>湖山社區內獨特的歷史建物「地下總統府」，是當年專門設計給蔣中正當成緊急避難與臨時指揮所，目前當地社區也結合在地農家與歷史文化推出多樣套裝行程，例如帶領走訪蔣家政權時代史蹟，或是走進橫嶺古道、湖底步道、湖底社區，或許欣賞老楓香，或許走訪櫻花秘境。",
         fb: "https://www.facebook.com/hushantw",
         imgs: ["hu1.jpg", "hu2.jpg", "hu3.jpg", "hu4.jpg", "hu5.jpg"]
-      };
-
-      var farm_fengcun = {
-        title: "峰村有機農場",
-        prefix: "食材中的：",
-        ingredient: "洛神花",
-        desc: "位於北投關渡平原，堅持友善耕作與有機種植，細心呵護每一株作物，提供安全健康的天然食材。",
-        fb: "https://www.facebook.com/fengcun.farm",
-        imgs: ["fon1.jpg", "fon2.jpg", "fon3.jpg", "fon4.jpeg"]
-      };
-
-      var farm_yide = {
-        title: "一德農園",
-        prefix: "食材中的：",
-        ingredient: "小黃瓜 / 百香果",
-        desc: "傳承在地多代經營，用心耕作優質蔬果與醬菜產品，展現關渡在地豐富濃郁的農業風貌。",
-        fb: "https://www.facebook.com/profile.php?id=100063934371465",
-        imgs: ["yide1.jpg", "yide2.jpg", "yide3.jpg", "yide4.jpg", "yide5.jpg", "yide6.jpg", "yide7.jpg"]
       };
 
       var farm_sunkitchen = {
         title: "四口田",
         prefix: "食材中的：",
         ingredient: "新鮮蔬果 / 蜂蜜",
-        desc: "致力於推廣自然有機栽培與生態養蜂，堅持不使用化學農藥，提供純淨自然的美味食材。",
+        desc: "農場坐落在陽明山國家公園，致力於生產有機農產品，並落實地產地消，為大台北地區提供優良蔬果。<br><br>此外，我們也注重與社會的連結：部分園區規劃作為市民農園，幫助在地居民一圓田園夢；推行食農教育課程，增進學員對於農業與飲食的知識涵養；舉辦各式療癒活動，帶領訪客感受大自然的療癒能量。",
         fb: "https://www.facebook.com/4sunkitchen",
         imgs: ["f1.jpg", "f2.jpeg", "f3.jpg", "f4.jpg", "f5.jpg", "f6.jpg", "f7.jpg", "f8.jpg"]
       };
 
-      var farm_shanshui = {
-        title: "山水香-曹永慶",
+      var farm_fengcun = {
+        title: "峰村有機農場",
         prefix: "食材中的：",
-        ingredient: "地瓜",
-        desc: "堅持友善土地的耕作精神，用心栽培優質在地地瓜與農作物，傳遞最單純樸實的在地好滋味。",
-        fb: "https://www.facebook.com/shanshuixiang",
-        imgs: ["tsh1.jpg"]
-      };
-
-      var farm_homeland = {
-        title: "故鄉金針花農園",
-        prefix: "食材中的：",
-        ingredient: "金針花",
-        desc: "位於北投陽明山，用心經營金針花海與友善農作，讓到訪民眾感受農村美麗景色與在地飲食活力。",
-        fb: "https://www.facebook.com/homeland.farm",
-        imgs: ["ku1.jpg", "ku2.jpg", "ku3.jpg", "ku4.jpg", "ku5.jpg"]
+        ingredient: "洛神花",
+        desc: "位於北投山腳下的峰村有機農場，隱身於從關渡捷運站步行即可抵達的驚喜之地，是一處堅持無農藥耕作的有機天地。<br><br>農場提供各式有機季節蔬菜、水果、自製果醬等等多樣品項可供購買唷！",
+        fb: "https://www.facebook.com/fengcun.farm",
+        imgs: ["fon1.jpg", "fon2.jpg", "fon3.jpg", "fon4.jpeg"]
       };
 
       var farm_suiye = {
         title: "隨野家農場",
         prefix: "玉子燒中的：",
         ingredient: "放牧蛋",
-        desc: "堅持人道飼養與友善放牧，讓母雞在自然舒適的環境下健康成長，生產純淨放心的好品質雞蛋。",
+        desc: "隱身於北投捷運站附近的隨野家農場，是一座兼具友善動物與生活美學的都市放牧雞農場。<br><br>主理人佳敏與小丁從2018年開始以低密度友善放牧養殖雞群，打破傳統雞舍印象，打造自然循環的環境與美學體驗空間。透過深度食農教育與蛋雞福利宣導，讓大眾在城市角落感受人與動物、土地和諧共生的美好。",
         fb: "https://www.facebook.com/suiyejia",
         imgs: ["w1.jpg", "w2.avif", "w3.avif", "w4.avif", "w5.jpg", "w6.jpg"]
       };
 
+      var farm_shanshui = {
+        title: "山水香--曹永慶農友",
+        prefix: "食材中的：",
+        ingredient: "地瓜",
+        desc: "在地深耕，新鮮野菜。<br><br>農家子弟曹永慶之前經營山水香庭園野菜餐廳，深耕竹子湖多年。目前餐廳轉成販售自耕與在地採集的現摘新鮮野菜，有前往竹子湖的話，可前往自助選購唷！",
+        fb: "https://www.facebook.com/shanshuixiang",
+        imgs: ["tsh1.jpg"]
+      };
+
+      var farm_yide = {
+        title: "一德農園--黃明賢農友",
+        prefix: "食材中的：",
+        ingredient: "小黃瓜 / 百香果",
+        desc: "黃先生退休後為陪伴老父投身農業，二十年來堅持無毒栽培，以工程思維將文旦樹矮化、推行物理生態防治。<br><br>園內更有依循時節輪替的近百種豐富作物，涵蓋柑橘類、芭樂、樹葡萄等水果，以及地瓜、絲瓜、辛香料等當季蔬菜，兼顧生態與優良品質。",
+        fb: "https://www.facebook.com/profile.php?id=100063934371465",
+        imgs: ["yide1.jpg", "yide2.jpg", "yide3.jpg", "yide4.jpg", "yide5.jpg", "yide6.jpg", "yide7.jpg"]
+      };
+
+      var farm_homeland = {
+        title: "故鄉",
+        prefix: "食材中的：",
+        ingredient: "金針花",
+        desc: "一場與金黃花海、手作體驗相遇的小農遊。<br><br>來故鄉可以遇見金黃花海秘境、自己採金針花，或是購買海芋、野蜂蜜等農特產，輕鬆小旅行之餘也提供多樣DIY手作體驗，包含金針花手工精油皂、花卉擴香石等，更不要錯過這邊的美味，特別雞肉都是來自陽明山區飼養的放山雞，滋味鮮甜多膠質。",
+        fb: "https://www.facebook.com/homeland.farm",
+        imgs: ["ku1.jpg", "ku2.jpg", "ku3.jpg", "ku4.jpg", "ku5.jpg"]
+      };
+
       var farm_caifu = {
-        title: "財福海芋田",
+        title: "財福",
         prefix: "甜點中的：",
         ingredient: "海芋 / 繡球花",
-        desc: "位於陽明山竹子湖，耕耘優質海芋與繡球花卉，推廣休閒農業與四季花卉風貌，帶給民眾親近自然的溫暖體驗。",
+        desc: "堅持友善無污染耕作，花田轉型獲選百大青農。<br><br>位於陽明山竹子湖頂湖地區，農場堅持友善無污染耕作與食農教育，提供採海芋、植物手作體驗及小農飲品點心，更舉辦多場食農教育體驗工作坊，與其他農田不同之處是田前方時不時有冒煙的七星山小油坑，為農場帶來與眾不同的視覺。",
         fb: "https://www.facebook.com/caifucalla",
         imgs: ["p1.JPG", "p2.jpg", "p3.JPG", "p4.JPG", "p5.jpg", "p6.jpeg", "p7.jpeg", "p8.jpg", "p9.jpg"]
       };
