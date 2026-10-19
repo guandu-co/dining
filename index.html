@@ -139,7 +139,7 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
-      pointer-events: none; /* 防止擋住點擊 */
+      pointer-events: none;
     }
 
     .labels-right {
@@ -163,7 +163,7 @@
       display: inline-block;
       margin: 0 2px;
       flex-shrink: 0;
-      pointer-events: none; /* 關鍵：避免遮擋點擊事件 */
+      pointer-events: none;
       -webkit-mask-image: url('卷卷.png');
       mask-image: url('卷卷.png');
       -webkit-mask-size: contain;
@@ -527,12 +527,12 @@
         </div>
       </div>
 
-      <!-- riceball2 (四口田 ↔ 八仙六代園 ↔ 峰村有機農場) -->
+      <!-- riceball2 (八仙六代園 ↔ 四口田 ↔ 峰村有機農場) -->
       <div class="food-row row-right">
         <div class="food-group color-riceball2 delay-4 trigger-farm-modal" data-modal="riceball2">
           <div class="labels-column labels-left">
-            <div class="label-line-item"><span class="food-label-text">四口田</span><span class="curly-png-line"></span></div>
             <div class="label-line-item"><span class="food-label-text">八仙六代園</span><span class="curly-png-line"></span></div>
+            <div class="label-line-item"><span class="food-label-text">四口田</span><span class="curly-png-line"></span></div>
             <div class="label-line-item"><span class="food-label-text">峰村有機農場</span><span class="curly-png-line"></span></div>
           </div>
           <img src="riceball2.png" alt="riceball2" class="food-item">
