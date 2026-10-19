@@ -151,11 +151,13 @@
       align-items: center;
     }
 
-    .pointer-line {
-      width: 25px;
-      height: 2px;
+    /* SVG 手繪打結捲捲線通用樣式 */
+    .curly-swirl-svg {
+      width: 30px;
+      height: 18px;
       display: inline-block;
-      margin: 0 4px;
+      margin: 0 2px;
+      flex-shrink: 0;
     }
 
     .food-label-text {
@@ -166,24 +168,24 @@
       white-space: nowrap;
     }
 
-    /* 各組色彩定義 */
-    .color-riceball1 .pointer-line { background-color: #d3be6a; }
+    /* 各組色彩定義 (包含文字與 SVG 捲捲線 stroke 顏色) */
     .color-riceball1 .food-label-text { color: #d3be6a; }
+    .color-riceball1 path { stroke: #d3be6a; }
 
-    .color-chicken .pointer-line { background-color: #c56e3b; }
     .color-chicken .food-label-text { color: #c56e3b; }
+    .color-chicken path { stroke: #c56e3b; }
 
-    .color-vege .pointer-line { background-color: #8f9e1e; }
     .color-vege .food-label-text { color: #8f9e1e; }
+    .color-vege path { stroke: #8f9e1e; }
 
-    .color-riceball2 .pointer-line { background-color: #ba8ecf; }
     .color-riceball2 .food-label-text { color: #ba8ecf; }
+    .color-riceball2 path { stroke: #ba8ecf; }
 
-    .color-eggroll .pointer-line { background-color: #f0b800; }
     .color-eggroll .food-label-text { color: #f0b800; }
+    .color-eggroll path { stroke: #f0b800; }
 
-    .color-cake .pointer-line { background-color: #f09bb0; }
     .color-cake .food-label-text { color: #f09bb0; }
+    .color-cake path { stroke: #f09bb0; }
 
     .food-item {
       max-width: 120px;
@@ -218,7 +220,6 @@
       display: block;
     }
 
-    /* 占位用圖片，維持原圖高寬比 */
     .banner-placeholder {
       width: 100%;
       height: auto;
@@ -461,6 +462,13 @@
       </div>
     </div>
 
+    <!-- 食材手繪捲捲線 SVG 元件範本 -->
+    <svg style="display: none;">
+      <g id="curly-swirl-path">
+        <path d="M 1,10 Q 8,10 12,5 A 4,4 0 1,1 12,13 Q 16,10 29,10" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </svg>
+
     <!-- 2. 食材圖形區域 -->
     <div class="food-grid">
       
@@ -469,8 +477,14 @@
         <div class="food-group color-riceball1 delay-1 trigger-farm-modal" data-modal="riceball1">
           <img src="riceball1.png" alt="riceball1" class="food-item">
           <div class="labels-column labels-right">
-            <div class="label-line-item"><span class="pointer-line"></span><span class="food-label-text">八仙六代園</span></div>
-            <div class="label-line-item"><span class="pointer-line"></span><span class="food-label-text">湖山社區發展協會</span></div>
+            <div class="label-line-item">
+              <svg class="curly-swirl-svg" viewBox="0 0 30 18"><use href="#curly-swirl-path"/></svg>
+              <span class="food-label-text">八仙六代園</span>
+            </div>
+            <div class="label-line-item">
+              <svg class="curly-swirl-svg" viewBox="0 0 30 18"><use href="#curly-swirl-path"/></svg>
+              <span class="food-label-text">湖山社區發展協會</span>
+            </div>
           </div>
         </div>
       </div>
@@ -479,7 +493,10 @@
       <div class="food-row row-right" style="margin-top: -30px;">
         <div class="food-group color-chicken delay-2 trigger-farm-modal" data-modal="chicken">
           <div class="labels-column labels-left">
-            <div class="label-line-item"><span class="food-label-text">峰村有機農場</span><span class="pointer-line"></span></div>
+            <div class="label-line-item">
+              <span class="food-label-text">峰村有機農場</span>
+              <svg class="curly-swirl-svg" viewBox="0 0 30 18"><use href="#curly-swirl-path"/></svg>
+            </div>
           </div>
           <img src="chicken.png" alt="chicken" class="food-item">
         </div>
@@ -490,12 +507,12 @@
         <div class="food-group color-vege delay-3 trigger-farm-modal" data-modal="vege">
           <img src="vege.png" alt="vege" class="food-item" style="max-width: 125px;">
           <div class="labels-column labels-right">
-            <div class="label-line-item"><span class="pointer-line"></span><span class="food-label-text">一德農園</span></div>
-            <div class="label-line-item"><span class="pointer-line"></span><span class="food-label-text">四口田</span></div>
-            <div class="label-line-item"><span class="pointer-line"></span><span class="food-label-text">故鄉金針花農園</span></div>
-            <div class="label-line-item"><span class="pointer-line"></span><span class="food-label-text">峰村有機農場</span></div>
-            <div class="label-line-item"><span class="pointer-line"></span><span class="food-label-text">山水香-曹永慶</span></div>
-            <div class="label-line-item"><span class="pointer-line"></span><span class="food-label-text">湖山社區發展協會</span></div>
+            <div class="label-line-item"><svg class="curly-swirl-svg" viewBox="0 0 30 18"><use href="#curly-swirl-path"/></svg><span class="food-label-text">一德農園</span></div>
+            <div class="label-line-item"><svg class="curly-swirl-svg" viewBox="0 0 30 18"><use href="#curly-swirl-path"/></svg><span class="food-label-text">四口田</span></div>
+            <div class="label-line-item"><svg class="curly-swirl-svg" viewBox="0 0 30 18"><use href="#curly-swirl-path"/></svg><span class="food-label-text">故鄉金針花農園</span></div>
+            <div class="label-line-item"><svg class="curly-swirl-svg" viewBox="0 0 30 18"><use href="#curly-swirl-path"/></svg><span class="food-label-text">峰村有機農場</span></div>
+            <div class="label-line-item"><svg class="curly-swirl-svg" viewBox="0 0 30 18"><use href="#curly-swirl-path"/></svg><span class="food-label-text">山水香-曹永慶</span></div>
+            <div class="label-line-item"><svg class="curly-swirl-svg" viewBox="0 0 30 18"><use href="#curly-swirl-path"/></svg><span class="food-label-text">湖山社區發展協會</span></div>
           </div>
         </div>
       </div>
@@ -504,9 +521,9 @@
       <div class="food-row row-right" style="margin-top: -20px;">
         <div class="food-group color-riceball2 delay-4 trigger-farm-modal" data-modal="riceball2">
           <div class="labels-column labels-left">
-            <div class="label-line-item"><span class="food-label-text">四口田</span><span class="pointer-line"></span></div>
-            <div class="label-line-item"><span class="food-label-text">八仙六代園</span><span class="pointer-line"></span></div>
-            <div class="label-line-item"><span class="food-label-text">峰村有機農場</span><span class="pointer-line"></span></div>
+            <div class="label-line-item"><span class="food-label-text">四口田</span><svg class="curly-swirl-svg" viewBox="0 0 30 18"><use href="#curly-swirl-path"/></svg></div>
+            <div class="label-line-item"><span class="food-label-text">八仙六代園</span><svg class="curly-swirl-svg" viewBox="0 0 30 18"><use href="#curly-swirl-path"/></svg></div>
+            <div class="label-line-item"><span class="food-label-text">峰村有機農場</span><svg class="curly-swirl-svg" viewBox="0 0 30 18"><use href="#curly-swirl-path"/></svg></div>
           </div>
           <img src="riceball2.png" alt="riceball2" class="food-item">
         </div>
@@ -517,8 +534,8 @@
         <div class="food-group color-eggroll delay-5 trigger-farm-modal" data-modal="eggroll">
           <img src="eggroll.png" alt="eggroll" class="food-item" style="max-width: 130px;">
           <div class="labels-column labels-right">
-            <div class="label-line-item"><span class="pointer-line"></span><span class="food-label-text">足妹農場</span></div>
-            <div class="label-line-item"><span class="pointer-line"></span><span class="food-label-text">隨野家農場</span></div>
+            <div class="label-line-item"><svg class="curly-swirl-svg" viewBox="0 0 30 18"><use href="#curly-swirl-path"/></svg><span class="food-label-text">足妹農場</span></div>
+            <div class="label-line-item"><svg class="curly-swirl-svg" viewBox="0 0 30 18"><use href="#curly-swirl-path"/></svg><span class="food-label-text">隨野家農場</span></div>
           </div>
         </div>
       </div>
@@ -527,10 +544,10 @@
       <div class="food-row row-center" style="margin-top: 10px;">
         <div class="food-group color-cake delay-6 trigger-farm-modal" data-modal="cake">
           <div class="labels-column labels-left">
-            <div class="label-line-item"><span class="food-label-text">一德農園</span><span class="pointer-line"></span></div>
-            <div class="label-line-item"><span class="food-label-text">八仙六代園</span><span class="pointer-line"></span></div>
-            <div class="label-line-item"><span class="food-label-text">財福海芋田</span><span class="pointer-line"></span></div>
-            <div class="label-line-item"><span class="food-label-text">峰村有機農場</span><span class="pointer-line"></span></div>
+            <div class="label-line-item"><span class="food-label-text">一德農園</span><svg class="curly-swirl-svg" viewBox="0 0 30 18"><use href="#curly-swirl-path"/></svg></div>
+            <div class="label-line-item"><span class="food-label-text">八仙六代園</span><svg class="curly-swirl-svg" viewBox="0 0 30 18"><use href="#curly-swirl-path"/></svg></div>
+            <div class="label-line-item"><span class="food-label-text">財福海芋田</span><svg class="curly-swirl-svg" viewBox="0 0 30 18"><use href="#curly-swirl-path"/></svg></div>
+            <div class="label-line-item"><span class="food-label-text">峰村有機農場</span><svg class="curly-swirl-svg" viewBox="0 0 30 18"><use href="#curly-swirl-path"/></svg></div>
           </div>
           <img src="cake.png" alt="cake" class="food-item" style="max-width: 135px;">
         </div>
@@ -538,13 +555,13 @@
 
     </div>
 
-    <!-- 3. 底部 Banner 區域 (第一張播放 banner2.png) -->
+    <!-- 3. 底部 Banner 區域 (第一張播放 banner3) -->
     <div class="banner-slider-container" id="banner-slider">
-      <!-- 佔位圖，維持比例 -->
+      <!-- 佔位圖，維持原比例 -->
       <img src="guandu-banner.jpg" class="banner-placeholder" alt="banner placeholder">
       
-      <!-- 第一張播放：banner2.png -->
-      <img src="banner2.png" alt="關渡共食" class="banner-slide-img active" onerror="if(this.src.endsWith('.png')){this.src='banner2.jpg';}else if(this.src.endsWith('.jpg')){this.src='banner2.jpeg';}">
+      <!-- 第一張播放：banner3 -->
+      <img src="banner3.png" alt="關渡共食" class="banner-slide-img active" onerror="if(this.src.endsWith('.png')){this.src='banner3.jpg';}else if(this.src.endsWith('.jpg')){this.src='banner3.jpeg';}">
       
       <!-- 第二張播放：guandu-banner.jpg -->
       <img src="guandu-banner.jpg" alt="關渡平原微型藝術祭" class="banner-slide-img">
