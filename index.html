@@ -60,6 +60,7 @@
       border: none;
       text-decoration: none;
       flex-shrink: 0;
+      z-index: 10;
     }
     .btn-back-top:active {
       transform: scale(0.95);
@@ -126,16 +127,19 @@
       will-change: transform;
       animation: floatAnim 3s ease-in-out infinite alternate;
       transition: transform 0.15s ease-out;
+      position: relative;
+      z-index: 5;
     }
 
     .food-group:active {
-      transform: scale(1.1) !important;
+      transform: scale(1.08) !important;
     }
 
     .labels-column {
       display: flex;
       flex-direction: column;
       gap: 12px;
+      pointer-events: none; /* 防止擋住點擊 */
     }
 
     .labels-right {
@@ -149,6 +153,7 @@
     .label-line-item {
       display: flex;
       align-items: center;
+      pointer-events: none;
     }
 
     /* 卷卷.png 連接線 */
@@ -158,6 +163,7 @@
       display: inline-block;
       margin: 0 2px;
       flex-shrink: 0;
+      pointer-events: none; /* 關鍵：避免遮擋點擊事件 */
       -webkit-mask-image: url('卷卷.png');
       mask-image: url('卷卷.png');
       -webkit-mask-size: contain;
@@ -174,6 +180,7 @@
       letter-spacing: 0.5px;
       user-select: none;
       white-space: nowrap;
+      pointer-events: none;
     }
 
     /* 各組色彩定義 (文字與 卷卷.png 連接線顏色) */
@@ -200,6 +207,7 @@
       height: auto;
       cursor: pointer;
       display: block;
+      pointer-events: none;
     }
 
     @keyframes floatAnim {
@@ -454,6 +462,7 @@
       font-weight: bold;
       font-size: 14px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      display: inline-block;
     }
   </style>
 </head>
@@ -627,7 +636,7 @@
       var desc_baxian = "農家第六代---宣智與亦真堅持友善耕作與自然共生，致力為下一代留下無毒乾淨的土地。<br><br>農場積極推動食農教育與季節農事體驗，包含插秧、割稻及米食 DIY、稻田運動會。邀請民眾在金黃稻浪間親近土地，感受都市角落裡最真誠的農村風土。";
       var desc_hushan = "歷史建築珍藏、探索古道湖底的神秘風情。<br><br>湖山社區內獨特的歷史建物「地下總統府」，是當年專門設計給蔣中正當成緊急避難與臨時指揮所，目前當地社區也結合在地農家與歷史文化推出多樣套裝行程，例如帶領走訪蔣家政權時代史蹟，或是走進橫嶺古道、湖底步道、湖底社區，或許欣賞老楓香，或許走訪櫻花祕境。";
       var desc_sunkitchen = "一口有機蔬菜、一口生態蜂蜜、一口放牧雞蛋、一口自然水果，配上一把新鮮土壤與一片完整天空。<br><br>從廢柴荒地到現在的有機農場＿四口田＿阿忠長年耕耘於陽明山，四口田創立於2020年，位於陽明山十八份，可遠眺紗帽山與臺北盆地。由青農夥伴共同經營，採用純淨山泉水灌溉與友善土地的有機耕作模式。農場積極推動社群支持型農業、有機藍莓與香草栽培、放牧養殖及食農教育體驗，引導大小朋友在自然中認識食物真實樣貌。";
-      var desc_fengcun = "位於北投山腳下的峰村有機農場，隱身於從關渡捷運站步行即可抵達的驚喜之處，是一處堅持無農藥耕作的有機天地。<br><br>農場提供各式有機蔬菜、水果（如火龍果、芭樂）可供販售。<br><br>農場亮點與特色：<br>1. 交通便利：從北投捷運站步行即可抵達。<br>2. 豐富食農體驗：預約可體驗採果、挖地瓜、堆窯烤蛋、現摘青菜。<br>3. 客製化與文化連結：為不同年齡層量身設計課程，並結合在地陶瓷歷史舉辦彩繪活動。";
+      var desc_fengcun = "位於北投山腳下的峰村有機農場，隱身於從關渡捷運站步行即可抵達的驚喜之地，是一處堅持無農藥耕作的有機天地。<br><br>農場提供各式有機季節蔬菜、水果、自製果醬等等多樣品項可供購買唷！";
       var desc_suiye = "隱身於北投捷運站附近的隨野家農場，是一座兼具友善動物與生活美學的都市放牧雞農場。<br><br>主理人佳敏與小丁從2018年開始以低密度友善放牧養殖雞群，打破傳統雞舍印象，打造自然循環的環境與美學體驗空間。透過深度食農教育與蛋雞福利宣導，讓大眾在城市角落感受人與動物、土地和諧共生的美好。";
       var desc_shanshui = "在地深耕，新鮮野菜。<br><br>農家子弟曹永慶之前經營山水香庭園野菜餐廳，深耕竹子湖多年。目前餐廳轉成販售自耕與在地採集的現摘新鮮野菜。";
       var desc_yide = "黃先生退休後為陪伴老父投身農業，二十年來堅持無毒栽培，以工程思維將文旦樹矮化、推行物理生態防治。<br><br>園內更有依循時節輪替的近百種豐富作物，涵蓋柑橘類、芭樂、樹葡萄等水果，以及地瓜、絲瓜、辛香料等當季蔬菜，兼顧生態與優良品質。";
@@ -636,7 +645,7 @@
       var desc_zumei = "位於北投在地友善農場，用心栽種優質無毒蔬果與特殊作物，堅持自然永續耕作。";
 
       // -----------------------------------
-      // 3. 各料理專屬 Modal 資料組 (按鈕與電話客製化)
+      // 3. 各料理專屬 Modal 資料組
       // -----------------------------------
       var modalDataSets = {
         // riceball1
@@ -656,4 +665,339 @@
             ingredient: "豆腐乳、珠蔥",
             desc: desc_hushan,
             btnText: "FB",
-            fb:
+            fb: "https://www.facebook.com/Husancommuntiyassociation/",
+            imgs: ["hu1.jpg", "hu2.jpg", "hu3.jpg", "hu4.jpg", "hu5.jpg"]
+          }
+        ],
+
+        // riceball2
+        riceball2: [
+          {
+            title: "八仙六代園",
+            prefix: "飯糰中的：",
+            ingredient: "米",
+            desc: desc_baxian,
+            btnText: "FB",
+            fb: "https://www.facebook.com/beitoubaxianfarm",
+            imgs: ["rice.webp", "eightpeople.jpg", "riceplant.webp", "carrot.jpg"]
+          },
+          {
+            title: "四口田",
+            prefix: "飯糰中的：",
+            ingredient: "日本枸杞葉",
+            desc: desc_sunkitchen,
+            btnText: "FB",
+            fb: "https://www.facebook.com/foursquarefarm",
+            imgs: ["f1.jpg", "f2.jpeg", "f3.jpg", "f4.jpg", "f5.jpg", "f6.jpg", "f7.jpg", "f8.jpg"]
+          },
+          {
+            title: "峰村有機農場",
+            prefix: "飯糰中的：",
+            ingredient: "仙草",
+            desc: desc_fengcun,
+            btnText: "FB",
+            fb: "https://www.facebook.com/p/%E5%B3%B0%E6%9D%91%E6%9C%89%E6%A9%9F%E8%BE%B2%E5%A0%B4-100064918140623/?locale=zh_TW",
+            imgs: ["fon1.jpg", "fon2.jpg", "fon3.jpg", "fon4.jpeg"]
+          }
+        ],
+
+        // chicken
+        chicken: [
+          {
+            title: "峰村有機農場",
+            prefix: "炸雞中的：",
+            ingredient: "香茅",
+            desc: desc_fengcun,
+            btnText: "FB",
+            fb: "https://www.facebook.com/p/%E5%B3%B0%E6%9D%91%E6%9C%89%E6%A9%9F%E8%BE%B2%E5%A0%B4-100064918140623/?locale=zh_TW",
+            imgs: ["fon1.jpg", "fon2.jpg", "fon3.jpg", "fon4.jpeg"]
+          }
+        ],
+
+        // vege
+        vege: [
+          {
+            title: "曹永慶",
+            prefix: "蔬菜天婦羅中的：",
+            ingredient: "南瓜、地瓜",
+            desc: desc_shanshui,
+            btnText: "聯絡小農",
+            fb: "tel:02-2861-8828",
+            imgs: ["tsh1.jpg"]
+          },
+          {
+            title: "湖山社區發展協會",
+            prefix: "蔬菜天婦羅中的：",
+            ingredient: "茭白筍",
+            desc: desc_hushan,
+            btnText: "FB",
+            fb: "https://www.facebook.com/Husancommuntiyassociation/",
+            imgs: ["hu1.jpg", "hu2.jpg", "hu3.jpg", "hu4.jpg", "hu5.jpg"]
+          },
+          {
+            title: "峰村有機農場",
+            prefix: "蔬菜天婦羅中的：",
+            ingredient: "茭白筍",
+            desc: desc_fengcun,
+            btnText: "FB",
+            fb: "https://www.facebook.com/p/%E5%B3%B0%E6%9D%91%E6%9C%89%E6%A9%9F%E8%BE%B2%E5%A0%B4-100064918140623/?locale=zh_TW",
+            imgs: ["fon1.jpg", "fon2.jpg", "fon3.jpg", "fon4.jpeg"]
+          },
+          {
+            title: "四口田",
+            prefix: "蔬菜天婦羅中的：",
+            ingredient: "紫蘇",
+            desc: desc_sunkitchen,
+            btnText: "FB",
+            fb: "https://www.facebook.com/foursquarefarm",
+            imgs: ["f1.jpg", "f2.jpeg", "f3.jpg", "f4.jpg", "f5.jpg", "f6.jpg", "f7.jpg", "f8.jpg"]
+          },
+          {
+            title: "故鄉金針花農園",
+            prefix: "蔬菜天婦羅中的：",
+            ingredient: "碧玉筍",
+            desc: desc_homeland,
+            btnText: "FB",
+            fb: "https://www.facebook.com/BLHometownFarm",
+            imgs: ["ku1.jpg", "ku2.jpg", "ku3.jpg", "ku4.jpg", "ku5.jpg"]
+          },
+          {
+            title: "財福海芋田",
+            prefix: "蔬菜天婦羅中的：",
+            ingredient: "芳香萬壽菊粉",
+            desc: desc_caifu,
+            btnText: "FB",
+            fb: "https://www.facebook.com/JAIFUGARDEN",
+            imgs: ["p1.JPG", "p2.jpg", "p3.JPG", "p4.JPG", "p5.jpg", "p6.jpeg", "p7.jpeg", "p8.jpg", "p9.jpg"]
+          },
+          {
+            title: "故鄉金針花農園",
+            prefix: "蔬菜天婦羅中的：",
+            ingredient: "魚腥草乾",
+            desc: desc_homeland,
+            btnText: "FB",
+            fb: "https://www.facebook.com/BLHometownFarm",
+            imgs: ["ku1.jpg", "ku2.jpg", "ku3.jpg", "ku4.jpg", "ku5.jpg"]
+          },
+          {
+            title: "一德農園",
+            prefix: "蔬菜天婦羅中的：",
+            ingredient: "自製白柚果醬",
+            desc: desc_yide,
+            btnText: "聯絡小農",
+            fb: "tel:0919246025",
+            imgs: ["yide1.jpg", "yide2.jpg", "yide3.jpg", "yide4.jpg", "yide5.jpg", "yide6.jpg", "yide7.jpg"]
+          }
+        ],
+
+        // eggroll
+        eggroll: [
+          {
+            title: "足妹農場",
+            prefix: "玉子燒中的：",
+            ingredient: "紫山藥",
+            desc: desc_zumei,
+            btnText: "聯絡小農",
+            fb: "javascript:void(0);",
+            imgs: ["w1.jpg"]
+          },
+          {
+            title: "隨野家農場",
+            prefix: "玉子燒中的：",
+            ingredient: "放牧雞蛋",
+            desc: desc_suiye,
+            btnText: "FB",
+            fb: "https://www.facebook.com/wildchicksfarm",
+            imgs: ["w1.jpg", "w2.avif", "w3.avif", "w4.avif", "w5.jpg", "w6.jpg"]
+          }
+        ],
+
+        // cake
+        cake: [
+          {
+            title: "八仙六代園",
+            prefix: "西瓜發糕中的：",
+            ingredient: "有善稻米",
+            desc: desc_baxian,
+            btnText: "FB",
+            fb: "https://www.facebook.com/beitoubaxianfarm",
+            imgs: ["rice.webp", "eightpeople.jpg", "riceplant.webp", "carrot.jpg"]
+          },
+          {
+            title: "財福海芋田",
+            prefix: "西瓜發糕中的：",
+            ingredient: "龍鬚菜粉",
+            desc: desc_caifu,
+            btnText: "FB",
+            fb: "https://www.facebook.com/JAIFUGARDEN",
+            imgs: ["p1.JPG", "p2.jpg", "p3.JPG", "p4.JPG", "p5.jpg", "p6.jpeg", "p7.jpeg", "p8.jpg", "p9.jpg"]
+          },
+          {
+            title: "峰村有機農場",
+            prefix: "西瓜發糕中的：",
+            ingredient: "洛神花",
+            desc: desc_fengcun,
+            btnText: "FB",
+            fb: "https://www.facebook.com/p/%E5%B3%B0%E6%9D%91%E6%9C%89%E6%A9%9F%E8%BE%B2%E5%A0%B4-100064918140623/?locale=zh_TW",
+            imgs: ["fon1.jpg", "fon2.jpg", "fon3.jpg", "fon4.jpeg"]
+          },
+          {
+            title: "一德農園",
+            prefix: "西瓜發糕中的：",
+            ingredient: "火龍果",
+            desc: desc_yide,
+            btnText: "聯絡小農",
+            fb: "tel:0919246025",
+            imgs: ["yide1.jpg", "yide2.jpg", "yide3.jpg", "yide4.jpg", "yide5.jpg", "yide6.jpg", "yide7.jpg"]
+          }
+        ]
+      };
+
+      var activeCardsData = [];
+      var currentCardIdx = 0;
+      var currentImgIdx = 0;
+      var autoPlayTimer = null;
+
+      var farmModal = document.getElementById('farm-modal');
+      var closeModal = document.getElementById('close-modal');
+      var cardTitle = document.getElementById('modal-card-title');
+      var prefixText = document.getElementById('prefix-text');
+      var ingredientText = document.getElementById('ingredient-text');
+      var descText = document.getElementById('modal-desc-text');
+      var fbLink = document.getElementById('modal-fb-link');
+      var mediaContainer = document.getElementById('media-container');
+      var cardPrevBtn = document.getElementById('card-prev');
+      var cardNextBtn = document.getElementById('card-next');
+
+      function loadCard(cardIdx) {
+        currentCardIdx = cardIdx;
+        currentImgIdx = 0;
+        var data = activeCardsData[cardIdx];
+
+        cardTitle.innerText = data.title;
+        prefixText.innerText = data.prefix || "食材中的：";
+        ingredientText.innerText = data.ingredient;
+        descText.innerHTML = data.desc;
+        
+        fbLink.innerText = data.btnText || "FB";
+        fbLink.href = data.fb || "#";
+
+        if (activeCardsData.length > 1) {
+          cardPrevBtn.style.display = 'flex';
+          cardNextBtn.style.display = 'flex';
+        } else {
+          cardPrevBtn.style.display = 'none';
+          cardNextBtn.style.display = 'none';
+        }
+
+        var oldImgs = mediaContainer.querySelectorAll('.modal-img');
+        oldImgs.forEach(function(img) { img.remove(); });
+
+        data.imgs.forEach(function(src, i) {
+          var imgEl = document.createElement('img');
+          imgEl.src = src;
+          imgEl.className = 'modal-img' + (i === 0 ? ' active' : '');
+          mediaContainer.appendChild(imgEl);
+        });
+
+        var prevImgBtn = document.getElementById('prev-img');
+        var nextImgBtn = document.getElementById('next-img');
+        if (data.imgs.length <= 1) {
+          prevImgBtn.style.display = 'none';
+          nextImgBtn.style.display = 'none';
+        } else {
+          prevImgBtn.style.display = 'flex';
+          nextImgBtn.style.display = 'flex';
+        }
+      }
+
+      function showSlide(imgIdx) {
+        var imgs = mediaContainer.querySelectorAll('.modal-img');
+        imgs.forEach(function(img, i) {
+          if (i === imgIdx) img.classList.add('active');
+          else img.classList.remove('active');
+        });
+      }
+
+      function startAutoPlay() {
+        if (autoPlayTimer) clearInterval(autoPlayTimer);
+        autoPlayTimer = setInterval(function() {
+          var imgs = mediaContainer.querySelectorAll('.modal-img');
+          if (imgs.length > 1) {
+            currentImgIdx = (currentImgIdx + 1) % imgs.length;
+            showSlide(currentImgIdx);
+          }
+        }, 3000);
+      }
+
+      function stopAutoPlay() {
+        if (autoPlayTimer) clearInterval(autoPlayTimer);
+      }
+
+      var triggers = document.querySelectorAll('.trigger-farm-modal');
+      triggers.forEach(function(trigger) {
+        trigger.addEventListener('click', function() {
+          var modalType = this.getAttribute('data-modal');
+          if (modalDataSets[modalType]) {
+            activeCardsData = modalDataSets[modalType];
+            loadCard(0);
+            farmModal.classList.add('active');
+            startAutoPlay();
+          }
+        });
+      });
+
+      cardPrevBtn.addEventListener('click', function() {
+        stopAutoPlay();
+        currentCardIdx = (currentCardIdx - 1 + activeCardsData.length) % activeCardsData.length;
+        loadCard(currentCardIdx);
+        startAutoPlay();
+      });
+
+      cardNextBtn.addEventListener('click', function() {
+        stopAutoPlay();
+        currentCardIdx = (currentCardIdx + 1) % activeCardsData.length;
+        loadCard(currentCardIdx);
+        startAutoPlay();
+      });
+
+      document.getElementById('next-img').addEventListener('click', function() {
+        stopAutoPlay();
+        var imgs = mediaContainer.querySelectorAll('.modal-img');
+        if (imgs.length > 1) {
+          currentImgIdx = (currentImgIdx + 1) % imgs.length;
+          showSlide(currentImgIdx);
+          startAutoPlay();
+        }
+      });
+
+      document.getElementById('prev-img').addEventListener('click', function() {
+        stopAutoPlay();
+        var imgs = mediaContainer.querySelectorAll('.modal-img');
+        if (imgs.length > 1) {
+          currentImgIdx = (currentImgIdx - 1 + imgs.length) % imgs.length;
+          showSlide(currentImgIdx);
+          startAutoPlay();
+        }
+      });
+
+      if (closeModal && farmModal) {
+        closeModal.addEventListener('click', function() {
+          farmModal.classList.remove('active');
+          stopAutoPlay();
+        });
+      }
+
+      if (farmModal) {
+        farmModal.addEventListener('click', function(e) {
+          if (e.target === farmModal) {
+            farmModal.classList.remove('active');
+            stopAutoPlay();
+          }
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
