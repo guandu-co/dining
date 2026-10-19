@@ -439,9 +439,9 @@
     <!-- 2. 食材圖形區域 -->
     <div class="food-grid">
       
-      <!-- 第一排：riceball1 (點擊跳出八仙/湖山) -->
+      <!-- 第一排：riceball1 (八仙六代園 ↔ 湖山社區) -->
       <div class="food-row row-left">
-        <div class="food-group color-riceball1 delay-1 trigger-farm-modal" data-modal="riceball">
+        <div class="food-group color-riceball1 delay-1 trigger-farm-modal" data-modal="riceball1">
           <img src="riceball1.png" alt="riceball1" class="food-item">
           <div class="labels-column labels-right">
             <div class="label-line-item"><span class="pointer-line"></span><span class="food-label-text">八仙六代園</span></div>
@@ -450,7 +450,7 @@
         </div>
       </div>
 
-      <!-- chicken (點擊跳出峰村有機農場) -->
+      <!-- chicken (峰村有機農場) -->
       <div class="food-row row-right" style="margin-top: -30px;">
         <div class="food-group color-chicken delay-2 trigger-farm-modal" data-modal="chicken">
           <div class="labels-column labels-left">
@@ -460,7 +460,7 @@
         </div>
       </div>
 
-      <!-- vege (點擊可切換：一德農園 ↔ 山水香-曹永慶 ↔ 四口田 ↔ 故鄉金針花農園) -->
+      <!-- vege (山水香-曹永慶 ↔ 四口田 ↔ 故鄉金針花 ↔ 一德農園) -->
       <div class="food-row row-left" style="margin-top: -10px;">
         <div class="food-group color-vege delay-3 trigger-farm-modal" data-modal="vege">
           <img src="vege.png" alt="vege" class="food-item" style="max-width: 125px;">
@@ -475,9 +475,9 @@
         </div>
       </div>
 
-      <!-- riceball2 (點擊跳出八仙/湖山) -->
+      <!-- riceball2 (四口田 ↔ 八仙六代園 ↔ 峰村有機農場) -->
       <div class="food-row row-right" style="margin-top: -20px;">
-        <div class="food-group color-riceball2 delay-4 trigger-farm-modal" data-modal="riceball">
+        <div class="food-group color-riceball2 delay-4 trigger-farm-modal" data-modal="riceball2">
           <div class="labels-column labels-left">
             <div class="label-line-item"><span class="food-label-text">四口田</span><span class="pointer-line"></span></div>
             <div class="label-line-item"><span class="food-label-text">八仙六代園</span><span class="pointer-line"></span></div>
@@ -487,9 +487,9 @@
         </div>
       </div>
 
-      <!-- eggroll -->
+      <!-- eggroll (隨野家農場) -->
       <div class="food-row row-left" style="margin-top: -15px;">
-        <div class="food-group color-eggroll delay-5">
+        <div class="food-group color-eggroll delay-5 trigger-farm-modal" data-modal="eggroll">
           <img src="eggroll.png" alt="eggroll" class="food-item" style="max-width: 130px;">
           <div class="labels-column labels-right">
             <div class="label-line-item"><span class="pointer-line"></span><span class="food-label-text">足妹農場</span></div>
@@ -498,9 +498,9 @@
         </div>
       </div>
 
-      <!-- cake -->
+      <!-- cake (一德農園 ↔ 八仙六代園 ↔ 財福海芋田 ↔ 峰村有機農場) -->
       <div class="food-row row-center" style="margin-top: 10px;">
-        <div class="food-group color-cake delay-6">
+        <div class="food-group color-cake delay-6 trigger-farm-modal" data-modal="cake">
           <div class="labels-column labels-left">
             <div class="label-line-item"><span class="food-label-text">一德農園</span><span class="pointer-line"></span></div>
             <div class="label-line-item"><span class="food-label-text">八仙六代園</span><span class="pointer-line"></span></div>
@@ -544,7 +544,7 @@
       </div>
 
       <div class="ingredient-tag">
-        <span id="prefix-text">蔬菜裡有：</span><span class="ingredient-highlight" id="ingredient-text">小黃瓜 / 百香果</span>
+        <span id="prefix-text">食材中的：</span><span class="ingredient-highlight" id="ingredient-text">米</span>
       </div>
 
       <p class="modal-desc" id="modal-desc-text"></p>
@@ -558,70 +558,96 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      // 資料庫：各類別資料
+      // 共通農場資料定義 (供重複使用)
+      var farm_baxian = {
+        title: "八仙六代園",
+        prefix: "食材中的：",
+        ingredient: "米",
+        desc: "農家第六代---宣智與亦真堅持友善耕作與自然共生，致力為下一代留下無毒乾淨的土地。<br><br>農場積極推動食農教育與季節農事體驗，包含插秧、割稻及米食 DIY、稻田運動會。邀請民眾在金黃稻浪間親近土地，感受都市角落裡最真誠的農村風土。",
+        fb: "https://www.facebook.com/beitoubaxianfarm",
+        imgs: ["rice.webp", "eightpeople.jpg", "riceplant.webp", "carrot.jpg"]
+      };
+
+      var farm_hushan = {
+        title: "湖山社區發展協會",
+        prefix: "食材中的：",
+        ingredient: "豆腐乳",
+        desc: "位於陽明山湖山里，致力於推廣在地友善農作與傳統醬菜手工藝，傳承在地豐富的人文與飲食文化。",
+        fb: "https://www.facebook.com/hushantw",
+        imgs: ["hu1.jpg", "hu2.jpg", "hu3.jpg", "hu4.jpg", "hu5.jpg"]
+      };
+
+      var farm_fengcun = {
+        title: "峰村有機農場",
+        prefix: "食材中的：",
+        ingredient: "洛神花",
+        desc: "位於北投關渡平原，堅持友善耕作與有機種植，細心呵護每一株作物，提供安全健康的天然食材。",
+        fb: "https://www.facebook.com/fengcun.farm",
+        imgs: ["fon1.jpg", "fon2.jpg", "fon3.jpg", "fon4.jpeg"]
+      };
+
+      var farm_yide = {
+        title: "一德農園",
+        prefix: "食材中的：",
+        ingredient: "小黃瓜 / 百香果",
+        desc: "傳承在地多代經營，用心耕作優質蔬果與醬菜產品，展現關渡在地豐富濃郁的農業風貌。",
+        fb: "https://www.facebook.com/profile.php?id=100063934371465",
+        imgs: ["yide1.jpg", "yide2.jpg", "yide3.jpg", "yide4.jpg", "yide5.jpg", "yide6.jpg", "yide7.jpg"]
+      };
+
+      var farm_sunkitchen = {
+        title: "四口田",
+        prefix: "食材中的：",
+        ingredient: "新鮮蔬果 / 蜂蜜",
+        desc: "致力於推廣自然有機栽培與生態養蜂，堅持不使用化學農藥，提供純淨自然的美味食材。",
+        fb: "https://www.facebook.com/4sunkitchen",
+        imgs: ["f1.jpg", "f2.jpeg", "f3.jpg", "f4.jpg", "f5.jpg", "f6.jpg", "f7.jpg", "f8.jpg"]
+      };
+
+      var farm_shanshui = {
+        title: "山水香-曹永慶",
+        prefix: "食材中的：",
+        ingredient: "地瓜",
+        desc: "堅持友善土地的耕作精神，用心栽培優質在地地瓜與農作物，傳遞最單純樸實的在地好滋味。",
+        fb: "https://www.facebook.com/shanshuixiang",
+        imgs: ["tsh1.jpg"]
+      };
+
+      var farm_homeland = {
+        title: "故鄉金針花農園",
+        prefix: "食材中的：",
+        ingredient: "金針花",
+        desc: "位於北投陽明山，用心經營金針花海與友善農作，讓到訪民眾感受農村美麗景色與在地飲食活力。",
+        fb: "https://www.facebook.com/homeland.farm",
+        imgs: ["ku1.jpg", "ku2.jpg", "ku3.jpg", "ku4.jpg", "ku5.jpg"]
+      };
+
+      var farm_suiye = {
+        title: "隨野家農場",
+        prefix: "玉子燒中的：",
+        ingredient: "放牧蛋",
+        desc: "堅持人道飼養與友善放牧，讓母雞在自然舒適的環境下健康成長，生產純淨放心的好品質雞蛋。",
+        fb: "https://www.facebook.com/suiyejia",
+        imgs: ["w1.jpg", "w2.avif", "w3.avif", "w4.avif", "w5.jpg", "w6.jpg"]
+      };
+
+      var farm_caifu = {
+        title: "財福海芋田",
+        prefix: "甜點中的：",
+        ingredient: "海芋 / 繡球花",
+        desc: "位於陽明山竹子湖，耕耘優質海芋與繡球花卉，推廣休閒農業與四季花卉風貌，帶給民眾親近自然的溫暖體驗。",
+        fb: "https://www.facebook.com/caifucalla",
+        imgs: ["p1.JPG", "p2.jpg", "p3.JPG", "p4.JPG", "p5.jpg", "p6.jpeg", "p7.jpeg", "p8.jpg", "p9.jpg"]
+      };
+
+      // 各項料理觸發時的 Modal 組合
       var modalDataSets = {
-        riceball: [
-          {
-            title: "八仙六代園",
-            prefix: "飯糰中的：",
-            ingredient: "米",
-            desc: "農家第六代---宣智與亦真堅持友善耕作與自然共生，致力為下一代留下無毒乾淨的土地。<br><br>農場積極推動食農教育與季節農事體驗，包含插秧、割稻及米食 DIY、稻田運動會。邀請民眾在金黃稻浪間親近土地，感受都市角落裡最真誠的農村風土。",
-            fb: "https://www.facebook.com/beitoubaxianfarm",
-            imgs: ["rice.webp", "eightpeople.jpg", "riceplant.webp", "carrot.jpg"]
-          },
-          {
-            title: "湖山社區發展協會",
-            prefix: "飯糰中的：",
-            ingredient: "豆腐乳",
-            desc: "位於陽明山湖山里，致力於推廣在地友善農作與傳統醬菜手工藝，傳承在地豐富的人文與飲食文化。",
-            fb: "https://www.facebook.com/hushantw",
-            imgs: ["hu1.jpg", "hu2.jpg", "hu3.jpg", "hu4.jpg", "hu5.jpg"]
-          }
-        ],
-        chicken: [
-          {
-            title: "峰村有機農場",
-            prefix: "炸雞中的：",
-            ingredient: "洛神花",
-            desc: "位於北投關渡平原，堅持友善耕作與有機種植，細心呵護每一株作物，提供安全健康的天然食材。",
-            fb: "https://www.facebook.com/fengcun.farm",
-            imgs: ["fon1.jpg", "fon2.jpg", "fon3.jpg", "fon4.jpeg"]
-          }
-        ],
-        vege: [
-          {
-            title: "山水香-曹永慶",
-            prefix: "蔬菜裡有：",
-            ingredient: "地瓜",
-            desc: "堅持友善土地的耕作精神，用心栽培優質在地地瓜與農作物，傳遞最單純樸實的在地好滋味。",
-            fb: "https://www.facebook.com/shanshuixiang",
-            imgs: ["tsh1.jpg"]
-          },
-          {
-            title: "四口田",
-            prefix: "蔬菜裡有：",
-            ingredient: "新鮮蔬果 / 蜂蜜",
-            desc: "致力於推廣自然有機栽培與生態養蜂，堅持不使用化學農藥，提供純淨自然的美味食材。",
-            fb: "https://www.facebook.com/4sunkitchen",
-            imgs: ["f1.jpg", "f2.jpeg", "f3.jpg", "f4.jpg", "f5.jpg", "f6.jpg", "f7.jpg", "f8.jpg"]
-          },
-          {
-            title: "故鄉金針花農園",
-            prefix: "蔬菜裡有：",
-            ingredient: "金針花",
-            desc: "位於北投陽明山，用心經營金針花海與友善農作，讓到訪民眾感受農村美麗景色與在地飲食活力。",
-            fb: "https://www.facebook.com/homeland.farm",
-            imgs: ["ku1.jpg", "ku2.jpg", "ku3.jpg", "ku4.jpg", "ku5.jpg"]
-          },
-          {
-            title: "一德農園",
-            prefix: "蔬菜裡有：",
-            ingredient: "小黃瓜 / 百香果",
-            desc: "傳承在地多代經營，用心耕作優質蔬果與醬菜產品，展現關渡在地豐富濃郁的農業風貌。",
-            fb: "https://www.facebook.com/profile.php?id=100063934371465",
-            imgs: ["yide1.jpg", "yide2.jpg", "yide3.jpg", "yide4.jpg", "yide5.jpg", "yide6.jpg", "yide7.jpg"]
-          }
-        ]
+        riceball1: [farm_baxian, farm_hushan],
+        chicken: [farm_fengcun],
+        vege: [farm_shanshui, farm_sunkitchen, farm_homeland, farm_yide],
+        riceball2: [farm_sunkitchen, farm_baxian, farm_fengcun],
+        eggroll: [farm_suiye],
+        cake: [farm_yide, farm_baxian, farm_caifu, farm_fengcun]
       };
 
       var activeCardsData = [];
@@ -651,7 +677,7 @@
         descText.innerHTML = data.desc;
         fbLink.href = data.fb;
 
-        // 依據卡片數量顯示/隱藏卡片切換箭頭
+        // 切換卡片箭頭顯示
         if (activeCardsData.length > 1) {
           cardPrevBtn.style.display = 'flex';
           cardNextBtn.style.display = 'flex';
@@ -670,7 +696,7 @@
           mediaContainer.appendChild(imgEl);
         });
 
-        // 若該卡片只有 1 張照片，則隱藏圖片內部的輪播箭頭
+        // 圖片輪播箭頭顯示
         var prevImgBtn = document.getElementById('prev-img');
         var nextImgBtn = document.getElementById('next-img');
         if (data.imgs.length <= 1) {
