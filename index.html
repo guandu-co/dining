@@ -380,54 +380,52 @@
       transform: rotate(90deg) scale(1.35);
     }
 
+    /* 照片輪播箭頭（無圓圈底色，僅保留符號筆畫） */
     .arrow-left, .arrow-right {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 22px;
+      font-size: 32px;
+      font-weight: bold;
       color: #ffffff;
       cursor: pointer;
-      background: rgba(0,0,0,0.35);
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
+      background: none;
+      width: auto;
+      height: auto;
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 10;
       user-select: none;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.6);
     }
-    .arrow-left { left: 8px; }
-    .arrow-right { right: 8px; }
+    .arrow-left { left: 10px; }
+    .arrow-right { right: 10px; }
 
-    /* 切換農場卡片的大白色箭頭 */
+    /* 切換農場卡片的大白色箭頭（無圓圈，上移至與食材標籤同高） */
     .card-switch-arrow {
       position: absolute;
-      top: 65%;
-      transform: translateY(-50%);
-      font-size: 24px;
+      top: 250px; /* 上移至與食材標籤框對齊的高度 */
+      font-size: 36px;
       font-weight: bold;
       color: #ffffff;
       cursor: pointer;
       user-select: none;
       z-index: 20;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.25);
+      background: none;
       display: flex;
       justify-content: center;
       align-items: center;
-      transition: background 0.2s ease, transform 0.1s ease;
+      transition: transform 0.1s ease;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.4);
     }
     .card-switch-arrow:active {
-      background: rgba(255, 255, 255, 0.5);
-      transform: translateY(-50%) scale(0.9);
+      transform: scale(0.85);
     }
-    .card-switch-arrow.left-arrow { left: -12px; }
-    .card-switch-arrow.right-arrow { right: -12px; }
+    .card-switch-arrow.left-arrow { left: -15px; }
+    .card-switch-arrow.right-arrow { right: -15px; }
 
-    /* 食材標籤提示列（換行獨立呈現） */
+    /* 食材標籤提示列（獨立呈現） */
     .ingredient-tag {
       font-size: 14px;
       font-weight: bold;
@@ -448,12 +446,13 @@
       display: inline-block;
     }
 
+    /* 所有介紹文字全數置中排列 */
     .modal-desc {
       font-size: 12.5px;
       line-height: 1.5;
       color: #e2f3ee;
       margin-bottom: 15px;
-      text-align: left;
+      text-align: center; /* 全數置中排列 */
       min-height: 60px;
       padding: 0 5px;
     }
@@ -487,31 +486,16 @@
     <!-- 2. 食材圖形區域 -->
     <div class="food-grid">
       
-      <!-- 第一排：riceball1 (八仙六代園 ↔ 湖山社區發展協會 ↔ 林記醬油 ↔ 四口田 ↔ 足妹農場) -->
+      <!-- 第一排：riceball1 (按筆劃排序：八仙六代園 ➔ 四口田 ➔ 足妹農場 ➔ 林記醬油 ➔ 湖山社區發展協會) -->
       <div class="food-row row-left">
         <div class="food-group color-riceball1 delay-1 trigger-farm-modal" data-modal="riceball1">
           <img src="riceball1.png" alt="riceball1" class="food-item">
           <div class="labels-column labels-right">
-            <div class="label-line-item" data-farm-target="八仙六代園">
-              <span class="curly-png-line"></span>
-              <span class="food-label-text">八仙六代園</span>
-            </div>
-            <div class="label-line-item" data-farm-target="湖山社區發展協會">
-              <span class="curly-png-line"></span>
-              <span class="food-label-text">湖山社區發展協會</span>
-            </div>
-            <div class="label-line-item" data-farm-target="林記醬油">
-              <span class="curly-png-line"></span>
-              <span class="food-label-text">林記醬油</span>
-            </div>
-            <div class="label-line-item" data-farm-target="四口田">
-              <span class="curly-png-line"></span>
-              <span class="food-label-text">四口田</span>
-            </div>
-            <div class="label-line-item" data-farm-target="足妹農場">
-              <span class="curly-png-line"></span>
-              <span class="food-label-text">足妹農場</span>
-            </div>
+            <div class="label-line-item" data-farm-target="八仙六代園"><span class="curly-png-line"></span><span class="food-label-text">八仙六代園</span></div>
+            <div class="label-line-item" data-farm-target="四口田"><span class="curly-png-line"></span><span class="food-label-text">四口田</span></div>
+            <div class="label-line-item" data-farm-target="足妹農場"><span class="curly-png-line"></span><span class="food-label-text">足妹農場</span></div>
+            <div class="label-line-item" data-farm-target="林記醬油"><span class="curly-png-line"></span><span class="food-label-text">林記醬油</span></div>
+            <div class="label-line-item" data-farm-target="湖山社區發展協會"><span class="curly-png-line"></span><span class="food-label-text">湖山社區發展協會</span></div>
           </div>
         </div>
       </div>
@@ -529,35 +513,34 @@
         </div>
       </div>
 
-      <!-- vege (順序：一德農園 ➔ 故鄉金針花農園 ➔ 峰村有機農場 ➔ 曹永慶 ➔ 湖山社區發展協會 ➔ 財福海芋田 ➔ 足妹農場) -->
+      <!-- vege (按筆劃排序：一德農園 ➔ 故鄉金針花農園 ➔ 曹永慶 ➔ 財福海芋田 ➔ 峰村有機農場 ➔ 湖山社區發展協會 ➔ 足妹農場) -->
       <div class="food-row row-left">
         <div class="food-group color-vege delay-3 trigger-farm-modal" data-modal="vege">
           <img src="vege.png" alt="vege" class="food-item" style="max-width: 125px;">
           <div class="labels-column labels-right">
             <div class="label-line-item" data-farm-target="一德農園"><span class="curly-png-line"></span><span class="food-label-text">一德農園</span></div>
             <div class="label-line-item" data-farm-target="故鄉金針花農園"><span class="curly-png-line"></span><span class="food-label-text">故鄉金針花農園</span></div>
-            <div class="label-line-item" data-farm-target="峰村有機農場"><span class="curly-png-line"></span><span class="food-label-text">峰村有機農場</span></div>
             <div class="label-line-item" data-farm-target="曹永慶"><span class="curly-png-line"></span><span class="food-label-text">曹永慶</span></div>
-            <div class="label-line-item" data-farm-target="湖山社區發展協會"><span class="curly-png-line"></span><span class="food-label-text">湖山社區發展協會</span></div>
             <div class="label-line-item" data-farm-target="財福海芋田"><span class="curly-png-line"></span><span class="food-label-text">財福海芋田</span></div>
+            <div class="label-line-item" data-farm-target="峰村有機農場"><span class="curly-png-line"></span><span class="food-label-text">峰村有機農場</span></div>
+            <div class="label-line-item" data-farm-target="湖山社區發展協會"><span class="curly-png-line"></span><span class="food-label-text">湖山社區發展協會</span></div>
             <div class="label-line-item" data-farm-target="足妹農場"><span class="curly-png-line"></span><span class="food-label-text">足妹農場</span></div>
           </div>
         </div>
       </div>
 
-      <!-- riceball2 (八仙六代園 ↔ 四口田 ↔ 峰村有機農場) -->
+      <!-- riceball2 (按筆劃排序：八仙六代園 ➔ 四口田) -->
       <div class="food-row row-right">
         <div class="food-group color-riceball2 delay-4 trigger-farm-modal" data-modal="riceball2">
           <div class="labels-column labels-left">
             <div class="label-line-item" data-farm-target="八仙六代園"><span class="food-label-text">八仙六代園</span><span class="curly-png-line"></span></div>
             <div class="label-line-item" data-farm-target="四口田"><span class="food-label-text">四口田</span><span class="curly-png-line"></span></div>
-            <div class="label-line-item" data-farm-target="峰村有機農場"><span class="food-label-text">峰村有機農場</span><span class="curly-png-line"></span></div>
           </div>
           <img src="riceball2.png" alt="riceball2" class="food-item">
         </div>
       </div>
 
-      <!-- eggroll (足妹農場 ↔ 隨野家農場) -->
+      <!-- eggroll (按筆劃排序：足妹農場 ➔ 隨野家農場) -->
       <div class="food-row row-left">
         <div class="food-group color-eggroll delay-5 trigger-farm-modal" data-modal="eggroll">
           <img src="eggroll.png" alt="eggroll" class="food-item" style="max-width: 130px;">
@@ -568,7 +551,7 @@
         </div>
       </div>
 
-      <!-- cake (一德農園 ↔ 八仙六代園 ↔ 財福海芋田 ↔ 峰村有機農場) -->
+      <!-- cake (按筆劃排序：一德農園 ➔ 八仙六代園 ➔ 財福海芋田 ➔ 峰村有機農場) -->
       <div class="food-row row-center">
         <div class="food-group color-cake delay-6 trigger-farm-modal" data-modal="cake">
           <div class="labels-column labels-left">
@@ -679,21 +662,19 @@
 
       var imgs_fengcun = ["fon2.jpg", "fon4.jpeg", "fon5.jpeg", "fon6.jpeg", "fon1.jpg", "fon3.jpg"];
       var imgs_sunkitchen = ["f1.jpg", "f2.jpeg", "f9.jpg", "f10.jpg", "f3.jpg", "f4.jpg", "f5.jpg", "f6.jpg", "f7.jpg", "f8.jpg"];
-      
-      // 曹永慶照片更換為 tsh2.jpg
       var imgs_shanshui = ["tsh2.jpg"];
 
-      // 故鄉金針花農園第 3、4 張加入 ku6.jpg 與 ku7.jpg
-      var imgs_homeland = ["ku1.jpg", "ku2.jpg", "ku6.jpg", "ku7.jpg", "ku3.jpg", "ku4.jpg", "ku5.jpg"];
+      // 故鄉金針花農園：刪除第5、6張照片
+      var imgs_homeland = ["ku1.jpg", "ku2.jpg", "ku6.jpg", "ku7.jpg", "ku3.jpg"];
 
       var imgs_zumei = ["ss1.jpg", "ss2.jpg", "ss3.jpg", "ss4.jpg"];
       var imgs_suiye = ["ww6.jpg", "ww7.jpg", "w3.avif", "w4.avif", "ww5.JPG", "w6.jpg"];
 
       // -----------------------------------
-      // 3. 各料理專屬 Modal 資料組
+      // 3. 各料理專屬 Modal 資料組 (按筆劃排序)
       // -----------------------------------
       var modalDataSets = {
-        // 珠蔥豆乳小魚乾日式飯糰
+        // 珠蔥豆乳小魚乾日式飯糰 (按筆劃：八仙 ➔ 四口田 ➔ 足妹 ➔ 林記 ➔ 湖山)
         riceball1: [
           {
             title: "八仙六代園",
@@ -703,24 +684,6 @@
             btnText: "FB",
             fb: "https://www.facebook.com/beitoubaxianfarm",
             imgs: imgs_baxian
-          },
-          {
-            title: "湖山社區發展協會",
-            prefix: "珠蔥豆乳小魚乾日式飯糰中的：",
-            ingredient: "豆腐乳、珠蔥",
-            desc: desc_hushan,
-            btnText: "FB",
-            fb: "https://www.facebook.com/Husancommuntiyassociation/",
-            imgs: ["hu1.jpg", "hu2.jpg", "hu3.jpg", "hu4.jpg", "hu5.jpg"]
-          },
-          {
-            title: "林記醬油",
-            prefix: "珠蔥豆乳小魚乾日式飯糰中的：",
-            ingredient: "黑豆醬油、豆豉",
-            desc: desc_linsoy,
-            btnText: "FB",
-            fb: "https://www.facebook.com/profile.php?id=100069495233994",
-            imgs: imgs_linsoy
           },
           {
             title: "四口田",
@@ -739,10 +702,28 @@
             btnText: "聯絡小農",
             fb: "tel:0983269152",
             imgs: imgs_zumei
+          },
+          {
+            title: "林記醬油",
+            prefix: "珠蔥豆乳小魚乾日式飯糰中的：",
+            ingredient: "黑豆醬油、豆豉",
+            desc: desc_linsoy,
+            btnText: "FB",
+            fb: "https://www.facebook.com/profile.php?id=100069495233994",
+            imgs: imgs_linsoy
+          },
+          {
+            title: "湖山社區發展協會",
+            prefix: "珠蔥豆乳小魚乾日式飯糰中的：",
+            ingredient: "豆腐乳、珠蔥",
+            desc: desc_hushan,
+            btnText: "FB",
+            fb: "https://www.facebook.com/Husancommuntiyassociation/",
+            imgs: ["hu1.jpg", "hu2.jpg", "hu3.jpg", "hu4.jpg", "hu5.jpg"]
           }
         ],
 
-        // 紫蘇昆布鹽燻雞日式飯糰
+        // 紫蘇昆布鹽燻雞日式飯糰 (按筆劃：八仙 ➔ 四口田；已刪除峰村)
         riceball2: [
           {
             title: "八仙六代園",
@@ -761,15 +742,6 @@
             btnText: "FB",
             fb: "https://www.facebook.com/foursquarefarm",
             imgs: imgs_sunkitchen
-          },
-          {
-            title: "峰村有機農場",
-            prefix: "紫蘇昆布鹽燻雞日式飯糰中的：",
-            ingredient: "仙草",
-            desc: desc_fengcun,
-            btnText: "FB",
-            fb: "https://www.facebook.com/p/%E5%B3%B0%E6%9D%91%E6%9C%89%E6%A9%9F%E8%BE%B2%E5%A0%B4-100064918140623/?locale=zh_TW",
-            imgs: imgs_fengcun
           }
         ],
 
@@ -786,7 +758,7 @@
           }
         ],
 
-        // 香草時蔬客家婆菜
+        // 香草時蔬客家婆菜 (按筆劃：一德 ➔ 故鄉 ➔ 曹永慶 ➔ 財福 ➔ 峰村 ➔ 湖山 ➔ 足妹)
         vege: [
           {
             title: "一德農園",
@@ -807,15 +779,6 @@
             imgs: imgs_homeland
           },
           {
-            title: "峰村有機農場",
-            prefix: "香草時蔬客家婆菜中的：",
-            ingredient: "茭白筍",
-            desc: desc_fengcun,
-            btnText: "FB",
-            fb: "https://www.facebook.com/p/%E5%B3%B0%E6%9D%91%E6%9C%89%E6%A9%9F%E8%BE%B2%E5%A0%B4-100064918140623/?locale=zh_TW",
-            imgs: imgs_fengcun
-          },
-          {
             title: "曹永慶",
             prefix: "香草時蔬客家婆菜中的：",
             ingredient: "南瓜、地瓜",
@@ -825,15 +788,6 @@
             imgs: imgs_shanshui
           },
           {
-            title: "湖山社區發展協會",
-            prefix: "香草時蔬客家婆菜中的：",
-            ingredient: "茭白筍",
-            desc: desc_hushan,
-            btnText: "FB",
-            fb: "https://www.facebook.com/Husancommuntiyassociation/",
-            imgs: ["hu1.jpg", "hu2.jpg", "hu3.jpg", "hu4.jpg", "hu5.jpg"]
-          },
-          {
             title: "財福海芋田",
             prefix: "香草時蔬客家婆菜中的：",
             ingredient: "芳香萬壽菊粉",
@@ -841,6 +795,24 @@
             btnText: "FB",
             fb: "https://www.facebook.com/JAIFUGARDEN",
             imgs: ["p1.JPG", "p2.jpg", "p3.JPG", "p4.JPG", "p5.jpg", "p6.jpeg", "p7.jpeg", "p8.jpg", "p9.jpg"]
+          },
+          {
+            title: "峰村有機農場",
+            prefix: "香草時蔬客家婆菜中的：",
+            ingredient: "茭白筍",
+            desc: desc_fengcun,
+            btnText: "FB",
+            fb: "https://www.facebook.com/p/%E5%B3%B0%E6%9D%91%E6%9C%89%E6%A9%9F%E8%BE%B2%E5%A0%B4-100064918140623/?locale=zh_TW",
+            imgs: imgs_fengcun
+          },
+          {
+            title: "湖山社區發展協會",
+            prefix: "香草時蔬客家婆菜中的：",
+            ingredient: "茭白筍",
+            desc: desc_hushan,
+            btnText: "FB",
+            fb: "https://www.facebook.com/Husancommuntiyassociation/",
+            imgs: ["hu1.jpg", "hu2.jpg", "hu3.jpg", "hu4.jpg", "hu5.jpg"]
           },
           {
             title: "足妹農場",
@@ -853,7 +825,7 @@
           }
         ],
 
-        // 江戶前厚玉子燒
+        // 江戶前厚玉子燒 (按筆劃：足妹 ➔ 隨野家)
         eggroll: [
           {
             title: "足妹農場",
@@ -875,7 +847,7 @@
           }
         ],
 
-        // 西瓜造型小發糕
+        // 西瓜造型小發糕 (按筆劃：一德 ➔ 八仙 ➔ 財福 ➔ 峰村)
         cake: [
           {
             title: "一德農園",
