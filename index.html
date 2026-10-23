@@ -490,7 +490,7 @@
     <!-- 2. 食材圖形區域 -->
     <div class="food-grid">
       
-      <!-- 第一排：riceball1 (八仙六代園 ↔ 湖山社區發展協會) -->
+      <!-- 第一排：riceball1 (八仙六代園 ↔ 湖山社區發展協會 ↔ 林記醬油) -->
       <div class="food-row row-left">
         <div class="food-group color-riceball1 delay-1 trigger-farm-modal" data-modal="riceball1">
           <img src="riceball1.png" alt="riceball1" class="food-item">
@@ -502,6 +502,10 @@
             <div class="label-line-item" data-farm-target="湖山社區發展協會">
               <span class="curly-png-line"></span>
               <span class="food-label-text">湖山社區發展協會</span>
+            </div>
+            <div class="label-line-item" data-farm-target="林記醬油">
+              <span class="curly-png-line"></span>
+              <span class="food-label-text">林記醬油</span>
             </div>
           </div>
         </div>
@@ -644,6 +648,7 @@
       // -----------------------------------
       var desc_baxian = "農家第六代---宣智與亦真堅持友善耕作與自然共生，致力為下一代留下無毒乾淨的土地。<br><br>農場積極推動食農教育與季節農事體驗，包含插秧、割稻及米食 DIY、稻田運動會。邀請民眾在金黃稻浪間親近土地，感受都市角落裡最真誠的農村風土。";
       var desc_hushan = "歷史建築珍藏、藍寶石茭白筍<br><br>湖山社區內獨特的歷史建物「草山防空洞」，是當年專門設計給蔣中正當成緊急避難與臨時指揮所，目前當地社區也結合在地農家與歷史文化推出多樣套裝行程，例如帶領走訪蔣家政權時代史蹟，或是走進橫嶺古道、湖底步道、湖底社區，或許欣賞老楓香，或許走訪櫻花祕境。<br><br>由陽明山藍寶石泉灌溉孕育而成的「藍寶石茭白筍」，品嚐鮮甜美味之餘，每年10月起更有採收體驗、茭白筍泡菜DIY、料理等一系列活動！";
+      var desc_linsoy = "林記黑豆醬油位於陽明山半山腰（燒庚寮）古地名，燒庚寮是一個獨立有個性單純的聚落，古時候老人家都會在盛夏季節製作手工醬油，現在我們傳承老一輩的智慧與堅持要將富有陽光熱情的家鄉味分享給大家";
       var desc_sunkitchen = "一口有機蔬菜、一口生態蜂蜜、一口放牧雞蛋、一口自然水果，配上一把新鮮土壤與一片完整天空。<br><br>四口田農場坐落在陽明山國家公園，致力於生產有機農產品，並落實地產地消，為大台北地區提供優良蔬果。此外，我們也注重與社會的聯結：部分園區規劃作為市民農園，幫助在地居民一圓田園夢；推行食農教育課程，增進學員對於農業與飲食的知識涵養；舉辦各式療癒活動，帶領訪客感受大自然的療癒能量。";
       var desc_fengcun = "位於北投山腳下的峰村有機農場，隱身於從關渡捷運站步行即可抵達的驚喜之地，是一處堅持無農藥耕作的有機天地。<br><br>農場提供各式有機季節蔬菜、水果、自製果醬等等多樣品項可供購買唷！";
       var desc_suiye = "隱身於北投捷運站附近的隨野家農場，是一座兼具友善動物與生活美學的都市放牧雞農場。<br><br>主理人佳敏與小丁從2018年開始以低密度友善放牧養殖雞群，打破傳統雞舍印象，打造自然循環的環境與美學體驗空間。透過深度食農教育與蛋雞福利宣導，讓大眾在城市角落感受人與動物、土地和諧共生的美好。";
@@ -655,8 +660,8 @@
 
       // 各農家照片資料庫
       var imgs_baxian = ["eightpeople.jpg", "rice.webp", "riceplant.webp", "carrot.jpg", "eight.jpg", "eight2.jpg"];
+      var imgs_linsoy = ["lin1.jpg", "lin2.jpg", "l3.jpg", "l4.jpg", "l5.jpg", "l6.jpg", "l7.jpg", "l8.jpg"];
       
-      // 一德：第3張更換為 yide9.jpg
       var imgs_yide = [
         { src: "yide2.jpg" },
         { src: "yide3.jpg" },
@@ -666,27 +671,11 @@
         { src: "yide7.jpg" }
       ];
 
-      // 峰村：人物照 fon2.jpg + fon4.jpeg 置前，加入茭白筍 fon5.jpeg + fon6.jpeg
       var imgs_fengcun = ["fon2.jpg", "fon4.jpeg", "fon5.jpeg", "fon6.jpeg", "fon1.jpg", "fon3.jpg"];
-
-      // 四口田：第3、4張加入 f9.jpg + f10.jpg
       var imgs_sunkitchen = ["f1.jpg", "f2.jpeg", "f9.jpg", "f10.jpg", "f3.jpg", "f4.jpg", "f5.jpg", "f6.jpg", "f7.jpg", "f8.jpg"];
-
-      // 曹永慶：圖片上移
       var imgs_shanshui = [{ src: "tsh1.jpg", posTop: true }];
-
-      // 足妹農場照片
       var imgs_zumei = ["ss1.jpg", "ss2.jpg", "ss3.jpg", "ss4.jpg"];
-
-      // 隨野家照片：前2張更換為 ww6.jpg 與 ww7.jpg
-      var imgs_suiye = [
-        "ww6.jpg",
-        "ww7.jpg",
-        "w3.avif",
-        "w4.avif",
-        "ww5.JPG",
-        "w6.jpg"
-      ];
+      var imgs_suiye = ["ww6.jpg", "ww7.jpg", "w3.avif", "w4.avif", "ww5.JPG", "w6.jpg"];
 
       // -----------------------------------
       // 3. 各料理專屬 Modal 資料組
@@ -711,6 +700,15 @@
             btnText: "FB",
             fb: "https://www.facebook.com/Husancommuntiyassociation/",
             imgs: ["hu1.jpg", "hu2.jpg", "hu3.jpg", "hu4.jpg", "hu5.jpg"]
+          },
+          {
+            title: "林記醬油",
+            prefix: "珠蔥豆乳小魚乾日式飯糰中的：",
+            ingredient: "黑豆醬油",
+            desc: desc_linsoy,
+            btnText: "FB",
+            fb: "javascript:void(0);",
+            imgs: imgs_linsoy
           }
         ],
 
