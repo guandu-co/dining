@@ -402,28 +402,29 @@
     .arrow-left { left: 10px; }
     .arrow-right { right: 10px; }
 
-    /* 切換農場卡片的大白色箭頭（無圓圈，上移至與食材標籤同高） */
+    /* 切換農場卡片的大白色箭頭（精準與使用食材框水平對齊並靠近） */
     .card-switch-arrow {
       position: absolute;
-      top: 250px; /* 上移至與食材標籤框對齊的高度 */
-      font-size: 36px;
+      bottom: 122px; /* 對齊 ingredient-tag 的水平高度 */
+      font-size: 38px;
       font-weight: bold;
       color: #ffffff;
       cursor: pointer;
       user-select: none;
-      z-index: 20;
+      z-index: 30;
       background: none;
       display: flex;
       justify-content: center;
       align-items: center;
       transition: transform 0.1s ease;
       text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      line-height: 1;
     }
     .card-switch-arrow:active {
       transform: scale(0.85);
     }
-    .card-switch-arrow.left-arrow { left: -15px; }
-    .card-switch-arrow.right-arrow { right: -15px; }
+    .card-switch-arrow.left-arrow { left: 8px; }
+    .card-switch-arrow.right-arrow { right: 8px; }
 
     /* 食材標籤提示列（獨立呈現） */
     .ingredient-tag {
@@ -436,6 +437,7 @@
       align-items: center;
       gap: 6px;
       width: 100%;
+      position: relative;
     }
     .ingredient-highlight {
       border: 2px solid #b3c200;
@@ -452,7 +454,7 @@
       line-height: 1.5;
       color: #e2f3ee;
       margin-bottom: 15px;
-      text-align: center; /* 全數置中排列 */
+      text-align: center;
       min-height: 60px;
       padding: 0 5px;
     }
@@ -664,8 +666,8 @@
       var imgs_sunkitchen = ["f1.jpg", "f2.jpeg", "f9.jpg", "f10.jpg", "f3.jpg", "f4.jpg", "f5.jpg", "f6.jpg", "f7.jpg", "f8.jpg"];
       var imgs_shanshui = ["tsh2.jpg"];
 
-      // 故鄉金針花農園：刪除第5、6張照片
-      var imgs_homeland = ["ku1.jpg", "ku2.jpg", "ku6.jpg", "ku7.jpg", "ku3.jpg"];
+      // 故鄉金針花農園：刪除第五張輪播照片，精簡為 4 張
+      var imgs_homeland = ["ku1.jpg", "ku2.jpg", "ku6.jpg", "ku7.jpg"];
 
       var imgs_zumei = ["ss1.jpg", "ss2.jpg", "ss3.jpg", "ss4.jpg"];
       var imgs_suiye = ["ww6.jpg", "ww7.jpg", "w3.avif", "w4.avif", "ww5.JPG", "w6.jpg"];
@@ -723,7 +725,7 @@
           }
         ],
 
-        // 紫蘇昆布鹽燻雞日式飯糰 (按筆劃：八仙 ➔ 四口田；已刪除峰村)
+        // 紫蘇昆布鹽燻雞日式飯糰 (按筆劃：八仙 ➔ 四口田)
         riceball2: [
           {
             title: "八仙六代園",
