@@ -369,7 +369,7 @@
       height: 100%;
       object-fit: cover;
       opacity: 0;
-      transition: opacity 0.8s ease-in-out;
+      transition: opacity 0.4s ease-in-out;
     }
     .modal-img.active {
       opacity: 1;
@@ -491,7 +491,7 @@
       <!-- 第一排：riceball1 (按筆劃排序：八仙六代園 ➔ 四口田 ➔ 足妹農場 ➔ 林記醬油 ➔ 湖山社區發展協會) -->
       <div class="food-row row-left">
         <div class="food-group color-riceball1 delay-1 trigger-farm-modal" data-modal="riceball1">
-          <img src="riceball1.png" alt="riceball1" class="food-item" loading="lazy">
+          <img src="riceball1.png" alt="riceball1" class="food-item">
           <div class="labels-column labels-right">
             <div class="label-line-item" data-farm-target="八仙六代園"><span class="curly-png-line"></span><span class="food-label-text">八仙六代園</span></div>
             <div class="label-line-item" data-farm-target="四口田"><span class="curly-png-line"></span><span class="food-label-text">四口田</span></div>
@@ -511,14 +511,14 @@
               <span class="curly-png-line"></span>
             </div>
           </div>
-          <img src="chicken.png" alt="chicken" class="food-item" loading="lazy">
+          <img src="chicken.png" alt="chicken" class="food-item">
         </div>
       </div>
 
       <!-- vege (按筆劃排序：一德農園 ➔ 足妹農場 ➔ 故鄉金針花農園 ➔ 曹永慶 ➔ 財福海芋田 ➔ 峰村有機農場 ➔ 湖山社區發展協會) -->
       <div class="food-row row-left">
         <div class="food-group color-vege delay-3 trigger-farm-modal" data-modal="vege">
-          <img src="vege.png" alt="vege" class="food-item" style="max-width: 125px;" loading="lazy">
+          <img src="vege.png" alt="vege" class="food-item" style="max-width: 125px;">
           <div class="labels-column labels-right">
             <div class="label-line-item" data-farm-target="一德農園"><span class="curly-png-line"></span><span class="food-label-text">一德農園</span></div>
             <div class="label-line-item" data-farm-target="足妹農場"><span class="curly-png-line"></span><span class="food-label-text">足妹農場</span></div>
@@ -538,14 +538,14 @@
             <div class="label-line-item" data-farm-target="八仙六代園"><span class="food-label-text">八仙六代園</span><span class="curly-png-line"></span></div>
             <div class="label-line-item" data-farm-target="四口田"><span class="food-label-text">四口田</span><span class="curly-png-line"></span></div>
           </div>
-          <img src="riceball2.png" alt="riceball2" class="food-item" loading="lazy">
+          <img src="riceball2.png" alt="riceball2" class="food-item">
         </div>
       </div>
 
       <!-- eggroll (按筆劃排序：足妹農場 ➔ 隨野家農場) -->
       <div class="food-row row-left">
         <div class="food-group color-eggroll delay-5 trigger-farm-modal" data-modal="eggroll">
-          <img src="eggroll.png" alt="eggroll" class="food-item" style="max-width: 130px;" loading="lazy">
+          <img src="eggroll.png" alt="eggroll" class="food-item" style="max-width: 130px;">
           <div class="labels-column labels-right">
             <div class="label-line-item" data-farm-target="足妹農場"><span class="curly-png-line"></span><span class="food-label-text">足妹農場</span></div>
             <div class="label-line-item" data-farm-target="隨野家農場"><span class="curly-png-line"></span><span class="food-label-text">隨野家農場</span></div>
@@ -562,7 +562,7 @@
             <div class="label-line-item" data-farm-target="財福海芋田"><span class="food-label-text">財福海芋田</span><span class="curly-png-line"></span></div>
             <div class="label-line-item" data-farm-target="峰村有機農場"><span class="food-label-text">峰村有機農場</span><span class="curly-png-line"></span></div>
           </div>
-          <img src="cake.png" alt="cake" class="food-item" style="max-width: 135px;" loading="lazy">
+          <img src="cake.png" alt="cake" class="food-item" style="max-width: 135px;">
         </div>
       </div>
 
@@ -696,10 +696,21 @@
       var imgs_shanshui = ["tsh2.jpg"];
       var imgs_homeland = ["ku1.jpg", "ku2.jpg", "ku6.jpg", "ku7.jpg"];
       var imgs_zumei = ["ss1.jpg", "ss2.jpg", "ss3.jpg", "ss4.jpg"];
-      var imgs_suiye = ["ww6.jpg", "ww7.jpg", "w3.avif", "w4.avif", "ww5.JPG", "w6.jpg"];
+      
+      // 隨野家農場：第 1 張與第 6 張更換為 ww6w.jpg 與 w6ww.jpg
+      var imgs_suiye = ["ww6w.jpg", "ww7.jpg", "w3.avif", "w4.avif", "ww5.JPG", "w6ww.jpg"];
 
       // 財福海芋田：第 2、3 張更換為 pp9.jpg 與 pp10.jpg
       var imgs_caifu = ["p1.JPG", "pp9.jpg", "pp10.jpg", "p3.JPG", "p4.JPG", "p5.jpg", "p6.jpeg", "p7.jpeg", "p8.jpg", "p9.jpg"];
+
+      // **主動預載所有農場的第一張主照片，確保點擊時瞬出**
+      var firstPhotosToPreload = [
+        "eightpeople.jpg", "w6.jpg", "yide2.jpg", "fon2.jpg", 
+        "f1.jpg", "tsh2.jpg", "ku1.jpg", "ss1.jpg", "ww6w.jpg", "p1.JPG", "hu1.jpg"
+      ];
+      firstPhotosToPreload.forEach(function(src) {
+        var img = createAutoFallbackImage(src);
+      });
 
       // -----------------------------------
       // 3. 各料理專屬 Modal 資料組 (按筆劃排序)
@@ -767,6 +778,7 @@
       var cardPrevBtn = document.getElementById('card-prev');
       var cardNextBtn = document.getElementById('card-next');
 
+      // 載入卡片
       function loadCard(cardIdx) {
         currentCardIdx = cardIdx;
         currentImgIdx = 0;
@@ -791,17 +803,33 @@
         var oldImgs = mediaContainer.querySelectorAll('.modal-img');
         oldImgs.forEach(function(img) { img.remove(); });
 
-        data.imgs.forEach(function(item, i) {
-          var imgSrc = (typeof item === 'string') ? item : item.src;
-          var isRotate = (typeof item === 'object' && item.rotate);
+        // 1. 立即載入第 1 張照片
+        if (data.imgs.length > 0) {
+          var firstItem = data.imgs[0];
+          var firstSrc = (typeof firstItem === 'string') ? firstItem : firstItem.src;
+          var isRotate = (typeof firstItem === 'object' && firstItem.rotate);
 
-          var imgEl = createAutoFallbackImage(imgSrc);
-          imgEl.className = 'modal-img' + 
-            (i === 0 ? ' active' : '') + 
-            (isRotate ? ' rotate-90' : '');
-            
-          mediaContainer.appendChild(imgEl);
-        });
+          var firstImgEl = createAutoFallbackImage(firstSrc);
+          firstImgEl.className = 'modal-img active' + (isRotate ? ' rotate-90' : '');
+          mediaContainer.appendChild(firstImgEl);
+        }
+
+        // 2. 剩餘照片微延遲 0.3 秒補載，順暢不卡頻寬
+        if (data.imgs.length > 1) {
+          setTimeout(function() {
+            for (var i = 1; i < data.imgs.length; i++) {
+              (function(index) {
+                var item = data.imgs[index];
+                var imgSrc = (typeof item === 'string') ? item : item.src;
+                var isRot = (typeof item === 'object' && item.rotate);
+
+                var imgEl = createAutoFallbackImage(imgSrc);
+                imgEl.className = 'modal-img' + (isRot ? ' rotate-90' : '');
+                mediaContainer.appendChild(imgEl);
+              })(i);
+            }
+          }, 300);
+        }
 
         var prevImgBtn = document.getElementById('prev-img');
         var nextImgBtn = document.getElementById('next-img');
