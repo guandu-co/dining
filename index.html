@@ -515,7 +515,7 @@
         </div>
       </div>
 
-      <!-- vege (按筆劃精準排序：一德農園 ➔ 足妹農場 ➔ 故鄉金針花農園 ➔ 曹永慶 ➔ 財福海芋田 ➔ 峰村有機農場 ➔ 湖山社區發展協會) -->
+      <!-- vege (按筆劃排序：一德農園 ➔ 足妹農場 ➔ 故鄉金針花農園 ➔ 曹永慶 ➔ 財福海芋田 ➔ 峰村有機農場 ➔ 湖山社區發展協會) -->
       <div class="food-row row-left">
         <div class="food-group color-vege delay-3 trigger-farm-modal" data-modal="vege">
           <img src="vege.png" alt="vege" class="food-item" style="max-width: 125px;">
@@ -663,11 +663,17 @@
       ];
 
       var imgs_fengcun = ["fon2.jpg", "fon4.jpeg", "fon5.jpeg", "fon6.jpeg", "fon1.jpg", "fon3.jpg"];
-      var imgs_sunkitchen = ["f1.jpg", "f2.jpeg", "f9.jpg", "f10.jpg", "f3.jpg", "f4.jpg", "f5.jpg", "f6.jpg", "f7.jpg", "f8.jpg"];
+      
+      // 四口田：第 6 張照片更換為 fff6.jpg
+      var imgs_sunkitchen = ["f1.jpg", "f2.jpeg", "f9.jpg", "f10.jpg", "f3.jpg", "fff6.jpg", "f5.jpg", "f6.jpg", "f7.jpg", "f8.jpg"];
+      
       var imgs_shanshui = ["tsh2.jpg"];
       var imgs_homeland = ["ku1.jpg", "ku2.jpg", "ku6.jpg", "ku7.jpg"];
       var imgs_zumei = ["ss1.jpg", "ss2.jpg", "ss3.jpg", "ss4.jpg"];
       var imgs_suiye = ["ww6.jpg", "ww7.jpg", "w3.avif", "w4.avif", "ww5.JPG", "w6.jpg"];
+
+      // 財福海芋田：刪除原本第2張，將 p1-2.jpg 與 p5-1.jpg 設為輪播第 2、3 張
+      var imgs_caifu = ["p1.JPG", "p1-2.jpg", "p5-1.jpg", "p3.JPG", "p4.JPG", "p5.jpg", "p6.jpeg", "p7.jpeg", "p8.jpg", "p9.jpg"];
 
       // -----------------------------------
       // 3. 各料理專屬 Modal 資料組 (按筆劃排序)
@@ -757,7 +763,7 @@
           }
         ],
 
-        // 香草時蔬客家婆菜 (精準筆劃排序：一德 ➔ 足妹 ➔ 故鄉 ➔ 曹永慶 ➔ 財福 ➔ 峰村 ➔ 湖山)
+        // 香草時蔬客家婆菜 (按筆劃：一德 ➔ 足妹 ➔ 故鄉 ➔ 曹永慶 ➔ 財福 ➔ 峰村 ➔ 湖山)
         vege: [
           {
             title: "一德農園",
@@ -802,7 +808,7 @@
             desc: desc_caifu,
             btnText: "FB",
             fb: "https://www.facebook.com/JAIFUGARDEN",
-            imgs: ["p1.JPG", "p2.jpg", "p3.JPG", "p4.JPG", "p5.jpg", "p6.jpeg", "p7.jpeg", "p8.jpg", "p9.jpg"]
+            imgs: imgs_caifu
           },
           {
             title: "峰村有機農場",
@@ -873,7 +879,7 @@
             desc: desc_caifu,
             btnText: "FB",
             fb: "https://www.facebook.com/JAIFUGARDEN",
-            imgs: ["p1.JPG", "p2.jpg", "p3.JPG", "p4.JPG", "p5.jpg", "p6.jpeg", "p7.jpeg", "p8.jpg", "p9.jpg"]
+            imgs: imgs_caifu
           },
           {
             title: "峰村有機農場",
