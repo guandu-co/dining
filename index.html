@@ -428,9 +428,9 @@
       transform: rotate(90deg) scale(1.35);
     }
 
-    /* 故鄉第8張照片專屬：垂直下移 40% */
-    .modal-img.shift-down-40 {
-      object-position: center 90%;
+    /* 故鄉第8張照片專屬：向另一個方向90%（露出照片上半部） */
+    .modal-img.shift-up-90 {
+      object-position: center 10%;
     }
 
     .arrow-left, .arrow-right {
@@ -548,7 +548,7 @@
        農場位置專屬迷你視窗 (淺綠色 + 白字 + 右上綠色叉叉)
     ----------------------------------- */
     #text-location-modal .modal-card {
-      background-color: #149377; /* 淺綠色背景 */
+      background-color: #149377;
       max-width: 310px;
       padding: 22px 20px 25px 20px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.35);
@@ -561,7 +561,7 @@
       right: 12px;
       width: 30px;
       height: 30px;
-      background-color: #b3c200; /* 右上角綠色叉叉背景 */
+      background-color: #b3c200;
       color: #ffffff;
       border-radius: 50%;
       display: flex;
@@ -580,7 +580,7 @@
     .text-modal-content {
       width: 100%;
       text-align: center;
-      color: #ffffff; /* 純白字 */
+      color: #ffffff;
       font-size: 15px;
       line-height: 1.8;
       font-weight: bold;
@@ -592,7 +592,7 @@
 </head>
 <body>
 
-  <!-- 1. 全頁 Loading 載入遮罩 (關渡共食 + 長形進度條) -->
+  <!-- 1. 全頁 Loading 載入遮罩 -->
   <div id="loading-overlay">
     <div class="loading-brand">關渡共食</div>
     <div class="progress-bar-container">
@@ -895,10 +895,10 @@
       var imgs_sunkitchen = ["f1.jpg", "f2.jpeg", "f9.jpg", "f10.jpg", "f3.jpg", "fff6.jpg", "f5.jpg", "f6.jpg", "f7.jpg", "f8.jpg"];
       var imgs_shanshui = ["tsh2.jpg"];
 
-      // 故鄉金針花農園：第 8 張照片 (k8.jpg) 設定 shiftDown 標記
+      // 故鄉金針花農園：第 8 張照片 (k8.jpg) 設定 shiftUp 標記（向上移動 90%，露出上半部）
       var imgs_homeland = [
         "k1.jpg", "k2.jpg", "k3.jpg", "k4.jpg", "k5.jpg", "k6.jpg", "k7.jpg", 
-        { src: "k8.jpg", shiftDown: true }, 
+        { src: "k8.jpg", shiftUp: true }, 
         "k9.jpg", "k1000.jpg"
       ];
 
@@ -1071,12 +1071,12 @@
           data.imgs.forEach(function(item, idx) {
             var src = (typeof item === 'string') ? item : item.src;
             var isRotate = (typeof item === 'object' && item.rotate);
-            var isShiftDown = (typeof item === 'object' && item.shiftDown);
+            var isShiftUp = (typeof item === 'object' && item.shiftUp);
 
             var imgEl = createAutoFallbackElement(src);
             var classNames = 'modal-img' + (idx === 0 ? ' active' : '');
             if (isRotate) classNames += ' rotate-90';
-            if (isShiftDown) classNames += ' shift-down-40';
+            if (isShiftUp) classNames += ' shift-up-90';
             
             imgEl.className = classNames;
             mediaContainer.appendChild(imgEl);
