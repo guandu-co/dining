@@ -163,7 +163,7 @@
 
     .food-row.row-left {
       justify-content: flex-start;
-      padding-left: 5px;
+      padding-left: 0px;
     }
 
     .food-row.row-right {
@@ -187,6 +187,11 @@
       z-index: 5;
     }
 
+    /* 使左靠的 r1 與 v1 往左移且右側留邊 */
+    .food-group.shift-left {
+      transform: translateX(-15px);
+    }
+
     .food-group:active {
       transform: scale(1.08) !important;
     }
@@ -198,7 +203,7 @@
     }
 
     .labels-right {
-      margin-left: -14px;
+      margin-left: -20px;
     }
 
     .labels-left {
@@ -212,8 +217,8 @@
     }
 
     .curly-png-line {
-      width: 96px;
-      height: 60px;
+      width: 85px;
+      height: 55px;
       display: inline-block;
       margin: 0 2px;
       flex-shrink: 0;
@@ -254,9 +259,8 @@
     .color-cake .food-label-text { color: #f09bb0; }
     .color-cake .curly-png-line { background-color: #f09bb0; }
 
-    /* 食材圖片放大設定，貼近卷卷線 */
     .food-item {
-      max-width: 160px;
+      max-width: 155px;
       height: auto;
       cursor: pointer;
       display: block;
@@ -632,10 +636,10 @@
     <!-- 3. 食材圖形區域 -->
     <div class="food-grid">
       
-      <!-- 第一排：r1 (riceball1) -->
+      <!-- 第一排：r1 (riceball1) -> 向左移 -->
       <div class="food-row row-left">
-        <div class="food-group color-riceball1 delay-1 trigger-farm-modal" data-modal="riceball1">
-          <img src="r1.png" alt="r1" class="food-item" style="max-width: 155px;">
+        <div class="food-group shift-left color-riceball1 delay-1 trigger-farm-modal" data-modal="riceball1">
+          <img src="r1.png" alt="r1" class="food-item" style="max-width: 150px;">
           <div class="labels-column labels-right">
             <div class="label-line-item" data-farm-target="八仙六代園"><span class="curly-png-line"></span><span class="food-label-text">八仙六代園</span></div>
             <div class="label-line-item" data-farm-target="四口田"><span class="curly-png-line"></span><span class="food-label-text">四口田</span></div>
@@ -659,10 +663,10 @@
         </div>
       </div>
 
-      <!-- v1 (vege) -->
+      <!-- v1 (vege) -> 向左移 -->
       <div class="food-row row-left">
-        <div class="food-group color-vege delay-3 trigger-farm-modal" data-modal="vege">
-          <img src="v1.png" alt="v1" class="food-item" style="max-width: 165px;">
+        <div class="food-group shift-left color-vege delay-3 trigger-farm-modal" data-modal="vege">
+          <img src="v1.png" alt="v1" class="food-item" style="max-width: 155px;">
           <div class="labels-column labels-right">
             <div class="label-line-item" data-farm-target="一德農園"><span class="curly-png-line"></span><span class="food-label-text">一德農園</span></div>
             <div class="label-line-item" data-farm-target="足妹農場"><span class="curly-png-line"></span><span class="food-label-text">足妹農場</span></div>
@@ -689,7 +693,7 @@
       <!-- e1 (eggroll) -->
       <div class="food-row row-left">
         <div class="food-group color-eggroll delay-5 trigger-farm-modal" data-modal="eggroll">
-          <img src="e1.png" alt="e1" class="food-item" style="max-width: 165px;">
+          <img src="e1.png" alt="e1" class="food-item" style="max-width: 160px;">
           <div class="labels-column labels-right">
             <div class="label-line-item" data-farm-target="足妹農場"><span class="curly-png-line"></span><span class="food-label-text">足妹農場</span></div>
             <div class="label-line-item" data-farm-target="隨野家農場"><span class="curly-png-line"></span><span class="food-label-text">隨野家農場</span></div>
