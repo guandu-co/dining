@@ -428,11 +428,6 @@
       transform: rotate(90deg) scale(1.35);
     }
 
-    /* 故鄉第8張照片專屬：向另一個方向90%（露出照片上半部） */
-    .modal-img.shift-up-90 {
-      object-position: center 10%;
-    }
-
     .arrow-left, .arrow-right {
       position: absolute;
       top: 50%;
@@ -869,7 +864,7 @@
       var desc_hushan_loc = { type: "map", url: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("臺北市北投區湖山里湖山路一段48-2號") };
       var loc_sunkitchen = { type: "map", url: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("臺北市北投區東昇路38-12號") };
       var loc_fengcun = { type: "map", url: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("臺北市北投區一德里立德路120巷貴子坑溪旁峰村有機農場") };
-      var loc_suiye = { type: "map", url: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("112臺北市北投區豐年里大業路517巷80號") };
+      var loc_suiye = { type: "map", url: "https://maps.app.goo.gl/y32pz8q9RMiF4MQ37?g_st=ic" };
       var loc_shanshui = { type: "map", url: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("山水香庭園野菜") };
       var loc_yide = { type: "map", url: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("台北市北投區大業路527巷155號") };
       var loc_homeland = { type: "map", url: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("臺北市北投區湖田里竹子湖路故鄉金針花農園") };
@@ -879,8 +874,8 @@
       var loc_zumei = { type: "text", text: "農場：關渡平原 農禪寺隔壁\n販賣：北投社大每週三16:00-18:00" };
       var loc_linsoy = { type: "text", text: "位置：臺北市新安路巷弄內" };
 
-      // 各農家照片資料庫
-      var imgs_baxian = ["eightpeople.jpg", "riceplant.webp", "rice.webp", "eight.jpg", "carrot.jpg", "e1.jpg", "e2.jpg", "e3.jpg"];
+      // 各農家照片資料庫（八仙第八張更新為 0000.jpg）
+      var imgs_baxian = ["eightpeople.jpg", "riceplant.webp", "rice.webp", "eight.jpg", "carrot.jpg", "e1.jpg", "e2.jpg", "0000.jpg"];
       var imgs_linsoy = ["w6.jpg", "ww6.jpg", "w6w6.jpg", "www8.jpg", "l5.jpg", "l6.jpg", "l7.jpg", "l8.jpg"];
       var imgs_yide = [
         { src: "yide2.jpg" },
@@ -895,12 +890,8 @@
       var imgs_sunkitchen = ["f1.jpg", "f2.jpeg", "f9.jpg", "f10.jpg", "f3.jpg", "fff6.jpg", "f5.jpg", "f6.jpg", "f7.jpg", "f8.jpg"];
       var imgs_shanshui = ["tsh2.jpg"];
 
-      // 故鄉金針花農園：第 8 張照片 (k8.jpg) 設定 shiftUp 標記（向上移動 90%，露出上半部）
-      var imgs_homeland = [
-        "k1.jpg", "k2.jpg", "k3.jpg", "k4.jpg", "k5.jpg", "k6.jpg", "k7.jpg", 
-        { src: "k8.jpg", shiftUp: true }, 
-        "k9.jpg", "k1000.jpg"
-      ];
+      // 故鄉金針花農園：第八張照片更新為 9090.jpg
+      var imgs_homeland = ["k1.jpg", "k2.jpg", "k3.jpg", "k4.jpg", "k5.jpg", "k6.jpg", "k7.jpg", "9090.jpg", "k9.jpg", "k1000.jpg"];
 
       var imgs_zumei = ["ss1.jpg", "ss2.jpg", "ss3.jpg", "ss4.jpg"];
       var imgs_suiye = ["ww6w.jpg", "ww7.jpg", "w3.avif", "w4.avif", "ww5.JPG", "w6ww.jpg"];
@@ -1071,12 +1062,10 @@
           data.imgs.forEach(function(item, idx) {
             var src = (typeof item === 'string') ? item : item.src;
             var isRotate = (typeof item === 'object' && item.rotate);
-            var isShiftUp = (typeof item === 'object' && item.shiftUp);
 
             var imgEl = createAutoFallbackElement(src);
             var classNames = 'modal-img' + (idx === 0 ? ' active' : '');
             if (isRotate) classNames += ' rotate-90';
-            if (isShiftUp) classNames += ' shift-up-90';
             
             imgEl.className = classNames;
             mediaContainer.appendChild(imgEl);
