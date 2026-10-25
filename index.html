@@ -36,7 +36,7 @@
       justify-content: center;
       align-items: center;
       z-index: 9999;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
     }
 
     .loading-brand {
@@ -44,18 +44,18 @@
       font-weight: bold;
       letter-spacing: 4px;
       margin-bottom: 25px;
-      animation: pulseText 1.8s ease-in-out infinite alternate;
+      animation: pulseText 1.5s ease-in-out infinite alternate;
     }
 
     @keyframes pulseText {
-      0% { opacity: 0.4; transform: scale(0.96); }
-      100% { opacity: 1; transform: scale(1.03); }
+      0% { opacity: 0.5; transform: scale(0.97); }
+      100% { opacity: 1; transform: scale(1.02); }
     }
 
     /* 長形進度條容器 */
     .progress-bar-container {
-      width: 260px;
-      height: 10px;
+      width: 240px;
+      height: 8px;
       background-color: rgba(255, 255, 255, 0.2);
       border-radius: 20px;
       overflow: hidden;
@@ -69,7 +69,7 @@
       height: 100%;
       background-color: #b3c200;
       border-radius: 20px;
-      transition: width 0.3s ease;
+      transition: width 0.2s ease;
     }
 
     .loading-subtext {
@@ -408,7 +408,7 @@
       margin-bottom: 12px;
       border-radius: 12px;
       overflow: hidden;
-      background-color: rgba(255,255,255,0.1);
+      background-color: rgba(0,0,0,0.15);
     }
     .modal-img {
       position: absolute;
@@ -418,14 +418,10 @@
       height: 100%;
       object-fit: cover;
       opacity: 0;
-      transition: opacity 0.4s ease-in-out;
+      transition: opacity 0.3s ease-in-out;
     }
     .modal-img.active {
       opacity: 1;
-    }
-
-    .modal-img.rotate-90 {
-      transform: rotate(90deg) scale(1.35);
     }
 
     .arrow-left, .arrow-right {
@@ -540,7 +536,7 @@
     }
 
     /* -----------------------------------
-       農場位置專屬迷你視窗 (淺綠色 + 白字 + 右上綠色叉叉)
+       農場位置專屬迷你視窗
     ----------------------------------- */
     #text-location-modal .modal-card {
       background-color: #149377;
@@ -593,7 +589,7 @@
     <div class="progress-bar-container">
       <div class="progress-bar-fill" id="progress-fill"></div>
     </div>
-    <div class="loading-subtext">資料與照片預載中，請稍候...</div>
+    <div class="loading-subtext">載入中...</div>
   </div>
 
   <div class="page-container">
@@ -750,51 +746,22 @@
   </div>
 
   <script>
-    // 檔名與副檔名自動替換建立 Image 物件
-    function preloadSingleImage(src, callback) {
-      if (!src) { if (callback) callback(); return; }
-      
-      var extIndex = src.lastIndexOf('.');
-      var basePath = extIndex !== -1 ? src.substring(0, extIndex) : src;
-      var ext = extIndex !== -1 ? src.substring(extIndex) : '';
-
-      var backups = [];
-      if (ext === '.jpg') backups = [basePath + '.JPG', basePath + '.jpeg', basePath + '.png'];
-      else if (ext === '.JPG') backups = [basePath + '.jpg', basePath + '.jpeg', basePath + '.png'];
-      else if (ext === '.png') backups = [basePath + '.PNG', basePath + '.jpg', basePath + '.jpeg'];
-      else if (ext === '.webp') backups = [basePath + '.jpg', basePath + '.png'];
-      else if (ext === '.jpeg') backups = [basePath + '.jpg', basePath + '.png'];
-
-      var imgObj = new Image();
-      
-      function tryNext() {
-        if (backups.length > 0) {
-          var nextSrc = backups.shift();
-          imgObj.src = nextSrc;
-        } else {
-          if (callback) callback();
-        }
-      }
-
-      imgObj.onload = function() {
-        if (callback) callback();
-      };
-      imgObj.onerror = tryNext;
-
-      imgObj.src = src;
-    }
-
-    function createAutoFallbackElement(src) {
+    // 建立自動降級的圖片元素，解決破圖與大寫副檔名問題
+    function createSafeImageElement(src) {
       var img = document.createElement('img');
+      
       var extIndex = src.lastIndexOf('.');
       var basePath = extIndex !== -1 ? src.substring(0, extIndex) : src;
-      var ext = extIndex !== -1 ? src.substring(extIndex) : '';
+      var ext = extIndex !== -1 ? src.substring(extIndex).toLowerCase() : '';
 
       var backups = [];
-      if (ext === '.jpg') backups = [basePath + '.JPG', basePath + '.jpeg', basePath + '.png'];
-      else if (ext === '.JPG') backups = [basePath + '.jpg', basePath + '.jpeg', basePath + '.png'];
-      else if (ext === '.png') backups = [basePath + '.PNG', basePath + '.jpg', basePath + '.jpeg'];
-      else if (ext === '.webp') backups = [basePath + '.jpg', basePath + '.png'];
+      if (ext === '.jpg' || ext === '.jpeg') {
+        backups = [basePath + '.JPG', basePath + '.png', basePath + '.PNG', basePath + '.jpeg'];
+      } else if (ext === '.png') {
+        backups = [basePath + '.PNG', basePath + '.jpg', basePath + '.JPG'];
+      } else {
+        backups = [basePath + '.jpg', basePath + '.JPG', basePath + '.png'];
+      }
 
       img.onerror = function() {
         if (backups.length > 0) {
@@ -808,7 +775,28 @@
 
     document.addEventListener("DOMContentLoaded", function() {
       // -----------------------------------
-      // 1. 最下方 Banner 自動淡入淡出輪播
+      // 極速 Loading 效果控制（1.2秒內順暢開啟）
+      // -----------------------------------
+      var progressFill = document.getElementById('progress-fill');
+      var loadingOverlay = document.getElementById('loading-overlay');
+      
+      var p = 0;
+      var timer = setInterval(function() {
+        p += 25;
+        if (progressFill) progressFill.style.width = p + '%';
+        if (p >= 100) {
+          clearInterval(timer);
+          setTimeout(function() {
+            if (loadingOverlay) {
+              loadingOverlay.style.opacity = '0';
+              loadingOverlay.style.visibility = 'hidden';
+            }
+          }, 200);
+        }
+      }, 250);
+
+      // -----------------------------------
+      // 最下方 Banner 輪播
       // -----------------------------------
       var bannerContainer = document.getElementById('banner-slider');
       if (bannerContainer) {
@@ -824,7 +812,7 @@
       }
 
       // -----------------------------------
-      // 2. 農家最新介紹內文
+      // 文案設定
       // -----------------------------------
       var desc_baxian_sub = "無毒農法金色稻浪，傳承六代的純淨給孩子";
       var desc_baxian = "宣智與亦真深耕於台北最後一塊綠洲關渡平原，堅持友善耕作與自然共生，留給下一代乾淨的土地。<br><br>農場推動食農教育與季節農事體驗，包含拔蘿蔔、插秧、割稻及米食 DIY、稻田運動會以及藝術工作坊。邀請民眾在金黃色的稻穀間親近土地，感受都市角落裡最真誠的自然風土，並持續傳達與自然永續共生的冀望。";
@@ -859,7 +847,7 @@
       var desc_zumei_sub = "北投青菜底呷，友善耕耘都市田地";
       var desc_zumei = "置身於北投區關渡平原的足妹農場，與北投在地多位小農及社區大學共同成立的北投社大青菜社「青菜底呷」，推廣在地農產蔬果與參與創生計畫。<br><br>農場亦與大屯山系一帶推動都市農業、友善耕作與食農教育，致力於友善土地、低碳生產與食農教育推廣！";
 
-      // 農場位置導航/純文字
+      // 位置資訊
       var loc_baxian = { type: "map", url: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("臺北市北投區承德路七段401巷八仙六代園") };
       var desc_hushan_loc = { type: "map", url: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("臺北市北投區湖山里湖山路一段48-2號") };
       var loc_sunkitchen = { type: "map", url: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("臺北市北投區東昇路38-12號") };
@@ -870,92 +858,22 @@
       var loc_homeland = { type: "map", url: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("臺北市北投區湖田里竹子湖路故鄉金針花農園") };
       var loc_caifu = { type: "map", url: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("台北市北投區竹子湖路68號財福海芋田") };
 
-      // 足妹與林記醬油之專屬文字視窗內容
       var loc_zumei = { type: "text", text: "農場：關渡平原 農禪寺隔壁\n販賣：北投社大每週三16:00-18:00" };
       var loc_linsoy = { type: "text", text: "位置：臺北市新安路巷弄內" };
 
-      // 各農家照片資料庫
+      // 各農場照片檔名修復
       var imgs_baxian = ["eightpeople.jpg", "riceplant.webp", "rice.webp", "eight.jpg", "carrot.jpg", "e1.jpg", "e2.jpg", "0000.jpg"];
       var imgs_linsoy = ["w6.jpg", "ww6.jpg", "w6w6.jpg", "www8.jpg", "l5.jpg", "l6.jpg", "l7.jpg", "l8.jpg"];
-      var imgs_yide = [
-        { src: "yide2.jpg" },
-        { src: "yide3.jpg" },
-        { src: "yide9.jpg" },
-        { src: "yide5.jpg" },
-        { src: "yide6.jpg" },
-        { src: "yide7.jpg" }
-      ];
-
+      var imgs_yide = ["yide2.jpg", "yide3.jpg", "yide9.jpg", "yide5.jpg", "yide6.jpg", "yide7.jpg"];
       var imgs_fengcun = ["fon2.jpg", "fon4.jpeg", "fon5.jpeg", "fon6.jpeg", "fon1.jpg", "fon3.jpg"];
       var imgs_sunkitchen = ["f1.jpg", "f2.jpeg", "f9.jpg", "f10.jpg", "f3.jpg", "fff6.jpg", "f5.jpg", "f6.jpg", "f7.jpg", "f8.jpg"];
       var imgs_shanshui = ["tsh2.jpg"];
-
-      // 故鄉金針花農園：第八張照片 9090.jpg
-      var imgs_homeland = ["k1.jpg", "k2.jpg", "k3.jpg", "k4.jpg", "k5.jpg", "k6.jpg", "k7.jpg", "9090.jpg", "k9.jpg", "k1000.jpg"];
-
+      var imgs_homeland = ["k1.jpg", "k2.jpg", "k3.jpg", "k4.jpg", "k5.jpg", "k6.jpg", "k7.jpg", "9090.jpg", "k9.jpg", "k10.jpg"];
       var imgs_zumei = ["ss1.jpg", "ss2.jpg", "ss3.jpg", "ss4.jpg"];
       var imgs_suiye = ["ww6w.jpg", "ww7.jpg", "w3.avif", "w4.avif", "ww5.JPG", "w6ww.jpg"];
       var imgs_caifu = ["p1.JPG", "pp9.jpg", "pp10.jpg", "p3.JPG", "p4.JPG", "p5.jpg", "p6.jpeg", "p7.jpeg", "p8.jpg", "p9.jpg"];
 
-      // -----------------------------------
-      // 強效全頁預載 + 長形進度條控制
-      // -----------------------------------
-      var allFarmImageLists = [
-        imgs_baxian, imgs_linsoy, imgs_yide, imgs_fengcun, 
-        imgs_sunkitchen, imgs_shanshui, imgs_homeland, 
-        imgs_zumei, imgs_suiye, imgs_caifu, ["hu1.jpg", "hu2.jpg", "hu3.jpg", "hu4.jpg"]
-      ];
-
-      var imagesToPreloadList = [];
-      allFarmImageLists.forEach(function(list) {
-        var count = Math.min(list.length, 4);
-        for (var i = 0; i < count; i++) {
-          var item = list[i];
-          var src = (typeof item === 'string') ? item : item.src;
-          if (src && imagesToPreloadList.indexOf(src) === -1) {
-            imagesToPreloadList.push(src);
-          }
-        }
-      });
-
-      var loadedCount = 0;
-      var totalToPreload = imagesToPreloadList.length;
-      var progressFill = document.getElementById('progress-fill');
-
-      function updateProgressBar() {
-        loadedCount++;
-        var percent = Math.min(Math.round((loadedCount / totalToPreload) * 100), 100);
-        if (progressFill) {
-          progressFill.style.width = percent + '%';
-        }
-        if (loadedCount >= totalToPreload) {
-          setTimeout(hideLoadingOverlay, 300);
-        }
-      }
-
-      function hideLoadingOverlay() {
-        var overlay = document.getElementById('loading-overlay');
-        if (overlay && overlay.style.opacity !== '0') {
-          overlay.style.opacity = '0';
-          overlay.style.visibility = 'hidden';
-        }
-      }
-
-      imagesToPreloadList.forEach(function(src) {
-        preloadSingleImage(src, function() {
-          updateProgressBar();
-        });
-      });
-
-      // 防卡死機制：2.5秒後無論進度強行解開 Loading
-      setTimeout(function() {
-        if (progressFill) progressFill.style.width = '100%';
-        setTimeout(hideLoadingOverlay, 200);
-      }, 2500);
-
-      // -----------------------------------
-      // 3. 各料理專屬 Modal 資料組
-      // -----------------------------------
+      // Modal 資料組合
       var modalDataSets = {
         riceball1: [
           { title: "八仙六代園", prefix: "珠蔥豆乳小魚乾日式飯糰的", ingredient: "有善稻米", subtitle: desc_baxian_sub, desc: desc_baxian, btnText: "FB", fb: "https://www.facebook.com/beitoubaxianfarm", locInfo: loc_baxian, imgs: imgs_baxian },
@@ -1010,7 +928,6 @@
       var cardPrevBtn = document.getElementById('card-prev');
       var cardNextBtn = document.getElementById('card-next');
 
-      // 專屬純文字彈窗元素
       var textLocationModal = document.getElementById('text-location-modal');
       var textModalBody = document.getElementById('text-modal-body');
       var closeTextModal = document.getElementById('close-text-modal');
@@ -1029,7 +946,6 @@
         fbLink.innerText = data.btnText || "FB";
         fbLink.href = data.fb || "#";
 
-        // 農場位置：地圖跳轉 vs 淺綠色純文字小視窗
         locLink.onclick = function(e) {
           if (data.locInfo && data.locInfo.type === "text") {
             e.preventDefault();
@@ -1057,17 +973,11 @@
         var oldImgs = mediaContainer.querySelectorAll('.modal-img');
         oldImgs.forEach(function(img) { img.remove(); });
 
-        // 即時生成圖片 DOM 節點
         if (data.imgs && data.imgs.length > 0) {
           data.imgs.forEach(function(item, idx) {
             var src = (typeof item === 'string') ? item : item.src;
-            var isRotate = (typeof item === 'object' && item.rotate);
-
-            var imgEl = createAutoFallbackElement(src);
-            var classNames = 'modal-img' + (idx === 0 ? ' active' : '');
-            if (isRotate) classNames += ' rotate-90';
-            
-            imgEl.className = classNames;
+            var imgEl = createSafeImageElement(src);
+            imgEl.className = 'modal-img' + (idx === 0 ? ' active' : '');
             mediaContainer.appendChild(imgEl);
           });
         }
@@ -1182,7 +1092,6 @@
         });
       }
 
-      // 關閉純文字小視窗
       if (closeTextModal && textLocationModal) {
         closeTextModal.addEventListener('click', function() {
           textLocationModal.classList.remove('active');
