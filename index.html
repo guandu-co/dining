@@ -627,8 +627,8 @@
     <!-- 3. 底部 Banner 區域 -->
     <div class="banner-slider-container" id="banner-slider">
       <img src="guandu-banner.jpg" class="banner-placeholder" alt="banner placeholder">
-      <img src="banner3.png" alt="關渡共食" class="banner-slide-img active" onerror="handleImgError(this, ['banner3.jpg', 'banner3.jpeg'])">
-      <img src="guandu-banner.jpg" alt="關渡平原微型藝術祭" class="banner-slide-img" onerror="handleImgError(this, ['guandu-banner.png', 'guandu-banner.jpeg'])">
+      <img src="banner3.png" alt="關渡共食" class="banner-slide-img active">
+      <img src="guandu-banner.jpg" alt="關渡平原微型藝術祭" class="banner-slide-img">
     </div>
 
     <!-- 4. 底部三個豎長型直排膠囊按鈕 -->
@@ -676,17 +676,41 @@
   </div>
 
   <script>
-    // 通用圖片載入救援機制（自動切換大小寫或格式檔名）
-    function handleImgError(img, backups) {
-      if (!backups || backups.length === 0) return;
-      var nextSrc = backups.shift();
-      img.onerror = function() {
-        handleImgError(img, backups);
+    // 檔名與副檔名自動替換建立 Image 物件
+    function preloadSingleImage(src, callback) {
+      if (!src) { if (callback) callback(); return; }
+      
+      var extIndex = src.lastIndexOf('.');
+      var basePath = extIndex !== -1 ? src.substring(0, extIndex) : src;
+      var ext = extIndex !== -1 ? src.substring(extIndex) : '';
+
+      var backups = [];
+      if (ext === '.jpg') backups = [basePath + '.JPG', basePath + '.jpeg', basePath + '.png'];
+      else if (ext === '.JPG') backups = [basePath + '.jpg', basePath + '.jpeg', basePath + '.png'];
+      else if (ext === '.png') backups = [basePath + '.PNG', basePath + '.jpg', basePath + '.jpeg'];
+      else if (ext === '.webp') backups = [basePath + '.jpg', basePath + '.png'];
+      else if (ext === '.jpeg') backups = [basePath + '.jpg', basePath + '.png'];
+
+      var imgObj = new Image();
+      
+      function tryNext() {
+        if (backups.length > 0) {
+          var nextSrc = backups.shift();
+          imgObj.src = nextSrc;
+        } else {
+          if (callback) callback();
+        }
+      }
+
+      imgObj.onload = function() {
+        if (callback) callback();
       };
-      img.src = nextSrc;
+      imgObj.onerror = tryNext;
+
+      imgObj.src = src;
     }
 
-    function createAutoFallbackImage(src, onComplete) {
+    function createAutoFallbackElement(src) {
       var img = document.createElement('img');
       var extIndex = src.lastIndexOf('.');
       var basePath = extIndex !== -1 ? src.substring(0, extIndex) : src;
@@ -698,18 +722,12 @@
       else if (ext === '.png') backups = [basePath + '.PNG', basePath + '.jpg', basePath + '.jpeg'];
       else if (ext === '.webp') backups = [basePath + '.jpg', basePath + '.png'];
 
-      img.onload = function() {
-        if (onComplete) onComplete(true);
-      };
-
       img.onerror = function() {
         if (backups.length > 0) {
-          handleImgError(img, backups);
-        } else {
-          if (onComplete) onComplete(false);
+          var nextSrc = backups.shift();
+          img.src = nextSrc;
         }
       };
-
       img.src = src;
       return img;
     }
@@ -767,7 +785,7 @@
       var desc_zumei_sub = "北投青菜底呷，友善耕耘都市田地";
       var desc_zumei = "置身於北投區關渡平原的足妹農場，與北投在地多位小農及社區大學共同成立的北投社大青菜社「青菜底呷」，推廣在地農產蔬果與參與創生計畫。<br><br>農場亦與大屯山系一帶推動都市農業、友善耕作與食農教育，致力於友善土地、低碳生產與食農教育推廣！";
 
-      // 農場位置：一般導航或純文字視窗設定
+      // 農場位置導航/純文字
       var loc_baxian = { type: "map", url: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("臺北市北投區承德路七段401巷八仙六代園") };
       var desc_hushan_loc = { type: "map", url: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("臺北市北投區湖山里湖山路一段48-2號") };
       var loc_sunkitchen = { type: "map", url: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("臺北市北投區東昇路38-12號") };
@@ -778,7 +796,6 @@
       var loc_homeland = { type: "map", url: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("臺北市北投區湖田里竹子湖路故鄉金針花農園") };
       var loc_caifu = { type: "map", url: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("台北市北投區竹子湖路68號財福海芋田") };
 
-      // 足妹農場與林記醬油改為純文字視窗
       var loc_zumei = { type: "text", text: "關渡平原 農禪寺隔壁\n北投社大每週三16:00-18:00" };
       var loc_linsoy = { type: "text", text: "臺北市新安路巷弄內" };
 
@@ -797,17 +814,13 @@
       var imgs_fengcun = ["fon2.jpg", "fon4.jpeg", "fon5.jpeg", "fon6.jpeg", "fon1.jpg", "fon3.jpg"];
       var imgs_sunkitchen = ["f1.jpg", "f2.jpeg", "f9.jpg", "f10.jpg", "f3.jpg", "fff6.jpg", "f5.jpg", "f6.jpg", "f7.jpg", "f8.jpg"];
       var imgs_shanshui = ["tsh2.jpg"];
-      
-      // 故鄉金針花農園：依圖一完整更新順序 (共9張)
       var imgs_homeland = ["k1.jpg", "k2.jpg", "k3.jpg", "k4.jpg", "k5.jpg", "k6.jpg", "k7.jpg", "k8.jpg", "k9.jpg", "k1000.jpg"];
-      
       var imgs_zumei = ["ss1.jpg", "ss2.jpg", "ss3.jpg", "ss4.jpg"];
       var imgs_suiye = ["ww6w.jpg", "ww7.jpg", "w3.avif", "w4.avif", "ww5.JPG", "w6ww.jpg"];
       var imgs_caifu = ["p1.JPG", "pp9.jpg", "pp10.jpg", "p3.JPG", "p4.JPG", "p5.jpg", "p6.jpeg", "p7.jpeg", "p8.jpg", "p9.jpg"];
 
       // -----------------------------------
-      // 【全網頁照片強效預載與 Loading 畫面控制】
-      // 預載每個農家的前 4 張照片，確保下載完成後才關閉 Loading
+      // 強效全頁預載：全部農家前4張照片直接強制快取
       // -----------------------------------
       var allFarmImageLists = [
         imgs_baxian, imgs_linsoy, imgs_yide, imgs_fengcun, 
@@ -839,28 +852,27 @@
 
       function hideLoadingOverlay() {
         var overlay = document.getElementById('loading-overlay');
-        if (overlay) {
+        if (overlay && overlay.style.opacity !== '0') {
           overlay.style.opacity = '0';
           overlay.style.visibility = 'hidden';
         }
       }
 
       imagesToPreloadList.forEach(function(src) {
-        createAutoFallbackImage(src, function() {
+        preloadSingleImage(src, function() {
           checkLoadingComplete();
         });
       });
 
-      // 防卡死備援：若網路過慢，最長 4 秒後自動進入網頁
+      // 防卡死：2.5秒後強行解開 Loading 讓使用者能正常操作
       setTimeout(function() {
         hideLoadingOverlay();
-      }, 4000);
+      }, 2500);
 
       // -----------------------------------
-      // 3. 各料理專屬 Modal 資料組 (按筆劃排序)
+      // 3. 各料理專屬 Modal 資料組
       // -----------------------------------
       var modalDataSets = {
-        // 珠蔥豆乳小魚乾日式飯糰
         riceball1: [
           { title: "八仙六代園", prefix: "珠蔥豆乳小魚乾日式飯糰的", ingredient: "有善稻米", subtitle: desc_baxian_sub, desc: desc_baxian, btnText: "FB", fb: "https://www.facebook.com/beitoubaxianfarm", locInfo: loc_baxian, imgs: imgs_baxian },
           { title: "四口田", prefix: "珠蔥豆乳小魚乾日式飯糰中的：", ingredient: "赤道櫻草", subtitle: desc_sunkitchen_sub, desc: desc_sunkitchen, btnText: "FB", fb: "https://www.facebook.com/foursquarefarm", locInfo: loc_sunkitchen, imgs: imgs_sunkitchen },
@@ -868,19 +880,13 @@
           { title: "林記醬油", prefix: "珠蔥豆乳小魚乾日式飯糰中的：", ingredient: "黑豆醬油、豆豉", subtitle: desc_linsoy_sub, desc: desc_linsoy, btnText: "FB", fb: "https://www.facebook.com/profile.php?id=100069495233994", locInfo: loc_linsoy, imgs: imgs_linsoy },
           { title: "湖山社區發展協會", prefix: "珠蔥豆乳小魚乾日式飯糰中的：", ingredient: "豆腐乳、珠蔥", subtitle: desc_hushan_sub, desc: desc_hushan, btnText: "FB", fb: "https://www.facebook.com/Husancommuntiyassociation/", locInfo: desc_hushan_loc, imgs: ["hu1.jpg", "hu2.jpg", "hu3.jpg", "hu4.jpg", "hu5.jpg"] }
         ],
-
-        // 紫蘇昆布鹽燻雞日式飯糰
         riceball2: [
           { title: "八仙六代園", prefix: "紫蘇昆布鹽燻雞日式飯糰的", ingredient: "友善稻米", subtitle: desc_baxian_sub, desc: desc_baxian, btnText: "FB", fb: "https://www.facebook.com/beitoubaxianfarm", locInfo: loc_baxian, imgs: imgs_baxian },
           { title: "四口田", prefix: "紫蘇昆布鹽燻雞日式飯糰中的：", ingredient: "紫蘇", subtitle: desc_sunkitchen_sub, desc: desc_sunkitchen, btnText: "FB", fb: "https://www.facebook.com/foursquarefarm", locInfo: loc_sunkitchen, imgs: imgs_sunkitchen }
         ],
-
-        // 香茅雞米花
         chicken: [
           { title: "峰村有機農場", prefix: "香茅雞米花中的：", ingredient: "香茅", subtitle: desc_fengcun_sub, desc: desc_fengcun, btnText: "FB", fb: "https://www.facebook.com/p/%E5%B3%B0%E6%9D%91%E6%9C%89%E6%A9%9F%E8%BE%B2%E5%A0%B4-100064918140623/?locale=zh_TW", locInfo: loc_fengcun, imgs: imgs_fengcun }
         ],
-
-        // 香草時蔬客家婆菜
         vege: [
           { title: "一德農園", prefix: "香草時蔬客家婆菜中的：", ingredient: "自製白柚果醬", subtitle: desc_yide_sub, desc: desc_yide, btnText: "聯絡小農", fb: "tel:0919246025", locInfo: loc_yide, imgs: imgs_yide },
           { title: "足妹農場", prefix: "香草時蔬客家婆菜中的：", ingredient: "羽衣甘藍", subtitle: desc_zumei_sub, desc: desc_zumei, btnText: "聯絡小農", fb: "tel:0983269152", locInfo: loc_zumei, imgs: imgs_zumei },
@@ -890,14 +896,10 @@
           { title: "峰村有機農場", prefix: "香草時蔬客家婆菜中的：", ingredient: "茭白筍", subtitle: desc_fengcun_sub, desc: desc_fengcun, btnText: "FB", fb: "https://www.facebook.com/p/%E5%B3%B0%E6%9D%91%E6%9C%89%E6%A9%9F%E8%BE%B2%E5%A0%B4-100064918140623/?locale=zh_TW", locInfo: loc_fengcun, imgs: imgs_fengcun },
           { title: "湖山社區發展協會", prefix: "香草時蔬客家婆菜中的：", ingredient: "茭白筍", subtitle: desc_hushan_sub, desc: desc_hushan, btnText: "FB", fb: "https://www.facebook.com/Husancommuntiyassociation/", locInfo: desc_hushan_loc, imgs: ["hu1.jpg", "hu2.jpg", "hu3.jpg", "hu4.jpg", "hu5.jpg"] }
         ],
-
-        // 江戶前厚玉子燒
         eggroll: [
           { title: "足妹農場", prefix: "江戶前厚玉子燒中的：", ingredient: "紫山藥", subtitle: desc_zumei_sub, desc: desc_zumei, btnText: "聯絡小農", fb: "tel:0983269152", locInfo: loc_zumei, imgs: imgs_zumei },
           { title: "隨野家農場", prefix: "江戶前厚玉子燒中的：", ingredient: "放牧雞蛋", subtitle: desc_suiye_sub, desc: desc_suiye, btnText: "FB", fb: "https://www.facebook.com/wildchicksfarm", locInfo: loc_suiye, imgs: imgs_suiye }
         ],
-
-        // 西瓜造型小發糕
         cake: [
           { title: "一德農園", prefix: "西瓜造型小發糕中的：", ingredient: "火龍果", subtitle: desc_yide_sub, desc: desc_yide, btnText: "聯絡小農", fb: "tel:0919246025", locInfo: loc_yide, imgs: imgs_yide },
           { title: "八仙六代園", prefix: "西瓜造型小發糕的", ingredient: "有善稻米", subtitle: desc_baxian_sub, desc: desc_baxian, btnText: "FB", fb: "https://www.facebook.com/beitoubaxianfarm", locInfo: loc_baxian, imgs: imgs_baxian },
@@ -938,7 +940,6 @@
         fbLink.innerText = data.btnText || "FB";
         fbLink.href = data.fb || "#";
 
-        // 位置按鈕：點擊跳轉或純文字提示
         locLink.onclick = function(e) {
           if (data.locInfo && data.locInfo.type === "text") {
             e.preventDefault();
@@ -965,35 +966,21 @@
         var oldImgs = mediaContainer.querySelectorAll('.modal-img');
         oldImgs.forEach(function(img) { img.remove(); });
 
-        // 1. 載入第 1 張照片
-        if (data.imgs.length > 0) {
-          var firstItem = data.imgs[0];
-          var firstSrc = (typeof firstItem === 'string') ? firstItem : firstItem.src;
-          var isRotate = (typeof firstItem === 'object' && firstItem.rotate);
+        // 即時生成圖片 DOM 節點
+        if (data.imgs && data.imgs.length > 0) {
+          data.imgs.forEach(function(item, idx) {
+            var src = (typeof item === 'string') ? item : item.src;
+            var isRotate = (typeof item === 'object' && item.rotate);
 
-          var firstImgEl = createAutoFallbackImage(firstSrc);
-          firstImgEl.className = 'modal-img active' + (isRotate ? ' rotate-90' : '');
-          mediaContainer.appendChild(firstImgEl);
-        }
-
-        // 2. 載入其餘輪播圖片
-        if (data.imgs.length > 1) {
-          for (var i = 1; i < data.imgs.length; i++) {
-            (function(index) {
-              var item = data.imgs[index];
-              var imgSrc = (typeof item === 'string') ? item : item.src;
-              var isRot = (typeof item === 'object' && item.rotate);
-
-              var imgEl = createAutoFallbackImage(imgSrc);
-              imgEl.className = 'modal-img' + (isRot ? ' rotate-90' : '');
-              mediaContainer.appendChild(imgEl);
-            })(i);
-          }
+            var imgEl = createAutoFallbackElement(src);
+            imgEl.className = 'modal-img' + (idx === 0 ? ' active' : '') + (isRotate ? ' rotate-90' : '');
+            mediaContainer.appendChild(imgEl);
+          });
         }
 
         var prevImgBtn = document.getElementById('prev-img');
         var nextImgBtn = document.getElementById('next-img');
-        if (data.imgs.length <= 1) {
+        if (!data.imgs || data.imgs.length <= 1) {
           prevImgBtn.style.display = 'none';
           nextImgBtn.style.display = 'none';
         } else {
@@ -1025,7 +1012,6 @@
         if (autoPlayTimer) clearInterval(autoPlayTimer);
       }
 
-      // 動態點擊監聽
       var foodGroups = document.querySelectorAll('.food-group');
       foodGroups.forEach(function(group) {
         group.addEventListener('click', function(e) {
