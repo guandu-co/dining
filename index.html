@@ -468,16 +468,31 @@
       padding: 0 5px;
     }
 
-    .fb-btn {
+    /* 彈跳視窗底部雙按鈕容器 */
+    .modal-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .modal-btn {
       background-color: #ffffff;
       color: #0d6e5a;
-      padding: 8px 30px;
+      padding: 8px 20px;
       border-radius: 20px;
       text-decoration: none;
       font-weight: bold;
-      font-size: 14px;
+      font-size: 13.5px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
       display: inline-block;
+      transition: transform 0.1s ease, background-color 0.2s ease;
+      text-align: center;
+    }
+    .modal-btn:active {
+      transform: scale(0.95);
+      background-color: #f0f0f0;
     }
   </style>
 </head>
@@ -619,9 +634,11 @@
       <div class="modal-subtitle-text" id="modal-subtitle-text"></div>
       <p class="modal-desc" id="modal-desc-text"></p>
 
-      <a href="#" target="_blank" class="fb-btn" id="modal-fb-link">
-        FB
-      </a>
+      <!-- 底部按鈕區：農場位置 + FB/聯絡小農 -->
+      <div class="modal-actions">
+        <a href="#" target="_blank" class="modal-btn" id="modal-loc-link">農場位置</a>
+        <a href="#" target="_blank" class="modal-btn" id="modal-fb-link">FB</a>
+      </div>
 
     </div>
   </div>
@@ -677,7 +694,7 @@
       // 2. 農家最新介紹內文
       // -----------------------------------
       var desc_baxian_sub = "無毒農法金色稻浪，傳承六代的純淨給孩子";
-      var desc_baxian = "宣智與亦真深耕於台北最後一塊綠洲關渡平原，堅持友善耕作與自然共生，冀望留給下一代乾淨的土地。<br><br>農場積極推動食農教育與季節農事體驗，包含拔蘿蔔、插秧、割稻及米食 DIY、稻田運動會以及藝術工作坊等等。邀請民眾在金黃色的稻穀間親近土地，感受都市角落裡最真誠的自然風土，持續傳達永續經營、與自然共生的概念。";
+      var desc_baxian = "宣智與亦真深耕於台北最後一塊綠洲關渡平原，堅持友善耕作與自然共生，留給下一代乾淨的土地。<br><br>農場推動食農教育與季節農事體驗，包含拔蘿蔔、插秧、割稻及米食 DIY、稻田運動會以及藝術工作坊。邀請民眾在金黃色的稻穀間親近土地，感受都市角落裡最真誠的自然風土，並持續傳達與自然永續共生的冀望。";
 
       var desc_hushan_sub = "歷史建築珍藏，藍寶石筊白筍";
       var desc_hushan = "湖山社區內的歷史建物「草山防空洞」，當年是專為蔣中正設計的緊急避難所與臨時指揮所。如今李秋霞社區里長，結合在地農家與歷史文化，推出多樣套裝行程，帶領民眾走訪時代史蹟，或漫步橫嶺古道、湖底步道，欣賞老楓香、探訪櫻花秘境。<br><br>社區獨有的「藍寶石筊白筍」由陽明山藍寶泉灌溉孕育，品嚐鮮甜美味之餘，更有採收體驗、筊白筍泡菜DIY、料理等一系列活動！";
@@ -692,7 +709,7 @@
       var desc_fengcun = "峰村有機農場位於北投山腳下，從關渡捷運站步行即可抵達，是任姐與粟大哥堅持無農藥耕作的一片有機天地，農場裡的屋子平台也不時會舉辦活動與工作坊。農場亦提供多種有機季節蔬菜、水果與自製果醬等多樣品項，歡迎電話訂購或現場選購。<br><br>農場旁的步道是不少人意想不到的桃花秘境，沿路能看見遼闊的稻田，這裡也常有市集活動，很適合隨意走走，親近大自然。";
 
       var desc_suiye_sub = "都市裡的友善放牧雞，生活美學永續建築";
-      var desc_suiye = "隱身於北投捷運站附近的隨野家農場，是一座兼具友善動物與生活美學的都市放牧雞農場。<br><br>雞老闆佳敏從2018年開始以低密度友善放牧養殖雞群，打破傳統雞舍印象，落實農業施作與生態共榮，打造自然循環的環境與美學體驗空間。透過深度食農教育與蛋雞福利宣導，讓大眾在城市角落感受人與動物、土地和諧共生的美好。";
+      var desc_suiye = "隱身於北投捷運站附近的隨野家農場，是一座兼具友善動物與生活美學的都市放牧雞農場。<br><br>雞老闆佳敏從2018年開始以低密度友善放牧養殖雞群，打破傳統雞舍印象，打造自然循環的環境與美學體驗空間。透過深度食農教育與蛋雞福利宣導，讓大眾在城市角落感受人與動物、土地和諧共生的美好。";
 
       var desc_shanshui_sub = "在地深耕二十年多，自耕新鮮季節野菜";
       var desc_shanshui = "農家子弟曹永慶曾經營山水香庭園野菜餐廳，深耕陽明山竹子湖二十多年。<br><br>如今餐廳轉成販賣自耕的新鮮野菜，前往竹子湖賞花或郊遊的同時，亦可到此處自行選購非常多樣的季節蔬菜與瓜果，ㄧ嚐來自曹大哥用心栽培的鮮甜好滋味。";
@@ -708,6 +725,19 @@
 
       var desc_zumei_sub = "北投青菜底呷，友善耕耘都市田地";
       var desc_zumei = "置身於北投區關渡平原的足妹農場，與北投在地多位小農及社區大學共同成立的北投社大青菜社「青菜底呷」，推廣在地農產蔬果與參與創生計畫。<br><br>農場亦與大屯山系一帶推動都市農業、友善耕作與食農教育，致力於友善土地、低碳生產與食農教育推廣！";
+
+      // 農場 Google 地圖位置 URL 庫
+      var loc_baxian = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("臺北市北投區承德路七段401巷八仙六代園");
+      var desc_hushan_loc = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("臺北市北投區湖山里湖山路一段48-2號");
+      var loc_sunkitchen = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("臺北市北投區東昇路38-12號");
+      var loc_fengcun = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("臺北市北投區一德里立德路120巷貴子坑溪旁峰村有機農場");
+      var loc_suiye = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("臺北市北投區大業路517巷63弄8號");
+      var loc_shanshui = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("台北市北投區竹子湖路33-5號");
+      var loc_yide = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("台北市北投區大業路527巷155號");
+      var loc_homeland = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("臺北市北投區湖田里竹子湖路故鄉金針花農園");
+      var loc_caifu = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("台北市北投區竹子湖路68號財福海芋田");
+      var loc_linsoy = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("臺北市北投區新安路林記醬油");
+      var loc_zumei = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("關渡平原足妹農場");
 
       // 各農家照片資料庫
       var imgs_baxian = ["eightpeople.jpg", "riceplant.webp", "rice.webp", "eight.jpg", "carrot.jpg", "e1.jpg", "e2.jpg", "e3.jpg"];
@@ -744,47 +774,47 @@
       var modalDataSets = {
         // 珠蔥豆乳小魚乾日式飯糰
         riceball1: [
-          { title: "八仙六代園", prefix: "珠蔥豆乳小魚乾日式飯糰的", ingredient: "有善稻米", subtitle: desc_baxian_sub, desc: desc_baxian, btnText: "FB", fb: "https://www.facebook.com/beitoubaxianfarm", imgs: imgs_baxian },
-          { title: "四口田", prefix: "珠蔥豆乳小魚乾日式飯糰中的：", ingredient: "赤道櫻草", subtitle: desc_sunkitchen_sub, desc: desc_sunkitchen, btnText: "FB", fb: "https://www.facebook.com/foursquarefarm", imgs: imgs_sunkitchen },
-          { title: "足妹農場", prefix: "珠蔥豆乳小魚乾日式飯糰中的：", ingredient: "赤道櫻草", subtitle: desc_zumei_sub, desc: desc_zumei, btnText: "聯絡小農", fb: "tel:0983269152", imgs: imgs_zumei },
-          { title: "林記醬油", prefix: "珠蔥豆乳小魚乾日式飯糰中的：", ingredient: "黑豆醬油、豆豉", subtitle: desc_linsoy_sub, desc: desc_linsoy, btnText: "FB", fb: "https://www.facebook.com/profile.php?id=100069495233994", imgs: imgs_linsoy },
-          { title: "湖山社區發展協會", prefix: "珠蔥豆乳小魚乾日式飯糰中的：", ingredient: "豆腐乳、珠蔥", subtitle: desc_hushan_sub, desc: desc_hushan, btnText: "FB", fb: "https://www.facebook.com/Husancommuntiyassociation/", imgs: ["hu1.jpg", "hu2.jpg", "hu3.jpg", "hu4.jpg", "hu5.jpg"] }
+          { title: "八仙六代園", prefix: "珠蔥豆乳小魚乾日式飯糰的", ingredient: "有善稻米", subtitle: desc_baxian_sub, desc: desc_baxian, btnText: "FB", fb: "https://www.facebook.com/beitoubaxianfarm", loc: loc_baxian, imgs: imgs_baxian },
+          { title: "四口田", prefix: "珠蔥豆乳小魚乾日式飯糰中的：", ingredient: "赤道櫻草", subtitle: desc_sunkitchen_sub, desc: desc_sunkitchen, btnText: "FB", fb: "https://www.facebook.com/foursquarefarm", loc: loc_sunkitchen, imgs: imgs_sunkitchen },
+          { title: "足妹農場", prefix: "珠蔥豆乳小魚乾日式飯糰中的：", ingredient: "赤道櫻草", subtitle: desc_zumei_sub, desc: desc_zumei, btnText: "聯絡小農", fb: "tel:0983269152", loc: loc_zumei, imgs: imgs_zumei },
+          { title: "林記醬油", prefix: "珠蔥豆乳小魚乾日式飯糰中的：", ingredient: "黑豆醬油、豆豉", subtitle: desc_linsoy_sub, desc: desc_linsoy, btnText: "FB", fb: "https://www.facebook.com/profile.php?id=100069495233994", loc: loc_linsoy, imgs: imgs_linsoy },
+          { title: "湖山社區發展協會", prefix: "珠蔥豆乳小魚乾日式飯糰中的：", ingredient: "豆腐乳、珠蔥", subtitle: desc_hushan_sub, desc: desc_hushan, btnText: "FB", fb: "https://www.facebook.com/Husancommuntiyassociation/", loc: desc_hushan_loc, imgs: ["hu1.jpg", "hu2.jpg", "hu3.jpg", "hu4.jpg", "hu5.jpg"] }
         ],
 
         // 紫蘇昆布鹽燻雞日式飯糰
         riceball2: [
-          { title: "八仙六代園", prefix: "紫蘇昆布鹽燻雞日式飯糰的", ingredient: "友善稻米", subtitle: desc_baxian_sub, desc: desc_baxian, btnText: "FB", fb: "https://www.facebook.com/beitoubaxianfarm", imgs: imgs_baxian },
-          { title: "四口田", prefix: "紫蘇昆布鹽燻雞日式飯糰中的：", ingredient: "紫蘇", subtitle: desc_sunkitchen_sub, desc: desc_sunkitchen, btnText: "FB", fb: "https://www.facebook.com/foursquarefarm", imgs: imgs_sunkitchen }
+          { title: "八仙六代園", prefix: "紫蘇昆布鹽燻雞日式飯糰的", ingredient: "友善稻米", subtitle: desc_baxian_sub, desc: desc_baxian, btnText: "FB", fb: "https://www.facebook.com/beitoubaxianfarm", loc: loc_baxian, imgs: imgs_baxian },
+          { title: "四口田", prefix: "紫蘇昆布鹽燻雞日式飯糰中的：", ingredient: "紫蘇", subtitle: desc_sunkitchen_sub, desc: desc_sunkitchen, btnText: "FB", fb: "https://www.facebook.com/foursquarefarm", loc: loc_sunkitchen, imgs: imgs_sunkitchen }
         ],
 
         // 香茅雞米花
         chicken: [
-          { title: "峰村有機農場", prefix: "香茅雞米花中的：", ingredient: "香茅", subtitle: desc_fengcun_sub, desc: desc_fengcun, btnText: "FB", fb: "https://www.facebook.com/p/%E5%B3%B0%E6%9D%91%E6%9C%89%E6%A9%9F%E8%BE%B2%E5%A0%B4-100064918140623/?locale=zh_TW", imgs: imgs_fengcun }
+          { title: "峰村有機農場", prefix: "香茅雞米花中的：", ingredient: "香茅", subtitle: desc_fengcun_sub, desc: desc_fengcun, btnText: "FB", fb: "https://www.facebook.com/p/%E5%B3%B0%E6%9D%91%E6%9C%89%E6%A9%9F%E8%BE%B2%E5%A0%B4-100064918140623/?locale=zh_TW", loc: loc_fengcun, imgs: imgs_fengcun }
         ],
 
         // 香草時蔬客家婆菜
         vege: [
-          { title: "一德農園", prefix: "香草時蔬客家婆菜中的：", ingredient: "自製白柚果醬", subtitle: desc_yide_sub, desc: desc_yide, btnText: "聯絡小農", fb: "tel:0919246025", imgs: imgs_yide },
-          { title: "足妹農場", prefix: "香草時蔬客家婆菜中的：", ingredient: "羽衣甘藍", subtitle: desc_zumei_sub, desc: desc_zumei, btnText: "聯絡小農", fb: "tel:0983269152", imgs: imgs_zumei },
-          { title: "故鄉金針花農園", prefix: "香草時蔬客家婆菜中的：", ingredient: "碧玉筍、魚腥草乾", subtitle: desc_homeland_sub, desc: desc_homeland, btnText: "FB", fb: "https://www.facebook.com/BLHometownFarm", imgs: imgs_homeland },
-          { title: "曹永慶", prefix: "香草時蔬客家婆菜中的：", ingredient: "南瓜、地瓜", subtitle: desc_shanshui_sub, desc: desc_shanshui, btnText: "聯絡小農", fb: "tel:02-2861-8828", imgs: imgs_shanshui },
-          { title: "財福海芋田", prefix: "香草時蔬客家婆菜中的：", ingredient: "芳香萬壽菊粉", subtitle: desc_caifu_sub, desc: desc_caifu, btnText: "FB", fb: "https://www.facebook.com/JAIFUGARDEN", imgs: imgs_caifu },
-          { title: "峰村有機農場", prefix: "香草時蔬客家婆菜中的：", ingredient: "茭白筍", subtitle: desc_fengcun_sub, desc: desc_fengcun, btnText: "FB", fb: "https://www.facebook.com/p/%E5%B3%B0%E6%9D%91%E6%9C%89%E6%A9%9F%E8%BE%B2%E5%A0%B4-100064918140623/?locale=zh_TW", imgs: imgs_fengcun },
-          { title: "湖山社區發展協會", prefix: "香草時蔬客家婆菜中的：", ingredient: "茭白筍", subtitle: desc_hushan_sub, desc: desc_hushan, btnText: "FB", fb: "https://www.facebook.com/Husancommuntiyassociation/", imgs: ["hu1.jpg", "hu2.jpg", "hu3.jpg", "hu4.jpg", "hu5.jpg"] }
+          { title: "一德農園", prefix: "香草時蔬客家婆菜中的：", ingredient: "自製白柚果醬", subtitle: desc_yide_sub, desc: desc_yide, btnText: "聯絡小農", fb: "tel:0919246025", loc: loc_yide, imgs: imgs_yide },
+          { title: "足妹農場", prefix: "香草時蔬客家婆菜中的：", ingredient: "羽衣甘藍", subtitle: desc_zumei_sub, desc: desc_zumei, btnText: "聯絡小農", fb: "tel:0983269152", loc: loc_zumei, imgs: imgs_zumei },
+          { title: "故鄉金針花農園", prefix: "香草時蔬客家婆菜中的：", ingredient: "碧玉筍、魚腥草乾", subtitle: desc_homeland_sub, desc: desc_homeland, btnText: "FB", fb: "https://www.facebook.com/BLHometownFarm", loc: loc_homeland, imgs: imgs_homeland },
+          { title: "曹永慶", prefix: "香草時蔬客家婆菜中的：", ingredient: "南瓜、地瓜", subtitle: desc_shanshui_sub, desc: desc_shanshui, btnText: "聯絡小農", fb: "tel:02-2861-8828", loc: loc_shanshui, imgs: imgs_shanshui },
+          { title: "財福海芋田", prefix: "香草時蔬客家婆菜中的：", ingredient: "芳香萬壽菊粉", subtitle: desc_caifu_sub, desc: desc_caifu, btnText: "FB", fb: "https://www.facebook.com/JAIFUGARDEN", loc: loc_caifu, imgs: imgs_caifu },
+          { title: "峰村有機農場", prefix: "香草時蔬客家婆菜中的：", ingredient: "茭白筍", subtitle: desc_fengcun_sub, desc: desc_fengcun, btnText: "FB", fb: "https://www.facebook.com/p/%E5%B3%B0%E6%9D%91%E6%9C%89%E6%A9%9F%E8%BE%B2%E5%A0%B4-100064918140623/?locale=zh_TW", loc: loc_fengcun, imgs: imgs_fengcun },
+          { title: "湖山社區發展協會", prefix: "香草時蔬客家婆菜中的：", ingredient: "茭白筍", subtitle: desc_hushan_sub, desc: desc_hushan, btnText: "FB", fb: "https://www.facebook.com/Husancommuntiyassociation/", loc: desc_hushan_loc, imgs: ["hu1.jpg", "hu2.jpg", "hu3.jpg", "hu4.jpg", "hu5.jpg"] }
         ],
 
         // 江戶前厚玉子燒
         eggroll: [
-          { title: "足妹農場", prefix: "江戶前厚玉子燒中的：", ingredient: "紫山藥", subtitle: desc_zumei_sub, desc: desc_zumei, btnText: "聯絡小農", fb: "tel:0983269152", imgs: imgs_zumei },
-          { title: "隨野家農場", prefix: "江戶前厚玉子燒中的：", ingredient: "放牧雞蛋", subtitle: desc_suiye_sub, desc: desc_suiye, btnText: "FB", fb: "https://www.facebook.com/wildchicksfarm", imgs: imgs_suiye }
+          { title: "足妹農場", prefix: "江戶前厚玉子燒中的：", ingredient: "紫山藥", subtitle: desc_zumei_sub, desc: desc_zumei, btnText: "聯絡小農", fb: "tel:0983269152", loc: loc_zumei, imgs: imgs_zumei },
+          { title: "隨野家農場", prefix: "江戶前厚玉子燒中的：", ingredient: "放牧雞蛋", subtitle: desc_suiye_sub, desc: desc_suiye, btnText: "FB", fb: "https://www.facebook.com/wildchicksfarm", loc: loc_suiye, imgs: imgs_suiye }
         ],
 
         // 西瓜造型小發糕
         cake: [
-          { title: "一德農園", prefix: "西瓜造型小發糕中的：", ingredient: "火龍果", subtitle: desc_yide_sub, desc: desc_yide, btnText: "聯絡小農", fb: "tel:0919246025", imgs: imgs_yide },
-          { title: "八仙六代園", prefix: "西瓜造型小發糕的", ingredient: "有善稻米", subtitle: desc_baxian_sub, desc: desc_baxian, btnText: "FB", fb: "https://www.facebook.com/beitoubaxianfarm", imgs: imgs_baxian },
-          { title: "財福海芋田", prefix: "西瓜造型小發糕中的：", ingredient: "龍鬚菜粉", subtitle: desc_caifu_sub, desc: desc_caifu, btnText: "FB", fb: "https://www.facebook.com/JAIFUGARDEN", imgs: imgs_caifu },
-          { title: "峰村有機農場", prefix: "西瓜造型小發糕中的：", ingredient: "洛神花", subtitle: desc_fengcun_sub, desc: desc_fengcun, btnText: "FB", fb: "https://www.facebook.com/p/%E5%B3%B0%E6%9D%91%E6%9C%89%E6%A9%9F%E8%BE%B2%E5%A0%B4-100064918140623/?locale=zh_TW", imgs: imgs_fengcun }
+          { title: "一德農園", prefix: "西瓜造型小發糕中的：", ingredient: "火龍果", subtitle: desc_yide_sub, desc: desc_yide, btnText: "聯絡小農", fb: "tel:0919246025", loc: loc_yide, imgs: imgs_yide },
+          { title: "八仙六代園", prefix: "西瓜造型小發糕的", ingredient: "有善稻米", subtitle: desc_baxian_sub, desc: desc_baxian, btnText: "FB", fb: "https://www.facebook.com/beitoubaxianfarm", loc: loc_baxian, imgs: imgs_baxian },
+          { title: "財福海芋田", prefix: "西瓜造型小發糕中的：", ingredient: "龍鬚菜粉", subtitle: desc_caifu_sub, desc: desc_caifu, btnText: "FB", fb: "https://www.facebook.com/JAIFUGARDEN", loc: loc_caifu, imgs: imgs_caifu },
+          { title: "峰村有機農場", prefix: "西瓜造型小發糕中的：", ingredient: "洛神花", subtitle: desc_fengcun_sub, desc: desc_fengcun, btnText: "FB", fb: "https://www.facebook.com/p/%E5%B3%B0%E6%9D%91%E6%9C%89%E6%A9%9F%E8%BE%B2%E5%A0%B4-100064918140623/?locale=zh_TW", loc: loc_fengcun, imgs: imgs_fengcun }
         ]
       };
 
@@ -801,6 +831,7 @@
       var subtitleText = document.getElementById('modal-subtitle-text');
       var descText = document.getElementById('modal-desc-text');
       var fbLink = document.getElementById('modal-fb-link');
+      var locLink = document.getElementById('modal-loc-link');
       var mediaContainer = document.getElementById('media-container');
       var cardPrevBtn = document.getElementById('card-prev');
       var cardNextBtn = document.getElementById('card-next');
@@ -818,6 +849,7 @@
         
         fbLink.innerText = data.btnText || "FB";
         fbLink.href = data.fb || "#";
+        locLink.href = data.loc || "#";
 
         if (activeCardsData.length > 1) {
           cardPrevBtn.style.display = 'flex';
