@@ -410,18 +410,42 @@
       overflow: hidden;
       background-color: rgba(0,0,0,0.15);
     }
-    .modal-img {
+
+    /* 相片外層包覆容器 (用於定位標註文字) */
+    .modal-img-wrapper {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
       opacity: 0;
       transition: opacity 0.3s ease-in-out;
+      pointer-events: none;
     }
-    .modal-img.active {
+    .modal-img-wrapper.active {
       opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* 右下角白色攝影標示文字 */
+    .photo-credit-tag {
+      position: absolute;
+      bottom: 8px;
+      right: 10px;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: bold;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8), 0 0 2px rgba(0, 0, 0, 0.9);
+      pointer-events: none;
+      z-index: 12;
+      letter-spacing: 0.5px;
     }
 
     .arrow-left, .arrow-right {
@@ -438,7 +462,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 10;
+      z-index: 20;
       user-select: none;
       text-shadow: 0 2px 6px rgba(0,0,0,0.6);
     }
@@ -749,6 +773,7 @@
     // 建立自動降級的圖片元素，解決破圖與大寫副檔名問題
     function createSafeImageElement(src) {
       var img = document.createElement('img');
+      img.className = 'modal-img';
       
       var extIndex = src.lastIndexOf('.');
       var basePath = extIndex !== -1 ? src.substring(0, extIndex) : src;
@@ -862,7 +887,7 @@
       var loc_zumei = { type: "text", text: "農場：關渡平原 農禪寺隔壁\n販賣：北投社大每週三16:00-18:00" };
       var loc_linsoy = { type: "text", text: "位置：臺北市新安路巷弄內" };
 
-      // 各農場照片檔名修復 (故鄉農場第10張修正為 k1000.jpg)
+      // 各農場照片檔名修復
       var imgs_baxian = ["eightpeople.jpg", "riceplant.webp", "rice.webp", "eight.jpg", "carrot.jpg", "e1.jpg", "e2.jpg", "0000.jpg"];
       var imgs_linsoy = ["w6.jpg", "ww6.jpg", "w6w6.jpg", "www8.jpg", "l5.jpg", "l6.jpg", "l7.jpg", "l8.jpg"];
       var imgs_yide = ["yide2.jpg", "yide3.jpg", "yide9.jpg", "yide5.jpg", "yide6.jpg", "yide7.jpg"];
@@ -872,7 +897,20 @@
       var imgs_homeland = ["k1.jpg", "k2.jpg", "k3.jpg", "k4.jpg", "k5.jpg", "k6.jpg", "k7.jpg", "9090.jpg", "k9.jpg", "k1000.jpg"];
       var imgs_zumei = ["ss1.jpg", "ss2.jpg", "ss3.jpg", "ss4.jpg"];
       var imgs_suiye = ["ww6w.jpg", "ww7.jpg", "w3.avif", "w4.avif", "ww5.JPG", "w6ww.jpg"];
-      var imgs_caifu = ["p1.JPG", "pp9.jpg", "pp10.jpg", "p3.JPG", "p4.JPG", "p5.jpg", "p6.jpeg", "p7.jpeg", "p8.jpg", "p9.jpg"];
+      
+      // 財福海芋田：pp9.jpg 與 pp10.jpg 加上文字註記
+      var imgs_caifu = [
+        "p1.JPG", 
+        { src: "pp9.jpg", credit: "攝影、照片提供：第五季" }, 
+        { src: "pp10.jpg", credit: "攝影、照片提供：林嘉琪" }, 
+        "p3.JPG", 
+        "p4.JPG", 
+        "p5.jpg", 
+        "p6.jpeg", 
+        "p7.jpeg", 
+        "p8.jpg", 
+        "p9.jpg"
+      ];
 
       // Modal 資料組合
       var modalDataSets = {
@@ -971,15 +1009,28 @@
           cardNextBtn.style.display = 'none';
         }
 
-        var oldImgs = mediaContainer.querySelectorAll('.modal-img');
-        oldImgs.forEach(function(img) { img.remove(); });
+        var oldWrappers = mediaContainer.querySelectorAll('.modal-img-wrapper');
+        oldWrappers.forEach(function(w) { w.remove(); });
 
         if (data.imgs && data.imgs.length > 0) {
           data.imgs.forEach(function(item, idx) {
             var src = (typeof item === 'string') ? item : item.src;
+            var credit = (typeof item === 'object') ? item.credit : null;
+
+            var wrapper = document.createElement('div');
+            wrapper.className = 'modal-img-wrapper' + (idx === 0 ? ' active' : '');
+
             var imgEl = createSafeImageElement(src);
-            imgEl.className = 'modal-img' + (idx === 0 ? ' active' : '');
-            mediaContainer.appendChild(imgEl);
+            wrapper.appendChild(imgEl);
+
+            if (credit) {
+              var creditEl = document.createElement('span');
+              creditEl.className = 'photo-credit-tag';
+              creditEl.innerText = credit;
+              wrapper.appendChild(creditEl);
+            }
+
+            mediaContainer.appendChild(wrapper);
           });
         }
 
@@ -995,19 +1046,19 @@
       }
 
       function showSlide(imgIdx) {
-        var imgs = mediaContainer.querySelectorAll('.modal-img');
-        imgs.forEach(function(img, i) {
-          if (i === imgIdx) img.classList.add('active');
-          else img.classList.remove('active');
+        var wrappers = mediaContainer.querySelectorAll('.modal-img-wrapper');
+        wrappers.forEach(function(w, i) {
+          if (i === imgIdx) w.classList.add('active');
+          else w.classList.remove('active');
         });
       }
 
       function startAutoPlay() {
         if (autoPlayTimer) clearInterval(autoPlayTimer);
         autoPlayTimer = setInterval(function() {
-          var imgs = mediaContainer.querySelectorAll('.modal-img');
-          if (imgs.length > 1) {
-            currentImgIdx = (currentImgIdx + 1) % imgs.length;
+          var wrappers = mediaContainer.querySelectorAll('.modal-img-wrapper');
+          if (wrappers.length > 1) {
+            currentImgIdx = (currentImgIdx + 1) % wrappers.length;
             showSlide(currentImgIdx);
           }
         }, 3000);
@@ -1059,9 +1110,9 @@
 
       document.getElementById('next-img').addEventListener('click', function() {
         stopAutoPlay();
-        var imgs = mediaContainer.querySelectorAll('.modal-img');
-        if (imgs.length > 1) {
-          currentImgIdx = (currentImgIdx + 1) % imgs.length;
+        var wrappers = mediaContainer.querySelectorAll('.modal-img-wrapper');
+        if (wrappers.length > 1) {
+          currentImgIdx = (currentImgIdx + 1) % wrappers.length;
           showSlide(currentImgIdx);
           startAutoPlay();
         }
@@ -1069,9 +1120,9 @@
 
       document.getElementById('prev-img').addEventListener('click', function() {
         stopAutoPlay();
-        var imgs = mediaContainer.querySelectorAll('.modal-img');
-        if (imgs.length > 1) {
-          currentImgIdx = (currentImgIdx - 1 + imgs.length) % imgs.length;
+        var wrappers = mediaContainer.querySelectorAll('.modal-img-wrapper');
+        if (wrappers.length > 1) {
+          currentImgIdx = (currentImgIdx - 1 + wrappers.length) % wrappers.length;
           showSlide(currentImgIdx);
           startAutoPlay();
         }
