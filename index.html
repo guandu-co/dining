@@ -97,29 +97,30 @@
       align-items: center;
     }
 
-    /* 頂部 Header */
+    /* 頂部 Header 調整：縮小按鈕、標題右移 */
     .header-section {
       width: 100%;
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      gap: 20px;
-      margin-bottom: 25px;
+      gap: 25px;
+      margin-bottom: 30px;
+      padding-left: 5px;
     }
 
     .btn-back-top {
       background-color: #b3c200;
       color: #ffffff;
-      width: 65px;
-      height: 120px;
-      border-radius: 35px;
+      width: 52px;
+      height: 95px;
+      border-radius: 26px;
       display: flex;
       justify-content: center;
       align-items: center;
       font-weight: bold;
-      font-size: 20px;
+      font-size: 16px;
       writing-mode: vertical-lr;
-      letter-spacing: 4px;
+      letter-spacing: 3px;
       cursor: pointer;
       user-select: none;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -138,10 +139,11 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
+      margin-left: 10px;
     }
 
     .header-title {
-      font-size: 32px;
+      font-size: 34px;
       font-weight: bold;
       color: #2b2b2b;
       letter-spacing: 2px;
@@ -149,9 +151,10 @@
 
     .header-subtitle {
       font-size: 13px;
-      color: #888888;
+      color: #777777;
       letter-spacing: 0.5px;
       user-select: none;
+      white-space: nowrap;
     }
 
     /* 食材圖形網格區域 */
@@ -209,7 +212,7 @@
       user-select: none;
     }
 
-    /* 卷卷線（不含點擊，不含框框） */
+    /* 卷卷線 */
     .curly-png-line {
       width: 65px;
       height: 40px;
@@ -227,7 +230,7 @@
       mask-position: center;
     }
 
-    /* 農場名稱字體（專屬點擊與灰色框框） */
+    /* 農場名稱字體 */
     .food-label-text {
       font-size: 16px;
       font-weight: bold;
@@ -243,7 +246,7 @@
       outline-offset: 1px;
     }
 
-    /* 第一次點擊：只框出農場名稱文字 */
+    /* 第一次點擊：灰色外框 */
     .food-label-text.selected-step1 {
       outline: 2px solid #888888 !important;
       background-color: rgba(0, 0, 0, 0.05);
@@ -327,30 +330,61 @@
       opacity: 1;
     }
 
+    /* 頁尾團隊與協力單位資訊（比按鈕更淡的綠色） */
+    .footer-credits-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 30px;
+      padding: 0 5px;
+    }
+
+    .credit-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 13.5px;
+      line-height: 1.5;
+    }
+
+    .credit-label {
+      color: #8da100;
+      font-weight: bold;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .credit-value {
+      color: #9cac00;
+      font-weight: 500;
+    }
+
+    /* 底部三個縮小的豎長型膠囊按鈕 */
     .footer-nav-horizontal {
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       margin-bottom: 30px;
     }
 
     .nav-pill-vertical {
       flex: 1;
-      height: 190px;
+      height: 145px;
       background-color: #b3c200;
       color: #ffffff;
-      border-radius: 40px;
+      border-radius: 32px;
       display: flex;
       justify-content: center;
       align-items: center;
       font-weight: bold;
-      font-size: 17px;
+      font-size: 15px;
       writing-mode: vertical-lr;
       letter-spacing: 3px;
       text-decoration: none;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       transition: background-color 0.2s ease, transform 0.1s ease;
       cursor: pointer;
       user-select: none;
@@ -650,12 +684,12 @@
 
   <div class="page-container">
     
-    <!-- 2. 頂部 Header -->
+    <!-- 2. 頂部 Header（縮小按鈕 + 標題右移 + 新字樣） -->
     <div class="header-section">
       <a href="https://usrhub.tnua.edu.tw/elementor-6431/#" class="btn-back-top">回上面</a>
       <div class="header-title-container">
         <h1 class="header-title">餐食介紹</h1>
-        <p class="header-subtitle">點擊料理查看辛苦的農民們吧！</p>
+        <p class="header-subtitle">點擊食物查看日日耕耘著的農民們吧！</p>
       </div>
     </div>
 
@@ -749,16 +783,52 @@
       <img src="guandu-banner.jpg" alt="關渡平原微型藝術祭" class="banner-slide-img smooth-img">
     </div>
 
-    <!-- 5. 底部三個豎長型直排膠囊按鈕 -->
+    <!-- 5. 頁尾團隊與協力單位名單（淡綠色字體） -->
+    <div class="footer-credits-section">
+      <div class="credit-item">
+        <span class="credit-label">主辦單位｜</span>
+        <span class="credit-value">北藝大關渡平原微型藝術祭</span>
+      </div>
+      <div class="credit-item">
+        <span class="credit-label">協辦單位｜</span>
+        <span class="credit-value">台北市錫瑠環境綠化基金會</span>
+      </div>
+      <div class="credit-item">
+        <span class="credit-label">計畫主持｜</span>
+        <span class="credit-value">王鍾山</span>
+      </div>
+      <div class="credit-item">
+        <span class="credit-label">廚房協力｜</span>
+        <span class="credit-value">The Studio藝術私廚團隊</span>
+      </div>
+      <div class="credit-item">
+        <span class="credit-label">計畫助理｜</span>
+        <span class="credit-value">許沛君</span>
+      </div>
+      <div class="credit-item">
+        <span class="credit-label">網站設計｜</span>
+        <span class="credit-value">許沛君</span>
+      </div>
+      <div class="credit-item">
+        <span class="credit-label">資料協力｜</span>
+        <span class="credit-value">臺北市休閒農業發展協會</span>
+      </div>
+      <div class="credit-item">
+        <span class="credit-label">農民協力｜</span>
+        <span class="credit-value">一德農園、八仙六代園、四口田、故鄉金針花農園、足妹農場、林記黑豆醬油、峰村有機農場、財福海芋田、曹永慶（山水香）、湖山社區發展協會、隨野家農場</span>
+      </div>
+    </div>
+
+    <!-- 6. 底部三個縮小的豎長型直排膠囊按鈕 -->
     <div class="footer-nav-horizontal">
       <a href="#" class="nav-pill-vertical">在地合作介紹</a>
       <a href="#" class="nav-pill-vertical">講師/藝術家介紹</a>
-      <a href="https://usrhub.tnua.edu.tw/elementor-6431/#" class="nav-pill-vertical">回上頁</a>
+      <a href="https://usrhub.tnua.edu.tw/elementor-6431/#" class="nav-pill-vertical">回頁首</a>
     </div>
 
   </div>
 
-  <!-- 6. 農家介紹主要彈跳視窗 -->
+  <!-- 7. 農家介紹主要彈跳視窗 -->
   <div class="modal-overlay" id="farm-modal">
     <div class="modal-card">
       
@@ -794,7 +864,7 @@
     </div>
   </div>
 
-  <!-- 7. 農場位置專屬純文字迷你視窗 -->
+  <!-- 8. 農場位置專屬純文字迷你視窗 -->
   <div class="modal-overlay" id="text-location-modal">
     <div class="modal-card">
       <span class="text-modal-close" id="close-text-modal">✕</span>
@@ -1139,14 +1209,12 @@
         labelEl.addEventListener('click', function(e) {
           e.stopPropagation();
 
-          // 第一次點擊：若尚未有灰色外框，加上灰色外框並選中
           if (!this.classList.contains('selected-step1')) {
             farmLabelTexts.forEach(function(el) { el.classList.remove('selected-step1'); });
             this.classList.add('selected-step1');
             return;
           }
 
-          // 第二次點擊：清除外框並觸發視窗開啟
           this.classList.remove('selected-step1');
           var parentGroup = this.closest('.food-group');
           var modalType = parentGroup.getAttribute('data-modal');
@@ -1166,7 +1234,6 @@
         });
       });
 
-      // 點擊網頁其他任何地方時，取消灰色外框選中狀態
       document.addEventListener('click', function() {
         farmLabelTexts.forEach(function(el) { el.classList.remove('selected-step1'); });
       });
