@@ -18,10 +18,11 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      overflow-x: hidden;
     }
 
     /* -----------------------------------
-       全頁 Loading 載入遮罩 (關渡共食 + 長形進度條)
+       全頁 Loading 載入遮罩
     ----------------------------------- */
     #loading-overlay {
       position: fixed;
@@ -52,7 +53,6 @@
       100% { opacity: 1; transform: scale(1.02); }
     }
 
-    /* 長形進度條容器 */
     .progress-bar-container {
       width: 240px;
       height: 8px;
@@ -78,10 +78,11 @@
       letter-spacing: 1px;
     }
 
+    /* 主容器：確保左右各留 20px 安全空隙，絕不貼邊 */
     .page-container {
       width: 100%;
       max-width: 450px;
-      padding: 20px 15px;
+      padding: 20px 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -95,7 +96,6 @@
       align-items: center;
       gap: 20px;
       margin-bottom: 25px;
-      padding-left: 5px;
     }
 
     .btn-back-top {
@@ -152,7 +152,6 @@
       flex-direction: column;
       gap: 40px;
       margin-bottom: 45px;
-      padding: 0 5px;
     }
 
     .food-row {
@@ -163,12 +162,10 @@
 
     .food-row.row-left {
       justify-content: flex-start;
-      padding-left: 0px;
     }
 
     .food-row.row-right {
       justify-content: flex-end;
-      padding-right: 5px;
     }
 
     .food-row.row-center {
@@ -187,10 +184,6 @@
       z-index: 5;
     }
 
-    .food-group.shift-left {
-      margin-left: -25px;
-    }
-
     .food-group:active {
       transform: scale(1.08) !important;
     }
@@ -202,11 +195,11 @@
     }
 
     .labels-right {
-      margin-left: -22px;
+      margin-left: 0px;
     }
 
     .labels-left {
-      margin-right: -14px;
+      margin-right: 0px;
     }
 
     .label-line-item {
@@ -215,11 +208,12 @@
       cursor: pointer;
     }
 
+    /* 卷卷線與圖片/文字拉開適度間距 */
     .curly-png-line {
-      width: 80px;
-      height: 50px;
+      width: 70px;
+      height: 45px;
       display: inline-block;
-      margin: 0 2px;
+      margin: 0 6px;
       flex-shrink: 0;
       pointer-events: none;
       -webkit-mask-image: url('卷卷.png');
@@ -233,7 +227,7 @@
     }
 
     .food-label-text {
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: bold;
       letter-spacing: 0.5px;
       user-select: none;
@@ -259,10 +253,11 @@
     .color-cake .curly-png-line { background-color: #f09bb0; }
 
     .food-item {
-      max-width: 150px;
+      max-width: 140px;
       height: auto;
       cursor: pointer;
       display: block;
+      flex-shrink: 0;
     }
 
     @keyframes floatAnim {
@@ -438,7 +433,6 @@
       display: block;
     }
 
-    /* 右下角純白小字標示（無陰影） */
     .photo-credit-tag {
       position: absolute;
       bottom: 6px;
@@ -648,10 +642,10 @@
     <!-- 3. 食材圖形區域 -->
     <div class="food-grid">
       
-      <!-- 第一排：r1 (riceball1) -> 更換為 r1-2.png -->
+      <!-- 第一排：r1 (riceball1) -->
       <div class="food-row row-left">
-        <div class="food-group shift-left color-riceball1 delay-1 trigger-farm-modal" data-modal="riceball1">
-          <img src="r1-2.png" alt="r1-2" class="food-item" style="max-width: 145px;">
+        <div class="food-group color-riceball1 delay-1 trigger-farm-modal" data-modal="riceball1">
+          <img src="r1-2.png" alt="r1-2" class="food-item" style="max-width: 135px;">
           <div class="labels-column labels-right">
             <div class="label-line-item" data-farm-target="八仙六代園"><span class="curly-png-line"></span><span class="food-label-text">八仙六代園</span></div>
             <div class="label-line-item" data-farm-target="四口田"><span class="curly-png-line"></span><span class="food-label-text">四口田</span></div>
@@ -671,14 +665,14 @@
               <span class="curly-png-line"></span>
             </div>
           </div>
-          <img src="c1.png" alt="c1" class="food-item" style="max-width: 155px;">
+          <img src="c1.png" alt="c1" class="food-item" style="max-width: 140px;">
         </div>
       </div>
 
       <!-- v1 (vege) -->
       <div class="food-row row-left">
-        <div class="food-group shift-left color-vege delay-3 trigger-farm-modal" data-modal="vege">
-          <img src="v1.png" alt="v1" class="food-item" style="max-width: 150px;">
+        <div class="food-group color-vege delay-3 trigger-farm-modal" data-modal="vege">
+          <img src="v1.png" alt="v1" class="food-item" style="max-width: 135px;">
           <div class="labels-column labels-right">
             <div class="label-line-item" data-farm-target="一德農園"><span class="curly-png-line"></span><span class="food-label-text">一德農園</span></div>
             <div class="label-line-item" data-farm-target="足妹農場"><span class="curly-png-line"></span><span class="food-label-text">足妹農場</span></div>
@@ -698,14 +692,14 @@
             <div class="label-line-item" data-farm-target="八仙六代園"><span class="food-label-text">八仙六代園</span><span class="curly-png-line"></span></div>
             <div class="label-line-item" data-farm-target="四口田"><span class="food-label-text">四口田</span><span class="curly-png-line"></span></div>
           </div>
-          <img src="r2.png" alt="r2" class="food-item" style="max-width: 155px;">
+          <img src="r2.png" alt="r2" class="food-item" style="max-width: 140px;">
         </div>
       </div>
 
       <!-- e1 (eggroll) -->
       <div class="food-row row-left">
         <div class="food-group color-eggroll delay-5 trigger-farm-modal" data-modal="eggroll">
-          <img src="e1.png" alt="e1" class="food-item" style="max-width: 160px;">
+          <img src="e1.png" alt="e1" class="food-item" style="max-width: 140px;">
           <div class="labels-column labels-right">
             <div class="label-line-item" data-farm-target="足妹農場"><span class="curly-png-line"></span><span class="food-label-text">足妹農場</span></div>
             <div class="label-line-item" data-farm-target="隨野家農場"><span class="curly-png-line"></span><span class="food-label-text">隨野家農場</span></div>
@@ -722,7 +716,7 @@
             <div class="label-line-item" data-farm-target="財福海芋田"><span class="food-label-text">財福海芋田</span><span class="curly-png-line"></span></div>
             <div class="label-line-item" data-farm-target="峰村有機農場"><span class="food-label-text">峰村有機農場</span><span class="curly-png-line"></span></div>
           </div>
-          <img src="w1.png" alt="w1" class="food-item" style="max-width: 170px;">
+          <img src="w1.png" alt="w1" class="food-item" style="max-width: 145px;">
         </div>
       </div>
 
