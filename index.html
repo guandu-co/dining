@@ -300,34 +300,61 @@
     .delay-5 { animation-delay: 2.0s; }
     .delay-6 { animation-delay: 2.5s; }
 
-    /* 底部 Banner 輪播區域修復 */
+    /* -----------------------------------
+       Banner 輪播區域（以第一張圖的長寬比為基準）
+    ----------------------------------- */
     .banner-slider-container {
       width: 100%;
-      height: 180px;
       position: relative;
       border-radius: 12px;
       margin-bottom: 25px;
       overflow: hidden;
       box-shadow: 0 4px 15px rgba(0,0,0,0.08);
       background-color: #f5f5f5;
-      display: block;
+      line-height: 0;
     }
 
-    .banner-slide-img {
+    /* 第一張圖片：負責撐開容器的自然寬度與高度 */
+    .banner-slide-img.primary-base {
+      width: 100%;
+      height: auto;
+      display: block;
+      position: relative;
+      z-index: 2;
+      opacity: 1;
+      transition: opacity 1s ease-in-out;
+    }
+
+    /* 第二張圖片：絕對定位撐滿第一張圖撐開的範圍 */
+    .banner-slide-img.overlay-match {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0;
       z-index: 1;
+      opacity: 0;
       transition: opacity 1s ease-in-out;
     }
 
-    .banner-slide-img.active {
+    /* 輪播切換 Active 狀態 */
+    .banner-slide-img.primary-base.active {
       opacity: 1;
       z-index: 2;
+    }
+    .banner-slide-img.primary-base:not(.active) {
+      opacity: 0;
+      z-index: 1;
+    }
+
+    .banner-slide-img.overlay-match.active {
+      opacity: 1;
+      z-index: 2;
+    }
+    .banner-slide-img.overlay-match:not(.active) {
+      opacity: 0;
+      z-index: 1;
     }
 
     /* 頁尾團隊與協力單位資訊 */
@@ -778,11 +805,12 @@
 
     </div>
 
-    <!-- 4. 底部 Banner 區域 (雙圖片強化動態載入與輪播) -->
+    <!-- 4. 底部 Banner 區域（以第一張圖的長寬比為基準） -->
     <div class="banner-slider-container" id="banner-slider">
-      <!-- 兩張輪播圖 -->
-      <img src="banner3.png" id="banner-img-1" alt="關渡共食" class="banner-slide-img active">
-      <img src="guandu-banner.jpg" id="banner-img-2" alt="關渡平原微型藝術祭" class="banner-slide-img">
+      <!-- 第一張基準圖 -->
+      <img src="banner3.png" id="banner-img-1" alt="關渡共食" class="banner-slide-img primary-base active">
+      <!-- 第二張符合尺寸的覆蓋圖 -->
+      <img src="guandu-banner.jpg" id="banner-img-2" alt="關渡平原微型藝術祭" class="banner-slide-img overlay-match">
     </div>
 
     <!-- 5. 頁尾團隊與協力單位名單 -->
@@ -977,7 +1005,7 @@
       }, 3000);
 
       // -----------------------------------
-      // 升級 Banner 自動雙圖 3.5秒淡入淡出輪播
+      // Banner 3.5 秒雙向輪播淡入淡出
       // -----------------------------------
       var bannerContainer = document.getElementById('banner-slider');
       if (bannerContainer) {
