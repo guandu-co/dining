@@ -185,7 +185,6 @@
     .food-group {
       display: flex;
       align-items: center;
-      cursor: pointer;
       will-change: transform;
       animation: floatAnim 3s ease-in-out infinite alternate;
       transition: transform 0.15s ease-out;
@@ -196,36 +195,31 @@
     .labels-column {
       display: flex;
       flex-direction: column;
-      gap: 4px;
-    }
-
-    .labels-right {
-      margin-left: 0px;
+      gap: 6px;
+      align-items: flex-start;
     }
 
     .labels-left {
-      margin-right: 0px;
+      align-items: flex-end;
     }
 
-    /* 大幅擴大點擊感應範圍 */
+    /* 精準農場點擊項目 (僅對齊內容，不佔用多餘空白) */
     .label-line-item {
-      display: flex;
+      display: inline-flex;
       align-items: center;
       cursor: pointer;
-      padding: 8px 12px;
-      border-radius: 14px;
-      transition: background-color 0.15s ease, transform 0.1s ease;
+      padding: 3px 8px;
+      border-radius: 10px;
+      transition: background-color 0.2s ease, transform 0.1s ease;
       user-select: none;
-      -webkit-tap-highlight-color: rgba(0,0,0,0.06);
+      width: fit-content;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .label-line-item:hover {
-      background-color: rgba(0, 0, 0, 0.04);
-    }
-
-    .label-line-item:active {
-      transform: scale(0.95);
-      background-color: rgba(0, 0, 0, 0.09);
+    /* 第一下點擊的灰色框框效果 */
+    .label-line-item.selected-step1 {
+      background-color: rgba(0, 0, 0, 0.12) !important;
+      transform: scale(1.02);
     }
 
     /* 卷卷線與圖片/文字拉開適度間距 */
@@ -233,7 +227,7 @@
       width: 65px;
       height: 40px;
       display: inline-block;
-      margin: 0 6px;
+      margin: 0 4px;
       flex-shrink: 0;
       pointer-events: none;
       -webkit-mask-image: url('卷卷.png');
@@ -253,6 +247,7 @@
       letter-spacing: 0.5px;
       user-select: none;
       white-space: nowrap;
+      pointer-events: none;
     }
 
     .color-riceball1 .food-label-text { color: #d3be6a; }
@@ -280,7 +275,7 @@
       display: block;
       flex-shrink: 0;
       transition: transform 0.15s ease;
-      padding: 6px;
+      padding: 4px;
     }
 
     .food-item:active {
@@ -495,7 +490,7 @@
     .arrow-left { left: 5px; }
     .arrow-right { right: 5px; }
 
-    /* 切換農家大箭頭：調整位置至紅箭頭指定高度 (top: 57%) */
+    /* 切換農家大箭頭：位於指定高度 (top: 57%) */
     .card-switch-arrow {
       position: absolute;
       top: 57%;
@@ -768,7 +763,7 @@
   <div class="modal-overlay" id="farm-modal">
     <div class="modal-card">
       
-      <!-- 切換農家大箭頭：調整至指定位置 (top: 57%) -->
+      <!-- 切換農家大箭頭 -->
       <span class="card-switch-arrow left-arrow" id="card-prev">‹</span>
       <span class="card-switch-arrow right-arrow" id="card-next">›</span>
 
@@ -860,7 +855,6 @@
               loadingOverlay.style.opacity = '0';
               loadingOverlay.style.visibility = 'hidden';
             }
-            // 開啟主畫面圖片淡入
             document.querySelectorAll('.food-item, .banner-slide-img').forEach(function(el) {
               el.classList.add('loaded');
             });
@@ -868,7 +862,6 @@
         }
       }
 
-      // 背景默默預先下載所有關鍵圖片
       mainImgs.forEach(function(src) {
         var img = new Image();
         img.onload = updateProgress;
@@ -876,7 +869,6 @@
         img.src = src;
       });
 
-      // 防呆機制：超時 3 秒自動強制解鎖 Loading
       setTimeout(function() {
         if (loadingOverlay && loadingOverlay.style.visibility !== 'hidden') {
           if (progressFill) progressFill.style.width = '100%';
@@ -922,7 +914,6 @@
       var desc_fengcun_sub = "堅持無農藥的有機天地，捷運步行的驚喜一隅";
       var desc_fengcun = "峰村有機農場位於北投山腳下，從關渡捷運站步行即可抵達，是任姐與粟大哥堅持無農藥耕作的一片有機天地，農場裡的屋子平台也不時會舉辦活動與工作坊。農場亦提供多種有機季節蔬菜、水果與自製果醬等多樣品項，歡迎電話訂購或現場選購。<br><br>農場旁的步道是不少人意想不到的桃花秘境，沿路能看見遼闊的稻田，這裡也常有市集活動，很適合隨意走走，親近大自然。";
 
-      // 隨野家農場
       var desc_suiye_sub = "都市裡的友善放牧雞，生活美學永續建築";
       var desc_suiye = "隱身於北投捷運站附近的隨野家農場，是一座兼具友善動物與生活美學的都市放牧雞農場。<br><br>雞老闆佳敏從2018年開始以友善放牧養殖雞群，透過深度食農教育、體驗課程與蛋雞福利宣導，打破傳統雞舍的印象，更落實自然循環的農場建設與管理。在永續設計的農場空間裡，經常舉辦各式食農相關工作坊以及活動，讓民眾能感受人與動物、土地和諧共生的美好。";
 
@@ -932,7 +923,6 @@
       var desc_yide_sub = "二十年無毒栽培，近百種作物隨季輪替";
       var desc_yide = "黃大哥退休後為陪伴老父投身農業，二十年來堅持無毒栽培，以工程思維將文旦樹矮化、推行物理生態防治。<br><br>園內依循時節輪替種植近百種作物，涵蓋柑橘類、芭樂、樹葡萄等水果，以及地瓜、絲瓜、辛香料等當季蔬菜，兼顧生態與優良品質，歡迎致電或LINE訂購。";
 
-      // 故鄉金針花農園
       var desc_homeland_sub = "漫步金黃花海，邂逅手作溫暖時光";
       var desc_homeland = "走進竹子湖的故鄉，可以遇見白大哥與女兒惠玟姐每日守候的---金黃花海秘境，可以親手採摘金針花，也能體驗南瓜粿、金針花料理等多樣食農手作。<br><br>園區另有多種綠保產品可選購，包括雞角刺草本飲、蕺兒根草本飲、日曬魚腥草乾及日曬金針花乾等。故鄉餐廳的招牌放養白斬雞，滋味鮮甜多膠質，各式菜餚與年菜也都歡迎至臉書預訂！";
 
@@ -1142,11 +1132,23 @@
         if (autoPlayTimer) clearInterval(autoPlayTimer);
       }
 
-      // 點擊農場標籤（精準開啟該農場）
+      // -----------------------------------
+      // 點擊感應：第 1 下顯示灰色框框，第 2 下開啟彈窗
+      // -----------------------------------
       var labelItems = document.querySelectorAll('.label-line-item');
       labelItems.forEach(function(item) {
         item.addEventListener('click', function(e) {
           e.stopPropagation();
+
+          // 如果目前不是灰色選中狀態，則為「第 1 下」：顯示灰色框框
+          if (!this.classList.contains('selected-step1')) {
+            labelItems.forEach(function(el) { el.classList.remove('selected-step1'); });
+            this.classList.add('selected-step1');
+            return;
+          }
+
+          // 如果已經是灰色選中狀態，則為「第 2 下」：開啟彈窗
+          this.classList.remove('selected-step1');
           var parentGroup = this.closest('.food-group');
           var modalType = parentGroup.getAttribute('data-modal');
           if (!modalDataSets[modalType]) return;
@@ -1165,11 +1167,17 @@
         });
       });
 
+      // 點擊頁面其他空白處時，取消灰色高亮框
+      document.addEventListener('click', function() {
+        labelItems.forEach(function(el) { el.classList.remove('selected-step1'); });
+      });
+
       // 點擊料理大圖（開啟預設第一個農場）
       var foodImgs = document.querySelectorAll('.trigger-img-click');
       foodImgs.forEach(function(img) {
         img.addEventListener('click', function(e) {
           e.stopPropagation();
+          labelItems.forEach(function(el) { el.classList.remove('selected-step1'); });
           var parentGroup = this.closest('.food-group');
           var modalType = parentGroup.getAttribute('data-modal');
           if (!modalDataSets[modalType]) return;
