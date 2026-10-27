@@ -97,7 +97,7 @@
       align-items: center;
     }
 
-    /* 頂部 Header 調整：縮小按鈕、標題右移 */
+    /* 頂部 Header */
     .header-section {
       width: 100%;
       display: flex;
@@ -270,6 +270,7 @@
     .color-cake .food-label-text { color: #f09bb0; }
     .color-cake .curly-png-line { background-color: #f09bb0; }
 
+    /* 食材插圖，增加明確點擊樣式 */
     .food-item {
       max-width: 140px;
       height: auto;
@@ -278,6 +279,7 @@
       flex-shrink: 0;
       transition: transform 0.15s ease;
       padding: 4px;
+      z-index: 10;
     }
 
     .food-item:active {
@@ -296,9 +298,10 @@
     .delay-5 { animation-delay: 2.0s; }
     .delay-6 { animation-delay: 2.5s; }
 
-    /* 底部 Banner */
+    /* 底部 Banner 輪播 */
     .banner-slider-container {
       width: 100%;
+      height: 180px;
       position: relative;
       border-radius: 12px;
       margin-bottom: 25px;
@@ -306,13 +309,6 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.08);
       background-color: #f5f5f5;
       display: block;
-    }
-
-    .banner-placeholder {
-      width: 100%;
-      height: auto;
-      display: block;
-      visibility: hidden;
     }
 
     .banner-slide-img {
@@ -330,7 +326,7 @@
       opacity: 1;
     }
 
-    /* 頁尾團隊與協力單位資訊（比按鈕更淡的綠色） */
+    /* 頁尾團隊與協力單位資訊 */
     .footer-credits-section {
       width: 100%;
       display: flex;
@@ -360,7 +356,7 @@
       font-weight: 500;
     }
 
-    /* 底部三個縮小的豎長型膠囊按鈕 */
+    /* 底部三個膠囊按鈕 */
     .footer-nav-horizontal {
       width: 100%;
       display: flex;
@@ -389,6 +385,8 @@
       cursor: pointer;
       user-select: none;
       border: none;
+      text-align: center;
+      line-height: 1.3;
     }
 
     .nav-pill-vertical:active {
@@ -684,7 +682,7 @@
 
   <div class="page-container">
     
-    <!-- 2. 頂部 Header（縮小按鈕 + 標題右移 + 新字樣） -->
+    <!-- 2. 頂部 Header -->
     <div class="header-section">
       <a href="https://usrhub.tnua.edu.tw/elementor-6431/#" class="btn-back-top">回上面</a>
       <div class="header-title-container">
@@ -776,14 +774,13 @@
 
     </div>
 
-    <!-- 4. 底部 Banner 區域 -->
+    <!-- 4. 底部 Banner 區域（恢復自動輪播） -->
     <div class="banner-slider-container" id="banner-slider">
-      <img src="guandu-banner.jpg" class="banner-placeholder" alt="banner placeholder">
       <img src="banner3.png" alt="關渡共食" class="banner-slide-img smooth-img active">
       <img src="guandu-banner.jpg" alt="關渡平原微型藝術祭" class="banner-slide-img smooth-img">
     </div>
 
-    <!-- 5. 頁尾團隊與協力單位名單（淡綠色字體） -->
+    <!-- 5. 頁尾團隊與協力單位名單 -->
     <div class="footer-credits-section">
       <div class="credit-item">
         <span class="credit-label">主辦單位｜</span>
@@ -815,15 +812,15 @@
       </div>
       <div class="credit-item">
         <span class="credit-label">農民協力｜</span>
-        <span class="credit-value">一德農園、八仙六代園、四口田、故鄉金針花農園、足妹農場、林記黑豆醬油、峰村有機農場、財福海芋田、曹永慶（山水香）、湖山社區發展協會、隨野家農場</span>
+        <span class="credit-value">一德農園、八仙六代園、四口田、故鄉金針花農園、足妹農場、林記黑豆醬油、峰村有機農場、財福海芋田、曹永慶、湖山社區發展協會、隨野家農場</span>
       </div>
     </div>
 
-    <!-- 6. 底部三個縮小的豎長型直排膠囊按鈕 -->
+    <!-- 6. 底部三個膠囊按鈕（右邊改為「回上頁」，中間換行） -->
     <div class="footer-nav-horizontal">
       <a href="#" class="nav-pill-vertical">在地合作介紹</a>
-      <a href="#" class="nav-pill-vertical">講師/藝術家介紹</a>
-      <a href="https://usrhub.tnua.edu.tw/elementor-6431/#" class="nav-pill-vertical">回頁首</a>
+      <a href="#" class="nav-pill-vertical">講師/藝術家<br>介紹</a>
+      <a href="https://usrhub.tnua.edu.tw/elementor-6431/#" class="nav-pill-vertical">回上頁</a>
     </div>
 
   </div>
@@ -904,7 +901,7 @@
 
     document.addEventListener("DOMContentLoaded", function() {
       // -----------------------------------
-      // 圖片預載入與極速 Loading 機制
+      // 圖片預載入與 Loading 機制
       // -----------------------------------
       var mainImgs = [
         'r1-3.png', 'c-3.png', 'v4.png', 'r2-3.png', 'egg3.png', 'cake3.png',
@@ -950,7 +947,7 @@
       }, 3000);
 
       // -----------------------------------
-      // 最下方 Banner 輪播
+      // 恢復 Banner 自動輪播第二張圖片
       // -----------------------------------
       var bannerContainer = document.getElementById('banner-slider');
       if (bannerContainer) {
@@ -1202,19 +1199,21 @@
       }
 
       // -----------------------------------
-      // 點擊事件：僅作用在【農場名稱文字】本體上
+      // 點擊事件監聽修復（包含文字與圖片）
       // -----------------------------------
       var farmLabelTexts = document.querySelectorAll('.food-label-text');
       farmLabelTexts.forEach(function(labelEl) {
         labelEl.addEventListener('click', function(e) {
           e.stopPropagation();
 
+          // 第一次點擊：若尚未顯示灰色外框，加上灰色外框高亮
           if (!this.classList.contains('selected-step1')) {
             farmLabelTexts.forEach(function(el) { el.classList.remove('selected-step1'); });
             this.classList.add('selected-step1');
             return;
           }
 
+          // 第二次點擊：進入視窗
           this.classList.remove('selected-step1');
           var parentGroup = this.closest('.food-group');
           var modalType = parentGroup.getAttribute('data-modal');
@@ -1234,22 +1233,24 @@
         });
       });
 
+      // 點擊空白處時清除灰色選中框
       document.addEventListener('click', function() {
         farmLabelTexts.forEach(function(el) { el.classList.remove('selected-step1'); });
       });
 
-      // 點擊料理大圖（開啟預設第一個農場）
+      // 點擊食物插圖 (PNG)，直接顯示視窗（並優先呈現排序最前面的小農）
       var foodImgs = document.querySelectorAll('.trigger-img-click');
       foodImgs.forEach(function(img) {
         img.addEventListener('click', function(e) {
           e.stopPropagation();
           farmLabelTexts.forEach(function(el) { el.classList.remove('selected-step1'); });
+          
           var parentGroup = this.closest('.food-group');
           var modalType = parentGroup.getAttribute('data-modal');
           if (!modalDataSets[modalType]) return;
 
           activeCardsData = modalDataSets[modalType];
-          loadCard(0);
+          loadCard(0); // 預設呈現排序第 1 位小農
           farmModal.classList.add('active');
           startAutoPlay();
         });
