@@ -22,7 +22,7 @@
     }
 
     /* -----------------------------------
-       全頁 Loading 載入遮罩（預載圖片）
+       全頁 Loading 載入遮罩
     ----------------------------------- */
     #loading-overlay {
       position: fixed;
@@ -78,7 +78,7 @@
       letter-spacing: 1px;
     }
 
-    /* 圖片防掃描慢慢跑：載入完成前隱藏，載入完成後淡入 */
+    /* 淡入動畫 */
     .smooth-img {
       opacity: 0;
       transition: opacity 0.3s ease-in-out;
@@ -203,26 +203,13 @@
       align-items: flex-end;
     }
 
-    /* 精準農場點擊項目 (僅對齊內容，不佔用多餘空白) */
     .label-line-item {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      cursor: pointer;
-      padding: 3px 8px;
-      border-radius: 10px;
-      transition: background-color 0.2s ease, transform 0.1s ease;
       user-select: none;
-      width: fit-content;
-      -webkit-tap-highlight-color: transparent;
     }
 
-    /* 第一下點擊的灰色框框效果 */
-    .label-line-item.selected-step1 {
-      background-color: rgba(0, 0, 0, 0.12) !important;
-      transform: scale(1.02);
-    }
-
-    /* 卷卷線與圖片/文字拉開適度間距 */
+    /* 卷卷線（不含點擊，不含框框） */
     .curly-png-line {
       width: 65px;
       height: 40px;
@@ -240,14 +227,26 @@
       mask-position: center;
     }
 
-    /* 農場名稱字體放大至 16px */
+    /* 農場名稱字體（專屬點擊與灰色框框） */
     .food-label-text {
       font-size: 16px;
       font-weight: bold;
       letter-spacing: 0.5px;
       user-select: none;
       white-space: nowrap;
-      pointer-events: none;
+      cursor: pointer;
+      padding: 3px 6px;
+      border-radius: 6px;
+      transition: outline 0.15s ease, background-color 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+      outline: 2px solid transparent;
+      outline-offset: 1px;
+    }
+
+    /* 第一次點擊：只框出農場名稱文字 */
+    .food-label-text.selected-step1 {
+      outline: 2px solid #888888 !important;
+      background-color: rgba(0, 0, 0, 0.05);
     }
 
     .color-riceball1 .food-label-text { color: #d3be6a; }
@@ -490,7 +489,7 @@
     .arrow-left { left: 5px; }
     .arrow-right { right: 5px; }
 
-    /* 切換農家大箭頭：位於指定高度 (top: 57%) */
+    /* 切換農家大箭頭 */
     .card-switch-arrow {
       position: absolute;
       top: 57%;
@@ -668,11 +667,11 @@
         <div class="food-group color-riceball1 delay-1" data-modal="riceball1">
           <img src="r1-3.png" alt="r1-3" class="food-item trigger-img-click smooth-img" loading="eager" style="max-width: 135px;">
           <div class="labels-column labels-right">
-            <div class="label-line-item" data-farm-target="八仙六代園"><span class="curly-png-line"></span><span class="food-label-text">八仙六代園</span></div>
-            <div class="label-line-item" data-farm-target="四口田"><span class="curly-png-line"></span><span class="food-label-text">四口田</span></div>
-            <div class="label-line-item" data-farm-target="足妹農場"><span class="curly-png-line"></span><span class="food-label-text">足妹農場</span></div>
-            <div class="label-line-item" data-farm-target="林記黑豆醬油"><span class="curly-png-line"></span><span class="food-label-text">林記黑豆醬油</span></div>
-            <div class="label-line-item" data-farm-target="湖山社區發展協會"><span class="curly-png-line"></span><span class="food-label-text">湖山社區發展協會</span></div>
+            <div class="label-line-item"><span class="curly-png-line"></span><span class="food-label-text" data-farm-target="八仙六代園">八仙六代園</span></div>
+            <div class="label-line-item"><span class="curly-png-line"></span><span class="food-label-text" data-farm-target="四口田">四口田</span></div>
+            <div class="label-line-item"><span class="curly-png-line"></span><span class="food-label-text" data-farm-target="足妹農場">足妹農場</span></div>
+            <div class="label-line-item"><span class="curly-png-line"></span><span class="food-label-text" data-farm-target="林記黑豆醬油">林記黑豆醬油</span></div>
+            <div class="label-line-item"><span class="curly-png-line"></span><span class="food-label-text" data-farm-target="湖山社區發展協會">湖山社區發展協會</span></div>
           </div>
         </div>
       </div>
@@ -681,8 +680,8 @@
       <div class="food-row row-right">
         <div class="food-group color-chicken delay-2" data-modal="chicken">
           <div class="labels-column labels-left">
-            <div class="label-line-item" data-farm-target="峰村有機農場">
-              <span class="food-label-text">峰村有機農場</span>
+            <div class="label-line-item">
+              <span class="food-label-text" data-farm-target="峰村有機農場">峰村有機農場</span>
               <span class="curly-png-line"></span>
             </div>
           </div>
@@ -695,13 +694,13 @@
         <div class="food-group color-vege delay-3" data-modal="vege">
           <img src="v4.png" alt="v4" class="food-item trigger-img-click smooth-img" loading="eager" style="max-width: 135px;">
           <div class="labels-column labels-right">
-            <div class="label-line-item" data-farm-target="一德農園"><span class="curly-png-line"></span><span class="food-label-text">一德農園</span></div>
-            <div class="label-line-item" data-farm-target="足妹農場"><span class="curly-png-line"></span><span class="food-label-text">足妹農場</span></div>
-            <div class="label-line-item" data-farm-target="故鄉金針花農園"><span class="curly-png-line"></span><span class="food-label-text">故鄉金針花農園</span></div>
-            <div class="label-line-item" data-farm-target="曹永慶"><span class="curly-png-line"></span><span class="food-label-text">曹永慶</span></div>
-            <div class="label-line-item" data-farm-target="財福海芋田"><span class="curly-png-line"></span><span class="food-label-text">財福海芋田</span></div>
-            <div class="label-line-item" data-farm-target="峰村有機農場"><span class="curly-png-line"></span><span class="food-label-text">峰村有機農場</span></div>
-            <div class="label-line-item" data-farm-target="湖山社區發展協會"><span class="curly-png-line"></span><span class="food-label-text">湖山社區發展協會</span></div>
+            <div class="label-line-item"><span class="curly-png-line"></span><span class="food-label-text" data-farm-target="一德農園">一德農園</span></div>
+            <div class="label-line-item"><span class="curly-png-line"></span><span class="food-label-text" data-farm-target="足妹農場">足妹農場</span></div>
+            <div class="label-line-item"><span class="curly-png-line"></span><span class="food-label-text" data-farm-target="故鄉金針花農園">故鄉金針花農園</span></div>
+            <div class="label-line-item"><span class="curly-png-line"></span><span class="food-label-text" data-farm-target="曹永慶">曹永慶</span></div>
+            <div class="label-line-item"><span class="curly-png-line"></span><span class="food-label-text" data-farm-target="財福海芋田">財福海芋田</span></div>
+            <div class="label-line-item"><span class="curly-png-line"></span><span class="food-label-text" data-farm-target="峰村有機農場">峰村有機農場</span></div>
+            <div class="label-line-item"><span class="curly-png-line"></span><span class="food-label-text" data-farm-target="湖山社區發展協會">湖山社區發展協會</span></div>
           </div>
         </div>
       </div>
@@ -710,8 +709,8 @@
       <div class="food-row row-right">
         <div class="food-group color-riceball2 delay-4" data-modal="riceball2">
           <div class="labels-column labels-left">
-            <div class="label-line-item" data-farm-target="八仙六代園"><span class="food-label-text">八仙六代園</span><span class="curly-png-line"></span></div>
-            <div class="label-line-item" data-farm-target="四口田"><span class="food-label-text">四口田</span><span class="curly-png-line"></span></div>
+            <div class="label-line-item"><span class="food-label-text" data-farm-target="八仙六代園">八仙六代園</span><span class="curly-png-line"></span></div>
+            <div class="label-line-item"><span class="food-label-text" data-farm-target="四口田">四口田</span><span class="curly-png-line"></span></div>
           </div>
           <img src="r2-3.png" alt="r2-3" class="food-item trigger-img-click smooth-img" loading="eager" style="max-width: 140px;">
         </div>
@@ -722,8 +721,8 @@
         <div class="food-group color-eggroll delay-5" data-modal="eggroll">
           <img src="egg3.png" alt="egg3" class="food-item trigger-img-click smooth-img" loading="eager" style="max-width: 140px;">
           <div class="labels-column labels-right">
-            <div class="label-line-item" data-farm-target="足妹農場"><span class="curly-png-line"></span><span class="food-label-text">足妹農場</span></div>
-            <div class="label-line-item" data-farm-target="隨野家農場"><span class="curly-png-line"></span><span class="food-label-text">隨野家農場</span></div>
+            <div class="label-line-item"><span class="curly-png-line"></span><span class="food-label-text" data-farm-target="足妹農場">足妹農場</span></div>
+            <div class="label-line-item"><span class="curly-png-line"></span><span class="food-label-text" data-farm-target="隨野家農場">隨野家農場</span></div>
           </div>
         </div>
       </div>
@@ -732,10 +731,10 @@
       <div class="food-row row-center">
         <div class="food-group color-cake delay-6" data-modal="cake">
           <div class="labels-column labels-left">
-            <div class="label-line-item" data-farm-target="一德農園"><span class="food-label-text">一德農園</span><span class="curly-png-line"></span></div>
-            <div class="label-line-item" data-farm-target="八仙六代園"><span class="food-label-text">八仙六代園</span><span class="curly-png-line"></span></div>
-            <div class="label-line-item" data-farm-target="財福海芋田"><span class="food-label-text">財福海芋田</span><span class="curly-png-line"></span></div>
-            <div class="label-line-item" data-farm-target="峰村有機農場"><span class="food-label-text">峰村有機農場</span><span class="curly-png-line"></span></div>
+            <div class="label-line-item"><span class="food-label-text" data-farm-target="一德農園">一德農園</span><span class="curly-png-line"></span></div>
+            <div class="label-line-item"><span class="food-label-text" data-farm-target="八仙六代園">八仙六代園</span><span class="curly-png-line"></span></div>
+            <div class="label-line-item"><span class="food-label-text" data-farm-target="財福海芋田">財福海芋田</span><span class="curly-png-line"></span></div>
+            <div class="label-line-item"><span class="food-label-text" data-farm-target="峰村有機農場">峰村有機農場</span><span class="curly-png-line"></span></div>
           </div>
           <img src="cake3.png" alt="cake3" class="food-item trigger-img-click smooth-img" loading="eager" style="max-width: 145px;">
         </div>
@@ -1133,21 +1132,21 @@
       }
 
       // -----------------------------------
-      // 點擊感應：第 1 下顯示灰色框框，第 2 下開啟彈窗
+      // 點擊事件：僅作用在【農場名稱文字】本體上
       // -----------------------------------
-      var labelItems = document.querySelectorAll('.label-line-item');
-      labelItems.forEach(function(item) {
-        item.addEventListener('click', function(e) {
+      var farmLabelTexts = document.querySelectorAll('.food-label-text');
+      farmLabelTexts.forEach(function(labelEl) {
+        labelEl.addEventListener('click', function(e) {
           e.stopPropagation();
 
-          // 如果目前不是灰色選中狀態，則為「第 1 下」：顯示灰色框框
+          // 第一次點擊：若尚未有灰色外框，加上灰色外框並選中
           if (!this.classList.contains('selected-step1')) {
-            labelItems.forEach(function(el) { el.classList.remove('selected-step1'); });
+            farmLabelTexts.forEach(function(el) { el.classList.remove('selected-step1'); });
             this.classList.add('selected-step1');
             return;
           }
 
-          // 如果已經是灰色選中狀態，則為「第 2 下」：開啟彈窗
+          // 第二次點擊：清除外框並觸發視窗開啟
           this.classList.remove('selected-step1');
           var parentGroup = this.closest('.food-group');
           var modalType = parentGroup.getAttribute('data-modal');
@@ -1167,9 +1166,9 @@
         });
       });
 
-      // 點擊頁面其他空白處時，取消灰色高亮框
+      // 點擊網頁其他任何地方時，取消灰色外框選中狀態
       document.addEventListener('click', function() {
-        labelItems.forEach(function(el) { el.classList.remove('selected-step1'); });
+        farmLabelTexts.forEach(function(el) { el.classList.remove('selected-step1'); });
       });
 
       // 點擊料理大圖（開啟預設第一個農場）
@@ -1177,7 +1176,7 @@
       foodImgs.forEach(function(img) {
         img.addEventListener('click', function(e) {
           e.stopPropagation();
-          labelItems.forEach(function(el) { el.classList.remove('selected-step1'); });
+          farmLabelTexts.forEach(function(el) { el.classList.remove('selected-step1'); });
           var parentGroup = this.closest('.food-group');
           var modalType = parentGroup.getAttribute('data-modal');
           if (!modalDataSets[modalType]) return;
