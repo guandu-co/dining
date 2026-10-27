@@ -270,7 +270,7 @@
     .color-cake .food-label-text { color: #f09bb0; }
     .color-cake .curly-png-line { background-color: #f09bb0; }
 
-    /* 食材 PNG 插圖：強化觸控感應區域 */
+    /* 食材 PNG 插圖 */
     .food-item {
       max-width: 140px;
       height: auto;
@@ -300,7 +300,7 @@
     .delay-5 { animation-delay: 2.0s; }
     .delay-6 { animation-delay: 2.5s; }
 
-    /* 底部 Banner 輪播區域 */
+    /* 底部 Banner 輪播區域修復 */
     .banner-slider-container {
       width: 100%;
       height: 180px;
@@ -321,11 +321,13 @@
       height: 100%;
       object-fit: cover;
       opacity: 0;
+      z-index: 1;
       transition: opacity 1s ease-in-out;
     }
 
     .banner-slide-img.active {
       opacity: 1;
+      z-index: 2;
     }
 
     /* 頁尾團隊與協力單位資訊 */
@@ -358,7 +360,7 @@
       font-weight: 500;
     }
 
-    /* 底部三個膠囊按鈕（不換行 + 寬度適中 + 文字與邊框充裕間隔） */
+    /* 底部三個膠囊按鈕 */
     .footer-nav-horizontal {
       width: 100%;
       display: flex;
@@ -776,10 +778,11 @@
 
     </div>
 
-    <!-- 4. 底部 Banner 區域（嚴格使用 banner3.png 與 guandu-banner.jpg 輪播） -->
+    <!-- 4. 底部 Banner 區域 (雙圖片強化動態載入與輪播) -->
     <div class="banner-slider-container" id="banner-slider">
-      <img src="banner3.png" alt="關渡共食" class="banner-slide-img smooth-img active">
-      <img src="guandu-banner.jpg" alt="關渡平原微型藝術祭" class="banner-slide-img smooth-img">
+      <!-- 兩張輪播圖 -->
+      <img src="banner3.png" id="banner-img-1" alt="關渡共食" class="banner-slide-img active">
+      <img src="guandu-banner.jpg" id="banner-img-2" alt="關渡平原微型藝術祭" class="banner-slide-img">
     </div>
 
     <!-- 5. 頁尾團隊與協力單位名單 -->
@@ -818,7 +821,7 @@
       </div>
     </div>
 
-    <!-- 6. 底部三個膠囊按鈕（不換行 + 充裕邊界間隔） -->
+    <!-- 6. 底部三個膠囊按鈕 -->
     <div class="footer-nav-horizontal">
       <a href="#" class="nav-pill-vertical">在地合作介紹</a>
       <a href="#" class="nav-pill-vertical">講師/藝術家介紹</a>
@@ -903,8 +906,33 @@
 
     document.addEventListener("DOMContentLoaded", function() {
       // -----------------------------------
-      // 圖片預載入
+      // 圖片預載入與副檔名自動容錯修復
       // -----------------------------------
+      function bindSafeSource(imgElement, originalSrc) {
+        var extIndex = originalSrc.lastIndexOf('.');
+        var basePath = extIndex !== -1 ? originalSrc.substring(0, extIndex) : originalSrc;
+        var ext = extIndex !== -1 ? originalSrc.substring(extIndex).toLowerCase() : '';
+
+        var backups = [];
+        if (ext === '.jpg' || ext === '.jpeg') {
+          backups = [basePath + '.JPG', basePath + '.png', basePath + '.PNG'];
+        } else if (ext === '.png') {
+          backups = [basePath + '.PNG', basePath + '.jpg', basePath + '.JPG'];
+        }
+
+        imgElement.onerror = function() {
+          if (backups.length > 0) {
+            imgElement.src = backups.shift();
+          }
+        };
+        imgElement.src = originalSrc;
+      }
+
+      var b1 = document.getElementById('banner-img-1');
+      var b2 = document.getElementById('banner-img-2');
+      if (b1) bindSafeSource(b1, 'banner3.png');
+      if (b2) bindSafeSource(b2, 'guandu-banner.jpg');
+
       var mainImgs = [
         'r1-3.png', 'c-3.png', 'v4.png', 'r2-3.png', 'egg3.png', 'cake3.png',
         'banner3.png', 'guandu-banner.jpg', '卷卷.png'
@@ -949,12 +977,13 @@
       }, 3000);
 
       // -----------------------------------
-      // 精準雙圖片 Banner 輪播 (banner3.png <-> guandu-banner.jpg)
+      // 升級 Banner 自動雙圖 3.5秒淡入淡出輪播
       // -----------------------------------
       var bannerContainer = document.getElementById('banner-slider');
       if (bannerContainer) {
         var bannerImgs = bannerContainer.querySelectorAll('.banner-slide-img');
         var currentBannerIdx = 0;
+
         setInterval(function() {
           if (bannerImgs.length > 1) {
             bannerImgs[currentBannerIdx].classList.remove('active');
@@ -964,7 +993,9 @@
         }, 3500);
       }
 
-      // 文案設定
+      // -----------------------------------
+      // 文案與小農資料集
+      // -----------------------------------
       var desc_baxian_sub = "無毒農法金色稻浪，傳承六代的純淨給孩子";
       var desc_baxian = "宣智與亦真深耕於台北最後一塊綠洲關渡平原，堅持友善耕作與自然共生，留給下一代乾淨的土地。<br><br>農場推動食農教育與季節農事體驗，包含拔蘿蔔、插秧、割稻及米食 DIY、稻田運動會以及藝術工作坊。邀請民眾在金黃色的稻穀間親近土地，感受都市角落裡最真誠的自然風土，並持續傳達與自然永續共生的冀望。";
 
@@ -1198,7 +1229,7 @@
       }
 
       // -----------------------------------
-      // 農場名稱點擊監聽 (100% 準確抓取)
+      // 農場名稱點擊監聽
       // -----------------------------------
       var farmLabelTexts = document.querySelectorAll('.food-label-text');
       farmLabelTexts.forEach(function(labelEl) {
@@ -1206,14 +1237,12 @@
           e.preventDefault();
           e.stopPropagation();
 
-          // 點擊第 1 下：若尚未顯示灰色框框，加上灰色框框高亮
           if (!labelEl.classList.contains('selected-step1')) {
             farmLabelTexts.forEach(function(el) { el.classList.remove('selected-step1'); });
             labelEl.classList.add('selected-step1');
             return;
           }
 
-          // 點擊第 2 下：進入視窗
           labelEl.classList.remove('selected-step1');
           var parentGroup = labelEl.closest('.food-group');
           var modalType = parentGroup.getAttribute('data-modal');
@@ -1235,13 +1264,12 @@
         labelEl.addEventListener('click', handleLabelClick);
       });
 
-      // 點擊頁面其他空白處時清除灰色外框
       document.addEventListener('click', function() {
         farmLabelTexts.forEach(function(el) { el.classList.remove('selected-step1'); });
       });
 
       // -----------------------------------
-      // 食材 PNG 圖片點擊觸發 (修復動畫導致失靈)
+      // 食材 PNG 圖片點擊觸發
       // -----------------------------------
       var foodImgs = document.querySelectorAll('.trigger-img-click');
       foodImgs.forEach(function(img) {
@@ -1255,7 +1283,7 @@
           if (!modalDataSets[modalType]) return;
 
           activeCardsData = modalDataSets[modalType];
-          loadCard(0); // 開啟第一位農民
+          loadCard(0);
           farmModal.classList.add('active');
           startAutoPlay();
         }
