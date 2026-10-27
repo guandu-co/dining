@@ -22,7 +22,7 @@
     }
 
     /* -----------------------------------
-       全頁 Loading 載入遮罩
+       全頁 Loading 載入遮罩（預載圖片）
     ----------------------------------- */
     #loading-overlay {
       position: fixed;
@@ -78,7 +78,16 @@
       letter-spacing: 1px;
     }
 
-    /* 主容器：確保左右各留 20px 安全空隙，絕不貼邊 */
+    /* 圖片防掃描慢慢跑：載入完成前隱藏，載入完成後淡入 */
+    .smooth-img {
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+    .smooth-img.loaded {
+      opacity: 1;
+    }
+
+    /* 主容器 */
     .page-container {
       width: 100%;
       max-width: 450px;
@@ -184,14 +193,10 @@
       z-index: 5;
     }
 
-    .food-group:active {
-      transform: scale(1.08) !important;
-    }
-
     .labels-column {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 4px;
     }
 
     .labels-right {
@@ -202,16 +207,31 @@
       margin-right: 0px;
     }
 
+    /* 大幅擴大點擊感應範圍 */
     .label-line-item {
       display: flex;
       align-items: center;
       cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 14px;
+      transition: background-color 0.15s ease, transform 0.1s ease;
+      user-select: none;
+      -webkit-tap-highlight-color: rgba(0,0,0,0.06);
+    }
+
+    .label-line-item:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+
+    .label-line-item:active {
+      transform: scale(0.95);
+      background-color: rgba(0, 0, 0, 0.09);
     }
 
     /* 卷卷線與圖片/文字拉開適度間距 */
     .curly-png-line {
-      width: 70px;
-      height: 45px;
+      width: 65px;
+      height: 40px;
       display: inline-block;
       margin: 0 6px;
       flex-shrink: 0;
@@ -226,8 +246,9 @@
       mask-position: center;
     }
 
+    /* 農場名稱字體放大至 16px */
     .food-label-text {
-      font-size: 13.5px;
+      font-size: 16px;
       font-weight: bold;
       letter-spacing: 0.5px;
       user-select: none;
@@ -258,6 +279,12 @@
       cursor: pointer;
       display: block;
       flex-shrink: 0;
+      transition: transform 0.15s ease;
+      padding: 6px;
+    }
+
+    .food-item:active {
+      transform: scale(0.93);
     }
 
     @keyframes floatAnim {
@@ -385,10 +412,10 @@
       margin-bottom: 15px;
     }
     .close-btn {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: bold;
       cursor: pointer;
-      padding: 0 5px;
+      padding: 4px 10px;
       line-height: 1;
       z-index: 10;
     }
@@ -456,8 +483,8 @@
       color: #ffffff;
       cursor: pointer;
       background: none;
-      width: auto;
-      height: auto;
+      width: 40px;
+      height: 60px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -465,14 +492,15 @@
       user-select: none;
       text-shadow: 0 2px 6px rgba(0,0,0,0.6);
     }
-    .arrow-left { left: 10px; }
-    .arrow-right { right: 10px; }
+    .arrow-left { left: 5px; }
+    .arrow-right { right: 5px; }
 
+    /* 切換農家大箭頭：調整位置至紅箭頭指定高度 (top: 57%) */
     .card-switch-arrow {
       position: absolute;
-      top: 40%;
+      top: 57%;
       transform: translateY(-50%);
-      font-size: 38px;
+      font-size: 40px;
       font-weight: bold;
       color: #ffffff;
       cursor: pointer;
@@ -485,14 +513,14 @@
       transition: transform 0.1s ease;
       text-shadow: 0 2px 6px rgba(0,0,0,0.4);
       line-height: 1;
-      width: 40px;
-      height: 60px;
+      width: 45px;
+      height: 70px;
     }
     .card-switch-arrow:active {
       transform: translateY(-50%) scale(0.85);
     }
-    .card-switch-arrow.left-arrow { left: 4px; }
-    .card-switch-arrow.right-arrow { right: 4px; }
+    .card-switch-arrow.left-arrow { left: 2px; }
+    .card-switch-arrow.right-arrow { right: 2px; }
 
     .ingredient-tag {
       font-size: 15px;
@@ -553,11 +581,11 @@
     .modal-btn {
       background-color: #ffffff;
       color: #0d6e5a;
-      padding: 8px 20px;
+      padding: 9px 22px;
       border-radius: 20px;
       text-decoration: none;
       font-weight: bold;
-      font-size: 13.5px;
+      font-size: 14px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
       display: inline-block;
       transition: transform 0.1s ease, background-color 0.2s ease;
@@ -571,9 +599,7 @@
       background-color: #f0f0f0;
     }
 
-    /* -----------------------------------
-       農場位置專屬迷你視窗
-    ----------------------------------- */
+    /* 農場位置專屬迷你視窗 */
     #text-location-modal .modal-card {
       background-color: #149377;
       max-width: 310px;
@@ -586,8 +612,8 @@
       position: absolute;
       top: 12px;
       right: 12px;
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       background-color: #b3c200;
       color: #ffffff;
       border-radius: 50%;
@@ -625,7 +651,7 @@
     <div class="progress-bar-container">
       <div class="progress-bar-fill" id="progress-fill"></div>
     </div>
-    <div class="loading-subtext">載入中...</div>
+    <div class="loading-subtext" id="loading-text">資源載入中...</div>
   </div>
 
   <div class="page-container">
@@ -644,8 +670,8 @@
       
       <!-- 第一排：r1 (riceball1) -> r1-3.png -->
       <div class="food-row row-left">
-        <div class="food-group color-riceball1 delay-1 trigger-farm-modal" data-modal="riceball1">
-          <img src="r1-3.png" alt="r1-3" class="food-item" style="max-width: 135px;">
+        <div class="food-group color-riceball1 delay-1" data-modal="riceball1">
+          <img src="r1-3.png" alt="r1-3" class="food-item trigger-img-click smooth-img" loading="eager" style="max-width: 135px;">
           <div class="labels-column labels-right">
             <div class="label-line-item" data-farm-target="八仙六代園"><span class="curly-png-line"></span><span class="food-label-text">八仙六代園</span></div>
             <div class="label-line-item" data-farm-target="四口田"><span class="curly-png-line"></span><span class="food-label-text">四口田</span></div>
@@ -658,21 +684,21 @@
 
       <!-- c1 (chicken) -> c-3.png -->
       <div class="food-row row-right">
-        <div class="food-group color-chicken delay-2 trigger-farm-modal" data-modal="chicken">
+        <div class="food-group color-chicken delay-2" data-modal="chicken">
           <div class="labels-column labels-left">
             <div class="label-line-item" data-farm-target="峰村有機農場">
               <span class="food-label-text">峰村有機農場</span>
               <span class="curly-png-line"></span>
             </div>
           </div>
-          <img src="c-3.png" alt="c-3" class="food-item" style="max-width: 140px;">
+          <img src="c-3.png" alt="c-3" class="food-item trigger-img-click smooth-img" loading="eager" style="max-width: 140px;">
         </div>
       </div>
 
-      <!-- v1 (vege) -> v33.png -->
+      <!-- v1 (vege) -> v4.png -->
       <div class="food-row row-left">
-        <div class="food-group color-vege delay-3 trigger-farm-modal" data-modal="vege">
-          <img src="v33.png" alt="v33" class="food-item" style="max-width: 135px;">
+        <div class="food-group color-vege delay-3" data-modal="vege">
+          <img src="v4.png" alt="v4" class="food-item trigger-img-click smooth-img" loading="eager" style="max-width: 135px;">
           <div class="labels-column labels-right">
             <div class="label-line-item" data-farm-target="一德農園"><span class="curly-png-line"></span><span class="food-label-text">一德農園</span></div>
             <div class="label-line-item" data-farm-target="足妹農場"><span class="curly-png-line"></span><span class="food-label-text">足妹農場</span></div>
@@ -687,19 +713,19 @@
 
       <!-- r2 (riceball2) -> r2-3.png -->
       <div class="food-row row-right">
-        <div class="food-group color-riceball2 delay-4 trigger-farm-modal" data-modal="riceball2">
+        <div class="food-group color-riceball2 delay-4" data-modal="riceball2">
           <div class="labels-column labels-left">
             <div class="label-line-item" data-farm-target="八仙六代園"><span class="food-label-text">八仙六代園</span><span class="curly-png-line"></span></div>
             <div class="label-line-item" data-farm-target="四口田"><span class="food-label-text">四口田</span><span class="curly-png-line"></span></div>
           </div>
-          <img src="r2-3.png" alt="r2-3" class="food-item" style="max-width: 140px;">
+          <img src="r2-3.png" alt="r2-3" class="food-item trigger-img-click smooth-img" loading="eager" style="max-width: 140px;">
         </div>
       </div>
 
       <!-- e1 (eggroll) -> egg3.png -->
       <div class="food-row row-left">
-        <div class="food-group color-eggroll delay-5 trigger-farm-modal" data-modal="eggroll">
-          <img src="egg3.png" alt="egg3" class="food-item" style="max-width: 140px;">
+        <div class="food-group color-eggroll delay-5" data-modal="eggroll">
+          <img src="egg3.png" alt="egg3" class="food-item trigger-img-click smooth-img" loading="eager" style="max-width: 140px;">
           <div class="labels-column labels-right">
             <div class="label-line-item" data-farm-target="足妹農場"><span class="curly-png-line"></span><span class="food-label-text">足妹農場</span></div>
             <div class="label-line-item" data-farm-target="隨野家農場"><span class="curly-png-line"></span><span class="food-label-text">隨野家農場</span></div>
@@ -709,14 +735,14 @@
 
       <!-- w1 (cake) -> cake3.png -->
       <div class="food-row row-center">
-        <div class="food-group color-cake delay-6 trigger-farm-modal" data-modal="cake">
+        <div class="food-group color-cake delay-6" data-modal="cake">
           <div class="labels-column labels-left">
             <div class="label-line-item" data-farm-target="一德農園"><span class="food-label-text">一德農園</span><span class="curly-png-line"></span></div>
             <div class="label-line-item" data-farm-target="八仙六代園"><span class="food-label-text">八仙六代園</span><span class="curly-png-line"></span></div>
             <div class="label-line-item" data-farm-target="財福海芋田"><span class="food-label-text">財福海芋田</span><span class="curly-png-line"></span></div>
             <div class="label-line-item" data-farm-target="峰村有機農場"><span class="food-label-text">峰村有機農場</span><span class="curly-png-line"></span></div>
           </div>
-          <img src="cake3.png" alt="cake3" class="food-item" style="max-width: 145px;">
+          <img src="cake3.png" alt="cake3" class="food-item trigger-img-click smooth-img" loading="eager" style="max-width: 145px;">
         </div>
       </div>
 
@@ -725,8 +751,8 @@
     <!-- 4. 底部 Banner 區域 -->
     <div class="banner-slider-container" id="banner-slider">
       <img src="guandu-banner.jpg" class="banner-placeholder" alt="banner placeholder">
-      <img src="banner3.png" alt="關渡共食" class="banner-slide-img active">
-      <img src="guandu-banner.jpg" alt="關渡平原微型藝術祭" class="banner-slide-img">
+      <img src="banner3.png" alt="關渡共食" class="banner-slide-img smooth-img active">
+      <img src="guandu-banner.jpg" alt="關渡平原微型藝術祭" class="banner-slide-img smooth-img">
     </div>
 
     <!-- 5. 底部三個豎長型直排膠囊按鈕 -->
@@ -742,6 +768,7 @@
   <div class="modal-overlay" id="farm-modal">
     <div class="modal-card">
       
+      <!-- 切換農家大箭頭：調整至指定位置 (top: 57%) -->
       <span class="card-switch-arrow left-arrow" id="card-prev">‹</span>
       <span class="card-switch-arrow right-arrow" id="card-next">›</span>
 
@@ -785,7 +812,8 @@
     // 建立自動降級的圖片元素，解決破圖與大寫副檔名問題
     function createSafeImageElement(src) {
       var img = document.createElement('img');
-      img.className = 'modal-img';
+      img.className = 'modal-img smooth-img';
+      img.onload = function() { img.classList.add('loaded'); };
       
       var extIndex = src.lastIndexOf('.');
       var basePath = extIndex !== -1 ? src.substring(0, extIndex) : src;
@@ -812,25 +840,53 @@
 
     document.addEventListener("DOMContentLoaded", function() {
       // -----------------------------------
-      // 極速 Loading 效果控制（1.2秒內順暢開啟）
+      // 圖片預載入與極速 Loading 機制
       // -----------------------------------
+      var mainImgs = [
+        'r1-3.png', 'c-3.png', 'v4.png', 'r2-3.png', 'egg3.png', 'cake3.png',
+        'banner3.png', 'guandu-banner.jpg', '卷卷.png'
+      ];
+      var loadedCount = 0;
       var progressFill = document.getElementById('progress-fill');
       var loadingOverlay = document.getElementById('loading-overlay');
-      
-      var p = 0;
-      var timer = setInterval(function() {
-        p += 25;
-        if (progressFill) progressFill.style.width = p + '%';
-        if (p >= 100) {
-          clearInterval(timer);
+
+      function updateProgress() {
+        loadedCount++;
+        var percent = Math.min(Math.floor((loadedCount / mainImgs.length) * 100), 100);
+        if (progressFill) progressFill.style.width = percent + '%';
+        if (loadedCount >= mainImgs.length) {
           setTimeout(function() {
             if (loadingOverlay) {
               loadingOverlay.style.opacity = '0';
               loadingOverlay.style.visibility = 'hidden';
             }
-          }, 200);
+            // 開啟主畫面圖片淡入
+            document.querySelectorAll('.food-item, .banner-slide-img').forEach(function(el) {
+              el.classList.add('loaded');
+            });
+          }, 250);
         }
-      }, 250);
+      }
+
+      // 背景默默預先下載所有關鍵圖片
+      mainImgs.forEach(function(src) {
+        var img = new Image();
+        img.onload = updateProgress;
+        img.onerror = updateProgress;
+        img.src = src;
+      });
+
+      // 防呆機制：超時 3 秒自動強制解鎖 Loading
+      setTimeout(function() {
+        if (loadingOverlay && loadingOverlay.style.visibility !== 'hidden') {
+          if (progressFill) progressFill.style.width = '100%';
+          loadingOverlay.style.opacity = '0';
+          loadingOverlay.style.visibility = 'hidden';
+          document.querySelectorAll('.food-item, .banner-slide-img').forEach(function(el) {
+            el.classList.add('loaded');
+          });
+        }
+      }, 3000);
 
       // -----------------------------------
       // 最下方 Banner 輪播
@@ -1086,27 +1142,40 @@
         if (autoPlayTimer) clearInterval(autoPlayTimer);
       }
 
-      var foodGroups = document.querySelectorAll('.food-group');
-      foodGroups.forEach(function(group) {
-        group.addEventListener('click', function(e) {
-          var modalType = this.getAttribute('data-modal');
+      // 點擊農場標籤（精準開啟該農場）
+      var labelItems = document.querySelectorAll('.label-line-item');
+      labelItems.forEach(function(item) {
+        item.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var parentGroup = this.closest('.food-group');
+          var modalType = parentGroup.getAttribute('data-modal');
           if (!modalDataSets[modalType]) return;
 
           activeCardsData = modalDataSets[modalType];
-          var targetIdx = 0;
+          var targetFarmName = this.getAttribute('data-farm-target');
+          var targetIdx = activeCardsData.findIndex(function(farm) {
+            return farm.title === targetFarmName;
+          });
 
-          var clickedLabel = e.target.closest('.label-line-item');
-          if (clickedLabel) {
-            var targetFarmName = clickedLabel.getAttribute('data-farm-target');
-            var foundIdx = activeCardsData.findIndex(function(item) {
-              return item.title === targetFarmName;
-            });
-            if (foundIdx !== -1) {
-              targetIdx = foundIdx;
-            }
-          }
+          if (targetIdx === -1) targetIdx = 0;
 
           loadCard(targetIdx);
+          farmModal.classList.add('active');
+          startAutoPlay();
+        });
+      });
+
+      // 點擊料理大圖（開啟預設第一個農場）
+      var foodImgs = document.querySelectorAll('.trigger-img-click');
+      foodImgs.forEach(function(img) {
+        img.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var parentGroup = this.closest('.food-group');
+          var modalType = parentGroup.getAttribute('data-modal');
+          if (!modalDataSets[modalType]) return;
+
+          activeCardsData = modalDataSets[modalType];
+          loadCard(0);
           farmModal.classList.add('active');
           startAutoPlay();
         });
