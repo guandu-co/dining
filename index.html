@@ -300,9 +300,7 @@
     .delay-5 { animation-delay: 2.0s; }
     .delay-6 { animation-delay: 2.5s; }
 
-    /* -----------------------------------
-       Banner 輪播區域（以第一張圖的長寬比為基準）
-    ----------------------------------- */
+    /* Banner 輪播區域 */
     .banner-slider-container {
       width: 100%;
       position: relative;
@@ -314,7 +312,6 @@
       line-height: 0;
     }
 
-    /* 第一張圖片：負責撐開容器的自然寬度與高度 */
     .banner-slide-img.primary-base {
       width: 100%;
       height: auto;
@@ -325,7 +322,6 @@
       transition: opacity 1s ease-in-out;
     }
 
-    /* 第二張圖片：絕對定位撐滿第一張圖撐開的範圍 */
     .banner-slide-img.overlay-match {
       position: absolute;
       top: 0;
@@ -338,7 +334,6 @@
       transition: opacity 1s ease-in-out;
     }
 
-    /* 輪播切換 Active 狀態 */
     .banner-slide-img.primary-base.active {
       opacity: 1;
       z-index: 2;
@@ -805,15 +800,13 @@
 
     </div>
 
-    <!-- 4. 底部 Banner 區域（以第一張圖的長寬比為基準） -->
+    <!-- 4. 底部 Banner 區域 -->
     <div class="banner-slider-container" id="banner-slider">
-      <!-- 第一張基準圖 -->
       <img src="banner3.png" id="banner-img-1" alt="關渡共食" class="banner-slide-img primary-base active">
-      <!-- 第二張符合尺寸的覆蓋圖 -->
       <img src="guandu-banner.jpg" id="banner-img-2" alt="關渡平原微型藝術祭" class="banner-slide-img overlay-match">
     </div>
 
-    <!-- 5. 頁尾團隊與協力單位名單 -->
+    <!-- 5. 頁尾團隊與協力單位名單（最新版） -->
     <div class="footer-credits-section">
       <div class="credit-item">
         <span class="credit-label">主辦單位｜</span>
@@ -821,7 +814,7 @@
       </div>
       <div class="credit-item">
         <span class="credit-label">協辦單位｜</span>
-        <span class="credit-value">台北市錫瑠環境綠化基金會</span>
+        <span class="credit-value">財團法人台北市錫瑠環境綠化基金會</span>
       </div>
       <div class="credit-item">
         <span class="credit-label">計畫主持｜</span>
@@ -840,8 +833,16 @@
         <span class="credit-value">許沛君</span>
       </div>
       <div class="credit-item">
+        <span class="credit-label">展台企劃｜</span>
+        <span class="credit-value">張大仁</span>
+      </div>
+      <div class="credit-item">
         <span class="credit-label">資料協力｜</span>
         <span class="credit-value">臺北市休閒農業發展協會</span>
+      </div>
+      <div class="credit-item">
+        <span class="credit-label">農民媒合｜</span>
+        <span class="credit-value">北投雲集食農教育勞動合作社、臺北市休閒農業發展協會</span>
       </div>
       <div class="credit-item">
         <span class="credit-label">農民協力｜</span>
@@ -1074,7 +1075,10 @@
       var imgs_baxian = ["eightpeople.jpg", "riceplant.webp", "rice.webp", "eight.jpg", "carrot.jpg", "e1.jpg", "e2.jpg", "0000.jpg"];
       var imgs_linsoy = ["w6.jpg", "ww6.jpg", "w6w6.jpg", "www8.jpg", "l5.jpg", "l6.jpg", "l7.jpg", "l8.jpg"];
       var imgs_yide = ["yide2.jpg", "yide3.jpg", "yide9.jpg", "yide5.jpg", "yide6.jpg", "yide7.jpg"];
-      var imgs_fengcun = ["fon2.jpg", "fon4.jpeg", "fon5.jpeg", "fon6.jpeg", "fon1.jpg", "fon3.jpg"];
+      var imgs_fengcun = [
+        "fon2.jpg", "fon4.jpeg", "fon5.jpeg", "fon6.jpeg", "fon1.jpg", "fon3.jpg",
+        { src: "mm.png", credit: "攝影：劉耀鈞" }
+      ];
       var imgs_sunkitchen = ["f1.jpg", "f2.jpeg", "f9.jpg", "f10.jpg", "f3.jpg", "fff6.jpg", "f5.jpg", "f6.jpg", "f7.jpg", "f8.jpg"];
       var imgs_shanshui = ["tsh2.jpg"];
       var imgs_homeland = ["k1.jpg", "k2.jpg", "k3.jpg", "k4.jpg", "k5.jpg", "k6.jpg", "k7.jpg", "9090.jpg", "k9.jpg", "k1000.jpg"];
