@@ -303,6 +303,7 @@
     /* Banner 輪播區域 */
     .banner-slider-container {
       width: 100%;
+      height: 180px;
       position: relative;
       border-radius: 12px;
       margin-bottom: 25px;
@@ -312,44 +313,21 @@
       line-height: 0;
     }
 
-    .banner-slide-img.primary-base {
-      width: 100%;
-      height: auto;
-      display: block;
-      position: relative;
-      z-index: 2;
-      opacity: 1;
-      transition: opacity 1s ease-in-out;
-    }
-
-    .banner-slide-img.overlay-match {
+    .banner-slide-img {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      z-index: 1;
       opacity: 0;
+      z-index: 1;
       transition: opacity 1s ease-in-out;
     }
 
-    .banner-slide-img.primary-base.active {
+    .banner-slide-img.active {
       opacity: 1;
       z-index: 2;
-    }
-    .banner-slide-img.primary-base:not(.active) {
-      opacity: 0;
-      z-index: 1;
-    }
-
-    .banner-slide-img.overlay-match.active {
-      opacity: 1;
-      z-index: 2;
-    }
-    .banner-slide-img.overlay-match:not(.active) {
-      opacity: 0;
-      z-index: 1;
     }
 
     /* 頁尾團隊與協力單位資訊 */
@@ -800,10 +778,16 @@
 
     </div>
 
-    <!-- 4. 底部 Banner 區域 -->
+    <!-- 4. 底部 Banner 輪播區域（已加入新照片與固定比例） -->
     <div class="banner-slider-container" id="banner-slider">
-      <img src="banner3.png" id="banner-img-1" alt="關渡共食" class="banner-slide-img primary-base active">
-      <img src="guandu-banner.jpg" id="banner-img-2" alt="關渡平原微型藝術祭" class="banner-slide-img overlay-match">
+      <img src="banner3.png" alt="關渡共食" class="banner-slide-img active">
+      <img src="guandu-banner.jpg" alt="關渡平原微型藝術祭" class="banner-slide-img">
+      <img src="IMG_6508.JPG" alt="活動花絮 6508" class="banner-slide-img">
+      <img src="IMG_6504.JPG" alt="活動花絮 6504" class="banner-slide-img">
+      <img src="IMG_6491.JPG" alt="活動花絮 6491" class="banner-slide-img">
+      <img src="IMG_6489.JPG" alt="活動花絮 6489" class="banner-slide-img">
+      <img src="IMG_6497.JPG" alt="活動花絮 6497" class="banner-slide-img">
+      <img src="IMG_6487.JPG" alt="活動花絮 6487" class="banner-slide-img">
     </div>
 
     <!-- 5. 頁尾團隊與協力單位名單 -->
@@ -944,7 +928,7 @@
 
         var backups = [];
         if (ext === '.jpg' || ext === '.jpeg') {
-          backups = [basePath + '.JPG', basePath + '.png', basePath + '.PNG'];
+          backups = [basePath + '.JPG', basePath + '.jpg', basePath + '.png', basePath + '.PNG'];
         } else if (ext === '.png') {
           backups = [basePath + '.PNG', basePath + '.jpg', basePath + '.JPG'];
         }
@@ -957,14 +941,15 @@
         imgElement.src = originalSrc;
       }
 
-      var b1 = document.getElementById('banner-img-1');
-      var b2 = document.getElementById('banner-img-2');
-      if (b1) bindSafeSource(b1, 'banner3.png');
-      if (b2) bindSafeSource(b2, 'guandu-banner.jpg');
+      var bannerImgsDom = document.querySelectorAll('.banner-slide-img');
+      bannerImgsDom.forEach(function(el) {
+        bindSafeSource(el, el.getAttribute('src'));
+      });
 
       var mainImgs = [
         'r1-3.png', 'c-3.png', 'v4.png', 'r2-3.png', 'egg3.png', 'cake3.png',
-        'banner3.png', 'guandu-banner.jpg', '卷卷.png'
+        'banner3.png', 'guandu-banner.jpg', '卷卷.png',
+        'IMG_6508.JPG', 'IMG_6504.JPG', 'IMG_6491.JPG', 'IMG_6489.JPG', 'IMG_6497.JPG', 'IMG_6487.JPG'
       ];
       var loadedCount = 0;
       var progressFill = document.getElementById('progress-fill');
@@ -1006,7 +991,7 @@
       }, 3000);
 
       // -----------------------------------
-      // Banner 3.5 秒雙向輪播淡入淡出
+      // Banner 3.5 秒多張輪播淡入淡出
       // -----------------------------------
       var bannerContainer = document.getElementById('banner-slider');
       if (bannerContainer) {
@@ -1038,7 +1023,7 @@
       var desc_sunkitchen = "四口田農場由農友阿忠創辦，目前與阿穎共同致力於生產有機農產品，並落實地產地消，為大台北地區提供有機蔬菜、生態蜂蜜、放牧雞蛋、自然水果，每一口都配上新鮮土壤與大天空。<br><br>農場也注重與社會的連結：部分園區規劃作為市民農園，幫助在地居民一圓田園夢；推行食農教育課程，增進學員對於農業與飲食的認識；舉辦各式活動，帶領訪客感受大自然的療癒能量。";
 
       var desc_fengcun_sub = "堅持無農藥的有機天地，捷運步行的驚喜一隅";
-      var desc_fengcun = "峰村有機農場位於北投山腳下，從關渡捷運站步行即可抵達，是任姐與粟大哥堅持無農藥耕作的一片有機天地，農場裡的屋子平台也不時會舉辦活動與工作坊。農場亦提供多種有機季節蔬菜、水果與自製果醬等多樣品項，歡迎電話訂購或現場選購。<br><br>農場旁的步道是不少人意想不到的桃花秘境，沿路能看見遼闊的稻田，這裡也常有市集活動，很適合隨意走走，親近大自然。";
+      var desc_fengcun = "峰村有機農場位於北投山腳下，從關渡捷運站步行即可抵達，是任姐與粟大哥堅持無農藥耕作的一片有機天地，農場里的屋子平台也不時會舉辦活動與工作坊。農場亦提供多種有機季節蔬菜、水果與自製果醬等多樣品項，歡迎電話訂購或現場選購。<br><br>農場旁的步道是不少人意想不到的桃花秘境，沿路能看見遼闊的稻田，這裡也常有市集活動，很適合隨意走走，親近大自然。";
 
       var desc_suiye_sub = "都市裡的友善放牧雞，生活美學永續建築";
       var desc_suiye = "隱身於北投捷運站附近的隨野家農場，是一座兼具友善動物與生活美學的都市放牧雞農場。<br><br>雞老闆佳敏從2018年開始以友善放牧養殖雞群，透過深度食農教育、體驗課程與蛋雞福利宣導，打破傳統雞舍的印象，更落實自然循環的農場建設與管理。在永續設計的農場空間裡，經常舉辦各式食農相關工作坊以及活動，讓民眾能感受人與動物、土地和諧共生的美好。";
